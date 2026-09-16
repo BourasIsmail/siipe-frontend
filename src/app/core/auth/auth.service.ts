@@ -85,6 +85,14 @@ export class AuthService {
     ]);
   }
 
+  // DELEGUE can only list personnel (read-only) — add/edit is not allowed for them
+  canEditPersonnel(): boolean {
+    return this.hasAnyRole([
+      'ROLE_ADMIN', 'ROLE_CHEF_SERVICE',
+      'ROLE_CHEF_DIVISION', 'ROLE_DIRECTEUR_CENTRALE'
+    ]);
+  }
+
   canManageBeneficiaires(): boolean {
     return this.hasAnyRole([
       'ROLE_ADMIN', 'ROLE_ASSISTANTE_SOCIALE', 'ROLE_DIRECTEUR_CENTRALE'
@@ -96,7 +104,7 @@ export class AuthService {
   }
 
   getUserEtablissementId(): number | undefined {
-    return (this.getCurrentUser() as any)?.etablissementId;
+    return this.getCurrentUser()?.etablissementCentreId;
   }
 
   private loadUser(): LoginResponse | null {

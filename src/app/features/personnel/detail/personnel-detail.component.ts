@@ -385,5 +385,5 @@ export class PersonnelDetailComponent implements OnInit {
     return val.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
   }
 
-  canEdit() { return this.auth.canManagePersonnel(); }
+  canEdit() { return this.auth.canEditPersonnel(); }
 }

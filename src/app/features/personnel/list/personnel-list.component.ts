@@ -389,5 +389,5 @@ export class PersonnelListComponent implements OnInit {
   }
 
   isAdmin() { return this.auth.isAdmin(); }
-  canEdit() { return this.auth.canManagePersonnel(); }
+  canEdit() { return this.auth.canEditPersonnel(); }
 }

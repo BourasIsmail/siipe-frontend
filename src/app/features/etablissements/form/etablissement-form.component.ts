@@ -9,6 +9,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import * as L from 'leaflet';
 import { ApiService } from '../../../core/services/api.service';
+import { AuthService } from '../../../core/auth/auth.service';
 import { Province, Region } from '../../../core/models/geo.model';
 import { Programme, Prestation } from '../../../core/models/etablissement.model';
 
@@ -521,6 +522,7 @@ export class EtablissementFormComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private api: ApiService,
+    private auth: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
@@ -529,12 +531,24 @@ export class EtablissementFormComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.buildForm();
-    this.api.getRegions().subscribe({ next: r => { this.regions = [...r]; this.cdr.detectChanges(); } });
-    this.api.getProvinces().subscribe({ next: p => { this.provinces = [...p]; this.filteredProvinces = [...p]; this.cdr.detectChanges(); } });
+    this.api.getRegions().subscribe({
+      next: r => { this.regions = this.restrictToOwnProvince() ? this.onlyOwnRegion(r) : [...r]; this.cdr.detectChanges(); }
+    });
+    this.api.getProvinces().subscribe({
+      next: p => {
+        this.provinces = this.restrictToOwnProvince() ? this.onlyOwnProvince(p) : [...p];
+        this.filteredProvinces = [...this.provinces];
+        this.cdr.detectChanges();
+      }
+    });
     this.api.getProgrammes().subscribe({ next: p => { this.programmes = [...p]; this.cdr.detectChanges(); } });
     this.api.getPersonnel().subscribe({ next: p => { this.personnel = [...p]; this.cdr.detectChanges(); } });
 
     const id = this.route.snapshot.paramMap.get('id');
+    if (!id && this.restrictToOwnProvince()) {
+      const user = this.auth.getCurrentUser();
+      this.form.patchValue({ regionId: user?.regionId ?? '', provinceId: user?.provinceId ?? '' });
+    }
     if (id) {
       this.isEdit = true;
       this.loading = true;
@@ -568,6 +582,20 @@ export class EtablissementFormComponent implements OnInit, AfterViewInit {
         error: () => { this.loading = false; this.router.navigate(['/etablissements']); }
       });
     }
+  }
+
+  restrictToOwnProvince(): boolean {
+    return this.auth.hasRole('ROLE_DELEGUE');
+  }
+
+  private onlyOwnProvince(provinces: Province[]): Province[] {
+    const provinceId = this.auth.getCurrentUser()?.provinceId;
+    return provinceId ? provinces.filter(p => p.id === provinceId) : [];
+  }
+
+  private onlyOwnRegion(regions: Region[]): Region[] {
+    const regionId = this.auth.getCurrentUser()?.regionId;
+    return regionId ? regions.filter(r => r.id === regionId) : [];
   }
 
   ngAfterViewInit() {
@@ -663,6 +691,7 @@ export class EtablissementFormComponent implements OnInit, AfterViewInit {
   }
 
   onRegionChange(event: any) {
+    if (this.restrictToOwnProvince()) return; // province choice is locked to the DELEGUE's own province
     const regionId = event.target?.value || event;
     if (!regionId) { this.filteredProvinces = [...this.provinces]; return; }
     this.api.getProvincesByRegion(+regionId).subscribe({
