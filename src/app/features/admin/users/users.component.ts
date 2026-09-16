@@ -10,6 +10,7 @@ import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/auth/auth.service';
 import { User, CreateUserRequest, ROLE_LABELS, Role } from '../../../core/models/user.model';
 import { Province, Region } from '../../../core/models/geo.model';
+import { EtablissementCentre } from '../../../core/models/etablissement.model';
 
 @Component({
   selector: 'app-users',
@@ -84,7 +85,7 @@ import { Province, Region } from '../../../core/models/geo.model';
             </div>
             <div class="field">
               <label>Rôle *</label>
-              <select formControlName="role">
+              <select formControlName="role" (change)="onRoleChange()">
                 <option value="">-- Sélectionner --</option>
                 <option *ngFor="let r of roles" [value]="r">{{ getRoleLabel(r) }}</option>
               </select>
@@ -103,6 +104,14 @@ import { Province, Region } from '../../../core/models/geo.model';
                 <option value="">-- Sélectionner --</option>
                 <option *ngFor="let p of filteredProvinces" [value]="p.id">{{ p.nomFr }}</option>
               </select>
+            </div>
+            <div class="field" *ngIf="form.get('role')?.value === 'ROLE_DIRECTEUR_CENTRALE'">
+              <label>Établissement / Centre *</label>
+              <select formControlName="etablissementCentreId">
+                <option value="">-- Sélectionner --</option>
+                <option *ngFor="let e of etablissements" [value]="e.id">{{ e.nomFr }}</option>
+              </select>
+              <span class="err" *ngIf="form.get('etablissementCentreId')?.invalid && form.get('etablissementCentreId')?.touched">Champ requis</span>
             </div>
           </div>
           <div class="form-info" *ngIf="!editingId">
@@ -158,7 +167,7 @@ import { Province, Region } from '../../../core/models/geo.model';
                 </td>
                 <td>{{ u.email }}</td>
                 <td><span class="badge badge-blue">{{ getRoleLabel(u.role) }}</span></td>
-                <td>{{ u.provinceNom || u.regionNom || '-' }}</td>
+                <td>{{ u.etablissementCentreNom || u.provinceNom || u.regionNom || '-' }}</td>
                 <td>
                   <span class="badge" [class.badge-green]="u.active" [class.badge-red]="!u.active">
                     {{ u.active ? 'Actif' : 'Inactif' }}
@@ -272,6 +281,7 @@ export class UsersComponent implements OnInit {
   paginated: User[] = [];
   regions: Region[] = [];
   filteredProvinces: Province[] = [];
+  etablissements: EtablissementCentre[] = [];
   loading = true;
   showForm = false;
   saving = false;
@@ -309,6 +319,9 @@ export class UsersComponent implements OnInit {
     this.api.getRegions().subscribe({
       next: r => { this.regions = [...r]; this.cdr.detectChanges(); }
     });
+    this.api.getEtablissements().subscribe({
+      next: e => { this.etablissements = [...e]; this.cdr.detectChanges(); }
+    });
   }
 
   buildForm() {
@@ -318,8 +331,20 @@ export class UsersComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       role: ['', Validators.required],
       regionId: [''],
-      provinceId: ['']
+      provinceId: [''],
+      etablissementCentreId: ['']
     });
+  }
+
+  onRoleChange() {
+    const control = this.form.get('etablissementCentreId');
+    if (this.form.get('role')?.value === 'ROLE_DIRECTEUR_CENTRALE') {
+      control?.setValidators([Validators.required]);
+    } else {
+      control?.clearValidators();
+      control?.setValue('');
+    }
+    control?.updateValueAndValidity();
   }
 
   openForm() { this.showForm = true; this.editingId = null; this.form.reset(); this.filteredProvinces = []; }
@@ -329,6 +354,7 @@ export class UsersComponent implements OnInit {
     this.showForm = true;
     this.form.patchValue(u);
     if (u.regionId) this.onRegionChange({ target: { value: u.regionId } });
+    this.onRoleChange();
   }
 
   closeForm() { this.showForm = false; this.editingId = null; this.form.reset(); this.filteredProvinces = []; }

@@ -78,10 +78,12 @@ export const routes: Routes = [
       },
       {
         path: 'personnel/add',
+        canActivate: [roleGuard(['ROLE_ADMIN', 'ROLE_CHEF_SERVICE', 'ROLE_CHEF_DIVISION', 'ROLE_DIRECTEUR_CENTRALE'])],
         loadComponent: () => import('./features/personnel/form/personnel-form.component').then(m => m.PersonnelFormComponent)
       },
       {
         path: 'personnel/:id/edit',
+        canActivate: [roleGuard(['ROLE_ADMIN', 'ROLE_CHEF_SERVICE', 'ROLE_CHEF_DIVISION', 'ROLE_DIRECTEUR_CENTRALE'])],
         loadComponent: () => import('./features/personnel/form/personnel-form.component').then(m => m.PersonnelFormComponent)
       },
       {

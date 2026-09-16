@@ -9,6 +9,8 @@ export interface User {
   regionNom?: string;
   provinceId?: number;
   provinceNom?: string;
+  etablissementCentreId?: number;
+  etablissementCentreNom?: string;
   createdAt?: string;
 }
 
@@ -27,6 +29,8 @@ export interface LoginResponse {
   provinceNom?: string;
   regionId?: number;
   regionNom?: string;
+  etablissementCentreId?: number;
+  etablissementCentreNom?: string;
 }
 
 export interface CreateUserRequest {
@@ -36,6 +40,7 @@ export interface CreateUserRequest {
   role: Role;
   regionId?: number;
   provinceId?: number;
+  etablissementCentreId?: number;
 }
 
 export type Role =
