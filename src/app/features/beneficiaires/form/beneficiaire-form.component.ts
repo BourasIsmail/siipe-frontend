@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ApiService } from '../../../core/services/api.service';
+import { AuthService } from '../../../core/auth/auth.service';
 import { EtablissementCentre, Programme, Prestation } from '../../../core/models/etablissement.model';
 import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
 
@@ -344,6 +345,7 @@ export class BeneficiaireFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private api: ApiService,
+    private auth: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
@@ -352,10 +354,19 @@ export class BeneficiaireFormComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
-    this.api.getEtablissements().subscribe({ next: e => { this.etablissements = [...e]; this.cdr.detectChanges(); } });
+    this.api.getEtablissements().subscribe({
+      next: e => {
+        const ownId = this.auth.getUserEtablissementId();
+        this.etablissements = this.restrictToOwnEtablissement() ? e.filter(x => x.id === ownId) : [...e];
+        this.cdr.detectChanges();
+      }
+    });
     this.api.getProgrammes().subscribe({ next: p => { this.programmes = [...p]; this.cdr.detectChanges(); } });
 
     const id = this.route.snapshot.paramMap.get('id');
+    if (!id && this.restrictToOwnEtablissement()) {
+      this.form.patchValue({ etablissementCentreId: this.auth.getUserEtablissementId() ?? '' });
+    }
     if (id) {
       this.isEdit = true;
       this.loading = true;
@@ -373,6 +384,10 @@ export class BeneficiaireFormComponent implements OnInit {
         error: () => { this.loading = false; this.router.navigate(['/beneficiaires']); }
       });
     }
+  }
+
+  restrictToOwnEtablissement(): boolean {
+    return this.auth.hasRole('ROLE_ASSISTANTE_SOCIALE');
   }
 
   buildForm() {

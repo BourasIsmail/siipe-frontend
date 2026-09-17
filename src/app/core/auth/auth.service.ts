@@ -93,10 +93,13 @@ export class AuthService {
     ]);
   }
 
+  // DIRECTEUR_CENTRALE is read-only on bénéficiaires — only ADMIN/ASSISTANTE_SOCIALE can manage them
   canManageBeneficiaires(): boolean {
-    return this.hasAnyRole([
-      'ROLE_ADMIN', 'ROLE_ASSISTANTE_SOCIALE', 'ROLE_DIRECTEUR_CENTRALE'
-    ]);
+    return this.hasAnyRole(['ROLE_ADMIN', 'ROLE_ASSISTANTE_SOCIALE']);
+  }
+
+  canDeleteBeneficiaire(): boolean {
+    return this.hasAnyRole(['ROLE_ADMIN', 'ROLE_ASSISTANTE_SOCIALE']);
   }
 
   getUserProvinceId(): number | undefined {

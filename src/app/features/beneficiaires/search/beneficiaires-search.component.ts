@@ -187,7 +187,7 @@ import { Province } from '../../../core/models/geo.model';
                   <mat-icon>print</mat-icon>
                 </button>
                 <button class="action-btn delete" (click)="delete(b)"
-                        title="Supprimer" *ngIf="isAdmin()">
+                        title="Supprimer" *ngIf="canDelete()">
                   <mat-icon>delete</mat-icon>
                 </button>
               </td>
@@ -454,9 +454,9 @@ export class BeneficiairesSearchComponent implements OnInit {
   }
 
   isAdmin() { return this.auth.isAdmin(); }
+  // DIRECTEUR_CENTRALE is read-only on bénéficiaires
   canCreate() {
-    return this.auth.hasAnyRole([
-      'ROLE_ADMIN', 'ROLE_ASSISTANTE_SOCIALE', 'ROLE_DIRECTEUR_CENTRALE'
-    ]);
+    return this.auth.hasAnyRole(['ROLE_ADMIN', 'ROLE_ASSISTANTE_SOCIALE']);
   }
+  canDelete() { return this.auth.canDeleteBeneficiaire(); }
 }
