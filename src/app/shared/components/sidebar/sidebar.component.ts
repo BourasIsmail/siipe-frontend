@@ -169,9 +169,10 @@ export class SidebarComponent {
   canSeeEntites() {
     return this.auth.hasAnyRole([
       'ROLE_ADMIN', 'ROLE_DELEGUE', 'ROLE_CHEF_SERVICE',
-      'ROLE_CHEF_DIVISION'
+      'ROLE_CHEF_DIVISION', 'ROLE_COORDINATION'
       // ROLE_DIRECTEUR_CENTRALE removed — they only see their own etablissement
     ]);
   }
-  canSeePersonnel() { return this.auth.canManagePersonnel(); }
+  // COORDINATION is read-only here but still needs to see the section (list views only)
+  canSeePersonnel() { return this.auth.canManagePersonnel() || this.auth.hasRole('ROLE_COORDINATION'); }
 }

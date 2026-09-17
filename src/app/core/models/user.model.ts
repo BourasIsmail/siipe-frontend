@@ -51,7 +51,8 @@ export type Role =
   | 'ROLE_DIRECTEUR_CENTRALE'
   | 'ROLE_RESPONSABLE_ALERTE'
   | 'ROLE_RESPONSABLE_SIGNALEMENT'
-  | 'ROLE_ASSISTANTE_SOCIALE';
+  | 'ROLE_ASSISTANTE_SOCIALE'
+  | 'ROLE_COORDINATION';
 
 export const ROLE_LABELS: Record<Role, string> = {
   ROLE_ADMIN: 'Administrateur',
@@ -61,5 +62,6 @@ export const ROLE_LABELS: Record<Role, string> = {
   ROLE_DIRECTEUR_CENTRALE: 'Directeur central',
   ROLE_RESPONSABLE_ALERTE: 'Responsable des alertes',
   ROLE_RESPONSABLE_SIGNALEMENT: 'Responsable des signalements',
-  ROLE_ASSISTANTE_SOCIALE: 'Assistante sociale'
+  ROLE_ASSISTANTE_SOCIALE: 'Assistante sociale',
+  ROLE_COORDINATION: 'Coordination régionale'
 };
