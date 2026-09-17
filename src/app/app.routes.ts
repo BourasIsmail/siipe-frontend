@@ -108,10 +108,12 @@ export const routes: Routes = [
       },
       {
         path: 'beneficiaires/add',
+        canActivate: [roleGuard(['ROLE_ADMIN', 'ROLE_ASSISTANTE_SOCIALE'])],
         loadComponent: () => import('./features/beneficiaires/form/beneficiaire-form.component').then(m => m.BeneficiaireFormComponent)
       },
       {
         path: 'beneficiaires/:id/edit',
+        canActivate: [roleGuard(['ROLE_ADMIN', 'ROLE_ASSISTANTE_SOCIALE'])],
         loadComponent: () => import('./features/beneficiaires/form/beneficiaire-form.component').then(m => m.BeneficiaireFormComponent)
       },
       {

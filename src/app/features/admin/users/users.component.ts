@@ -105,7 +105,7 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
                 <option *ngFor="let p of filteredProvinces" [value]="p.id">{{ p.nomFr }}</option>
               </select>
             </div>
-            <div class="field" *ngIf="form.get('role')?.value === 'ROLE_DIRECTEUR_CENTRALE'">
+            <div class="field" *ngIf="requiresEtablissement()">
               <label>Établissement / Centre *</label>
               <select formControlName="etablissementCentreId">
                 <option value="">-- Sélectionner --</option>
@@ -336,9 +336,13 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  requiresEtablissement(): boolean {
+    return ['ROLE_DIRECTEUR_CENTRALE', 'ROLE_ASSISTANTE_SOCIALE'].includes(this.form.get('role')?.value);
+  }
+
   onRoleChange() {
     const control = this.form.get('etablissementCentreId');
-    if (this.form.get('role')?.value === 'ROLE_DIRECTEUR_CENTRALE') {
+    if (this.requiresEtablissement()) {
       control?.setValidators([Validators.required]);
     } else {
       control?.clearValidators();
