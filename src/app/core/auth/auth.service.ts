@@ -13,8 +13,11 @@ export class AuthService {
 
   private currentUserSubject = new BehaviorSubject<LoginResponse | null>(this.loadUser());
   currentUser$ = this.currentUserSubject.asObservable();
+  private autoLogoutTimer: ReturnType<typeof setTimeout> | null = null;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+    this.scheduleAutoLogout();
+  }
 
   login(request: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${environment.apiUrl}/auth/login`, request).pipe(
@@ -22,15 +25,58 @@ export class AuthService {
         localStorage.setItem(this.TOKEN_KEY, response.token);
         localStorage.setItem(this.USER_KEY, JSON.stringify(response));
         this.currentUserSubject.next(response);
+        this.scheduleAutoLogout();
       })
     );
   }
 
   logout(): void {
+    if (this.autoLogoutTimer) {
+      clearTimeout(this.autoLogoutTimer);
+      this.autoLogoutTimer = null;
+    }
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.USER_KEY);
     this.currentUserSubject.next(null);
     this.router.navigate(['/auth/login']);
+  }
+
+  private getTokenExpiration(): number | null {
+    const token = this.getToken();
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return typeof payload.exp === 'number' ? payload.exp * 1000 : null;
+    } catch {
+      return null;
+    }
+  }
+
+  isTokenExpired(): boolean {
+    const expiration = this.getTokenExpiration();
+    return expiration !== null && Date.now() >= expiration;
+  }
+
+  private scheduleAutoLogout(): void {
+    if (this.autoLogoutTimer) {
+      clearTimeout(this.autoLogoutTimer);
+      this.autoLogoutTimer = null;
+    }
+    const expiration = this.getTokenExpiration();
+    if (expiration === null) return;
+
+    const delay = expiration - Date.now();
+    if (delay <= 0) {
+      this.logout();
+      return;
+    }
+    // setTimeout delays beyond ~24.8 days overflow to a 32-bit int and fire immediately;
+    // cap it and let the timer re-check/reschedule closer to expiration instead.
+    const MAX_DELAY = 2_147_483_000;
+    this.autoLogoutTimer = setTimeout(
+      () => this.scheduleAutoLogout(),
+      Math.min(delay, MAX_DELAY)
+    );
   }
 
   forgotPassword(email: string): Observable<any> {
@@ -50,7 +96,7 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return !!this.getToken();
+    return !!this.getToken() && !this.isTokenExpired();
   }
 
   hasRole(role: Role): boolean {

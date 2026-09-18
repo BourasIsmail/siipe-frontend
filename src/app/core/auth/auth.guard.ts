@@ -5,9 +5,8 @@ import { Role } from '../models/user.model';
 
 export const authGuard: CanActivateFn = () => {
   const auth = inject(AuthService);
-  const router = inject(Router);
   if (auth.isAuthenticated()) return true;
-  router.navigate(['/auth/login']);
+  auth.logout();
   return false;
 };
 
