@@ -31,6 +31,7 @@
     "maplibre-gl": "^6.10.0",
     "ng2-charts": "^4.1.1",
     "ngx-leaflet": "^0.0.16",
+    "pmtiles": "^4.5.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
