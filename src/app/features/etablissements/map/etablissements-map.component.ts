@@ -57,6 +57,13 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
           <option value="RURAL">Rural</option>
         </select>
       </div>
+      <div class="filter-group">
+        <label class="checkbox-label">
+          <input type="checkbox" [(ngModel)]="showHospitals" (ngModelChange)="onToggleHospitals()">
+          Hôpitaux à proximité
+          <mat-spinner *ngIf="loadingHospitals" diameter="14"></mat-spinner>
+        </label>
+      </div>
     </div>
 
     <!-- Map always visible, spinner overlay when loading -->
@@ -104,6 +111,10 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
         padding: 6px 10px; border: 1px solid #ccc; border-radius: 6px;
         font-size: 13px; font-family: inherit; background: white;
       }
+    }
+    .checkbox-label {
+      display: flex; align-items: center; gap: 6px; cursor: pointer;
+      mat-spinner { display: inline-block; }
     }
     .map-card {
       padding: 0 !important;
@@ -156,11 +167,24 @@ export class EtablissementsMapComponent implements OnInit, AfterViewInit {
   loading = true;
   map: any;
   markersLayer: any;
+  hospitalsLayer: any;
+  showHospitals = false;
+  loadingHospitals = false;
+  private hospitalsMoveTimer: ReturnType<typeof setTimeout> | null = null;
   selectedType = '';
   selectedMilieu = '';
   total = 0;
   withCoords = 0;
   mapReady = false;
+
+  // Inline styles here (not a component stylesheet class) because Leaflet creates
+  // this element outside Angular's view, so scoped component styles wouldn't reach it.
+  private readonly hospitalIcon = L.divIcon({
+    html: '<div style="font-size:22px;line-height:26px;text-align:center">🏥</div>',
+    className: 'hospital-marker-icon',
+    iconSize: [26, 26],
+    iconAnchor: [13, 13]
+  });
 
   private readonly icons: Record<string, L.Icon> = {
     CENTRE_SOCIALE: L.icon({
@@ -228,6 +252,13 @@ export class EtablissementsMapComponent implements OnInit, AfterViewInit {
     }).addTo(this.map);
 
     this.markersLayer = L.layerGroup().addTo(this.map);
+    this.hospitalsLayer = L.layerGroup();
+
+    this.map.on('moveend', () => {
+      if (!this.showHospitals) return;
+      if (this.hospitalsMoveTimer) clearTimeout(this.hospitalsMoveTimer);
+      this.hospitalsMoveTimer = setTimeout(() => this.fetchHospitals(), 800);
+    });
 
     // Legend
     const legend = (L as any).control({ position: 'bottomright' });
@@ -240,6 +271,7 @@ export class EtablissementsMapComponent implements OnInit, AfterViewInit {
           <div><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png" height="16" style="vertical-align:middle;margin-right:6px"> Délégation</div>
           <div><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png" height="16" style="vertical-align:middle;margin-right:6px"> Coordination</div>
           <div><img src="https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png" height="16" style="vertical-align:middle;margin-right:6px"> Autre</div>
+          <div>🏥 Hôpital (OpenStreetMap)</div>
         </div>
       `;
       return div;
@@ -292,5 +324,52 @@ export class EtablissementsMapComponent implements OnInit, AfterViewInit {
       COORDINATION: 'Coordination', DEPOT: 'Dépôt', AUTRE: 'Autre'
     };
     return type ? (map[type] || type) : '-';
+  }
+
+  onToggleHospitals() {
+    if (!this.map || !this.hospitalsLayer) return;
+    if (this.showHospitals) {
+      this.hospitalsLayer.addTo(this.map);
+      this.fetchHospitals();
+    } else {
+      this.map.removeLayer(this.hospitalsLayer);
+      this.hospitalsLayer.clearLayers();
+    }
+  }
+
+  // Live overlay: queries hospitals for the current viewport from OpenStreetMap's
+  // public Overpass API — kept separate from ApiService/HttpClient so the app's
+  // JWT never gets attached to this third-party request.
+  fetchHospitals() {
+    if (!this.map) return;
+    const b = this.map.getBounds();
+    const bbox = `${b.getSouth()},${b.getWest()},${b.getNorth()},${b.getEast()}`;
+    const query = `[out:json][timeout:25];(node["amenity"="hospital"](${bbox});way["amenity"="hospital"](${bbox}););out center;`;
+
+    this.loadingHospitals = true;
+    this.cdr.detectChanges();
+
+    fetch('https://overpass-api.de/api/interpreter', {
+      method: 'POST',
+      body: 'data=' + encodeURIComponent(query)
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.hospitalsLayer.clearLayers();
+        (data.elements || []).forEach((el: any) => {
+          const lat = el.lat ?? el.center?.lat;
+          const lon = el.lon ?? el.center?.lon;
+          if (lat == null || lon == null) return;
+          const name = el.tags?.name || 'Hôpital';
+          const marker = L.marker([lat, lon], { icon: this.hospitalIcon });
+          marker.bindPopup(`<strong>${name}</strong><div style="color:#666;font-size:12px">Hôpital — OpenStreetMap</div>`);
+          this.hospitalsLayer.addLayer(marker);
+        });
+      })
+      .catch(err => console.error('Overpass API error:', err))
+      .finally(() => {
+        this.loadingHospitals = false;
+        this.cdr.detectChanges();
+      });
   }
 }
