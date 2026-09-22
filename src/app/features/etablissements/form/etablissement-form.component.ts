@@ -754,8 +754,8 @@ export class EtablissementFormComponent implements OnInit, AfterViewInit {
       maxBounds: [[-90, -180], [90, 180]], maxBoundsViscosity: 1.0
     }).setView([lat, lng], 6);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors', noWrap: true
+    L.tileLayer('https://mt{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+      attribution: '© Google Maps', subdomains: ['0', '1', '2', '3'], noWrap: true, maxZoom: 20
     }).addTo(this.map);
 
     if (this.form.get('latitude')?.value && this.form.get('longitude')?.value) {
