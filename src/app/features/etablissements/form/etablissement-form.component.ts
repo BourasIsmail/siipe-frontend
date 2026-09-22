@@ -754,8 +754,8 @@ export class EtablissementFormComponent implements OnInit, AfterViewInit {
       maxBounds: [[-90, -180], [90, 180]], maxBoundsViscosity: 1.0
     }).setView([lat, lng], 6);
 
-    L.tileLayer('https://mt{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
-      attribution: '© Google Maps', subdomains: ['0', '1', '2', '3'], noWrap: true, maxZoom: 20
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles © Esri', noWrap: true, maxZoom: 19
     }).addTo(this.map);
 
     if (this.form.get('latitude')?.value && this.form.get('longitude')?.value) {
