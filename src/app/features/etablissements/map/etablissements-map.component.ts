@@ -6,8 +6,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import * as L from 'leaflet';
+import '@maplibre/maplibre-gl-leaflet';
 import { ApiService } from '../../../core/services/api.service';
 import { EtablissementCentre } from '../../../core/models/etablissement.model';
+import { buildSatelliteLabelsStyle, ESRI_WORLD_IMAGERY_URL } from '../../../shared/map/satellite-labels-style';
 
 @Component({
   selector: 'app-etablissements-map',
@@ -222,9 +224,14 @@ export class EtablissementsMapComponent implements OnInit, AfterViewInit {
 
     this.map = L.map('main-map', { zoomControl: true }).setView([31.7917, -7.0926], 6);
 
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles © Esri',
+    L.tileLayer(ESRI_WORLD_IMAGERY_URL, {
+      attribution: 'Imagery © Esri',
       maxZoom: 19
+    }).addTo(this.map);
+
+    L.maplibreGL({
+      style: buildSatelliteLabelsStyle(),
+      interactive: false
     }).addTo(this.map);
 
     this.markersLayer = L.layerGroup().addTo(this.map);
