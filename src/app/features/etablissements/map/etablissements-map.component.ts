@@ -222,9 +222,10 @@ export class EtablissementsMapComponent implements OnInit, AfterViewInit {
 
     this.map = L.map('main-map', { zoomControl: true }).setView([31.7917, -7.0926], 6);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors',
-      maxZoom: 18
+    L.tileLayer('https://mt{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+      attribution: '© Google Maps',
+      subdomains: ['0', '1', '2', '3'],
+      maxZoom: 20
     }).addTo(this.map);
 
     this.markersLayer = L.layerGroup().addTo(this.map);
