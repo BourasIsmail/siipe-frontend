@@ -20,7 +20,8 @@
     "FORMATION_CONTINUE": "التكوين المستمر",
     "POSTE_PROFIL": "الوظائف والملفات الشخصية",
     "UTILISATEURS": "المستخدمون",
-    "PROGRAMMES": "البرامج"
+    "PROGRAMMES": "البرامج",
+    "ETABLISSEMENTS": "المؤسسات"
   },
   "AUTH": {
     "LOGIN": "تسجيل الدخول",
@@ -45,7 +46,8 @@
     "BENEFICIAIRES_PAR_MOIS": "المستفيدون حسب الشهر",
     "BENEFICIAIRES_PAR_SITUATION": "حسب وضع الصعوبة",
     "PERSONNEL_PAR_GRADE": "الموظفون حسب الرتبة",
-    "ETABLISSEMENTS_PAR_PROVINCE": "المؤسسات حسب الإقليم"
+    "ETABLISSEMENTS_PAR_PROVINCE": "المؤسسات حسب الإقليم",
+    "WELCOME": "مرحباً"
   },
   "COMMON": {
     "ADD": "إضافة",

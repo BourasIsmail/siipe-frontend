@@ -16,67 +16,67 @@ import { AuthService } from '../../../core/auth/auth.service';
         <div class="nav-section">
           <a class="nav-item" routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
             <mat-icon>dashboard</mat-icon>
-            <span>Tableau de bord</span>
+            <span>{{ 'NAV.DASHBOARD' | translate }}</span>
           </a>
         </div>
 
         <!-- Beneficiaires -->
         <div class="nav-section">
-          <div class="nav-section-title">Bénéficiaires</div>
+          <div class="nav-section-title">{{ 'NAV.BENEFICIAIRES' | translate }}</div>
           <a class="nav-item" routerLink="/beneficiaires" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
             <mat-icon>search</mat-icon>
-            <span>Recherche</span>
+            <span>{{ 'MENU.RECHERCHE' | translate }}</span>
           </a>
           <a class="nav-item" routerLink="/beneficiaires/add" routerLinkActive="active" *ngIf="canCreateBeneficiaire()">
             <mat-icon>person_add</mat-icon>
-            <span>Inscription</span>
+            <span>{{ 'MENU.INSCRIPTION' | translate }}</span>
           </a>
         </div>
 
         <!-- Entités impliquées -->
         <div class="nav-section" *ngIf="canSeeEntites()">
-          <div class="nav-section-title">Entités impliquées</div>
+          <div class="nav-section-title">{{ 'NAV.ETABLISSEMENTS' | translate }}</div>
           <a class="nav-item" routerLink="/etablissements" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
             <mat-icon>business</mat-icon>
-            <span>Établissements</span>
+            <span>{{ 'MENU.ETABLISSEMENTS' | translate }}</span>
           </a>
           <a class="nav-item" routerLink="/partenaires" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
             <mat-icon>handshake</mat-icon>
-            <span>Partenaires</span>
+            <span>{{ 'MENU.PARTENAIRES' | translate }}</span>
           </a>
           <a class="nav-item" routerLink="/subventions" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
             <mat-icon>payments</mat-icon>
-            <span>Subventions</span>
+            <span>{{ 'MENU.SUBVENTIONS' | translate }}</span>
           </a>
           <a class="nav-item" routerLink="/etablissements/map" routerLinkActive="active">
             <mat-icon>map</mat-icon>
-            <span>Cartographie</span>
+            <span>{{ 'MENU.CARTOGRAPHIE' | translate }}</span>
           </a>
         </div>
 
         <!-- Personnel -->
         <div class="nav-section" *ngIf="canSeePersonnel()">
-          <div class="nav-section-title">Gestion du personnel</div>
+          <div class="nav-section-title">{{ 'NAV.PERSONNEL' | translate }}</div>
           <a class="nav-item" routerLink="/personnel" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
             <mat-icon>people</mat-icon>
-            <span>Personnel</span>
+            <span>{{ 'MENU.PERSONNEL' | translate }}</span>
           </a>
           <a class="nav-item" routerLink="/formations" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
             <mat-icon>school</mat-icon>
-            <span>Formation continue</span>
+            <span>{{ 'MENU.FORMATION_CONTINUE' | translate }}</span>
           </a>
         </div>
 
         <!-- Administration -->
         <div class="nav-section" *ngIf="isAdmin()">
-          <div class="nav-section-title">Administration</div>
+          <div class="nav-section-title">{{ 'NAV.ADMIN' | translate }}</div>
           <a class="nav-item" routerLink="/admin/users" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
             <mat-icon>manage_accounts</mat-icon>
-            <span>Utilisateurs</span>
+            <span>{{ 'MENU.UTILISATEURS' | translate }}</span>
           </a>
           <a class="nav-item" routerLink="/programmes" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
             <mat-icon>category</mat-icon>
-            <span>Programmes</span>
+            <span>{{ 'MENU.PROGRAMMES' | translate }}</span>
           </a>
         </div>
 

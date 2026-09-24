@@ -4,12 +4,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../core/auth/auth.service';
 import { Router } from '@angular/router';
-import { RoleLabelPipe } from '../../pipes/role-label.pipe';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, MatIconModule, TranslateModule, RoleLabelPipe],
+  imports: [CommonModule, MatIconModule, TranslateModule],
   template: `
     <div class="navbar">
       <button class="icon-btn" (click)="toggleSidebar.emit()">
@@ -44,13 +43,13 @@ import { RoleLabelPipe } from '../../pipes/role-label.pipe';
         </button>
         <div class="dropdown-menu" [class.show]="userOpen">
           <div class="dropdown-header">
-            <strong>{{ (user?.role || '') | roleLabel }}</strong>
+            <strong>{{ ('ADMIN.USERS.ROLES.' + (user?.role || '')) | translate }}</strong>
             <small>{{ user?.email }}</small>
           </div>
           <hr>
           <button class="dropdown-item" (click)="logout()">
             <mat-icon>logout</mat-icon>
-            Se déconnecter
+            {{ 'NAV.LOGOUT' | translate }}
           </button>
         </div>
       </div>
