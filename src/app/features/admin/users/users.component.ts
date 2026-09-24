@@ -6,9 +6,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/auth/auth.service';
-import { User, CreateUserRequest, ROLE_LABELS, Role } from '../../../core/models/user.model';
+import { User, CreateUserRequest, Role } from '../../../core/models/user.model';
 import { Province, Region } from '../../../core/models/geo.model';
 import { EtablissementCentre } from '../../../core/models/etablissement.model';
 
@@ -18,13 +19,13 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
   imports: [
     CommonModule, FormsModule, ReactiveFormsModule,
     MatCardModule, MatButtonModule, MatIconModule,
-    MatSnackBarModule, MatProgressSpinnerModule
+    MatSnackBarModule, MatProgressSpinnerModule, TranslateModule
   ],
   template: `
     <div class="page-header">
-      <h1>Gestion des Utilisateurs</h1>
+      <h1>{{ 'ADMIN.USERS.TITLE' | translate }}</h1>
       <button class="btn btn-primary" (click)="openForm()">
-        <mat-icon>person_add</mat-icon> Ajouter
+        <mat-icon>person_add</mat-icon> {{ 'COMMON.ADD' | translate }}
       </button>
     </div>
 
@@ -33,27 +34,27 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
       <mat-card-content>
         <div class="filter-grid">
           <div class="field">
-            <label>Nom / Email</label>
-            <input type="text" [(ngModel)]="filterNom" (ngModelChange)="applyFilter()" placeholder="Rechercher...">
+            <label>{{ 'ADMIN.USERS.SEARCH_LABEL' | translate }}</label>
+            <input type="text" [(ngModel)]="filterNom" (ngModelChange)="applyFilter()" [placeholder]="'ADMIN.USERS.SEARCH_PLACEHOLDER' | translate">
           </div>
           <div class="field">
-            <label>Rôle</label>
+            <label>{{ 'ADMIN.USERS.ROLE' | translate }}</label>
             <select [(ngModel)]="filterRole" (ngModelChange)="applyFilter()">
-              <option value="">Tous</option>
+              <option value="">{{ 'COMMON.ALL' | translate }}</option>
               <option *ngFor="let r of roles" [value]="r">{{ getRoleLabel(r) }}</option>
             </select>
           </div>
           <div class="field">
-            <label>Statut</label>
+            <label>{{ 'ADMIN.USERS.STATUT' | translate }}</label>
             <select [(ngModel)]="filterActive" (ngModelChange)="applyFilter()">
-              <option value="">Tous</option>
-              <option value="true">Actif</option>
-              <option value="false">Inactif</option>
+              <option value="">{{ 'COMMON.ALL' | translate }}</option>
+              <option value="true">{{ 'ADMIN.USERS.ACTIVE' | translate }}</option>
+              <option value="false">{{ 'ADMIN.USERS.INACTIVE' | translate }}</option>
             </select>
           </div>
           <div class="field" style="justify-content:flex-end;padding-top:20px">
             <button class="btn btn-outline" (click)="resetFilter()">
-              <mat-icon>clear</mat-icon> Réinitialiser
+              <mat-icon>clear</mat-icon> {{ 'COMMON.RESET' | translate }}
             </button>
           </div>
         </div>
@@ -63,66 +64,66 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
     <!-- Add/Edit Form -->
     <mat-card class="mb-2" *ngIf="showForm">
       <mat-card-header>
-        <mat-card-title>{{ editingId ? 'Modifier' : 'Ajouter' }} un utilisateur</mat-card-title>
+        <mat-card-title>{{ (editingId ? 'ADMIN.USERS.FORM_TITLE_EDIT' : 'ADMIN.USERS.FORM_TITLE_ADD') | translate }}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="form-row">
             <div class="field">
-              <label>Nom *</label>
-              <input type="text" formControlName="nom" placeholder="Nom">
-              <span class="err" *ngIf="form.get('nom')?.invalid && form.get('nom')?.touched">Champ requis</span>
+              <label>{{ 'ADMIN.USERS.NOM_LABEL' | translate }}</label>
+              <input type="text" formControlName="nom" [placeholder]="'ADMIN.USERS.NOM_PLACEHOLDER' | translate">
+              <span class="err" *ngIf="form.get('nom')?.invalid && form.get('nom')?.touched">{{ 'ADMIN.USERS.REQUIRED' | translate }}</span>
             </div>
             <div class="field">
-              <label>Prénom *</label>
-              <input type="text" formControlName="prenom" placeholder="Prénom">
-              <span class="err" *ngIf="form.get('prenom')?.invalid && form.get('prenom')?.touched">Champ requis</span>
+              <label>{{ 'ADMIN.USERS.PRENOM_LABEL' | translate }}</label>
+              <input type="text" formControlName="prenom" [placeholder]="'ADMIN.USERS.PRENOM_PLACEHOLDER' | translate">
+              <span class="err" *ngIf="form.get('prenom')?.invalid && form.get('prenom')?.touched">{{ 'ADMIN.USERS.REQUIRED' | translate }}</span>
             </div>
             <div class="field">
-              <label>Email *</label>
+              <label>{{ 'ADMIN.USERS.EMAIL_LABEL' | translate }}</label>
               <input type="email" formControlName="email" placeholder="email@entraide.ma">
-              <span class="err" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">Email invalide</span>
+              <span class="err" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">{{ 'ADMIN.USERS.EMAIL_INVALID' | translate }}</span>
             </div>
             <div class="field">
-              <label>Rôle *</label>
+              <label>{{ 'ADMIN.USERS.ROLE_LABEL' | translate }}</label>
               <select formControlName="role" (change)="onRoleChange()">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'ADMIN.USERS.SELECT_PLACEHOLDER' | translate }}</option>
                 <option *ngFor="let r of roles" [value]="r">{{ getRoleLabel(r) }}</option>
               </select>
-              <span class="err" *ngIf="form.get('role')?.invalid && form.get('role')?.touched">Champ requis</span>
+              <span class="err" *ngIf="form.get('role')?.invalid && form.get('role')?.touched">{{ 'ADMIN.USERS.REQUIRED' | translate }}</span>
             </div>
             <div class="field">
-              <label>Région</label>
+              <label>{{ 'ADMIN.USERS.REGION' | translate }}</label>
               <select formControlName="regionId" (change)="onRegionChange($event)">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'ADMIN.USERS.SELECT_PLACEHOLDER' | translate }}</option>
                 <option *ngFor="let r of regions" [value]="r.id">{{ r.nomFr }}</option>
               </select>
             </div>
             <div class="field">
-              <label>Province</label>
+              <label>{{ 'ADMIN.USERS.PROVINCE' | translate }}</label>
               <select formControlName="provinceId">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'ADMIN.USERS.SELECT_PLACEHOLDER' | translate }}</option>
                 <option *ngFor="let p of filteredProvinces" [value]="p.id">{{ p.nomFr }}</option>
               </select>
             </div>
             <div class="field" *ngIf="requiresEtablissement()">
-              <label>Établissement / Centre *</label>
+              <label>{{ 'ADMIN.USERS.ETABLISSEMENT_LABEL' | translate }}</label>
               <select formControlName="etablissementCentreId">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'ADMIN.USERS.SELECT_PLACEHOLDER' | translate }}</option>
                 <option *ngFor="let e of etablissements" [value]="e.id">{{ e.nomFr }}</option>
               </select>
-              <span class="err" *ngIf="form.get('etablissementCentreId')?.invalid && form.get('etablissementCentreId')?.touched">Champ requis</span>
+              <span class="err" *ngIf="form.get('etablissementCentreId')?.invalid && form.get('etablissementCentreId')?.touched">{{ 'ADMIN.USERS.REQUIRED' | translate }}</span>
             </div>
           </div>
           <div class="form-info" *ngIf="!editingId">
             <mat-icon>info</mat-icon>
-            Un email d'activation sera envoyé à l'utilisateur pour définir son mot de passe.
+            {{ 'ADMIN.USERS.ACTIVATION_INFO' | translate }}
           </div>
           <div class="form-btns">
-            <button type="button" class="btn btn-outline" (click)="closeForm()">Annuler</button>
+            <button type="button" class="btn btn-outline" (click)="closeForm()">{{ 'COMMON.CANCEL' | translate }}</button>
             <button type="submit" class="btn btn-primary" [disabled]="form.invalid || saving">
               <mat-spinner diameter="16" *ngIf="saving" style="display:inline-block;margin-right:6px"></mat-spinner>
-              {{ saving ? '' : (editingId ? 'Enregistrer' : 'Créer & Envoyer email') }}
+              {{ saving ? '' : ((editingId ? 'COMMON.SAVE' : 'ADMIN.USERS.CREATE_AND_SEND') | translate) }}
             </button>
           </div>
         </form>
@@ -138,19 +139,19 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
     <mat-card *ngIf="!loading">
       <mat-card-content>
         <div class="table-meta">
-          <span class="text-secondary">{{ filtered.length }} utilisateur(s)</span>
+          <span class="text-secondary">{{ filtered.length }} {{ 'ADMIN.USERS.COUNT_SUFFIX' | translate }}</span>
         </div>
         <div class="table-wrap">
           <table class="data-table">
             <thead>
               <tr>
-                <th>Utilisateur</th>
-                <th>Email</th>
-                <th>Rôle</th>
-                <th>Province</th>
-                <th>Statut</th>
-                <th>Créé le</th>
-                <th>Actions</th>
+                <th>{{ 'ADMIN.USERS.COL_UTILISATEUR' | translate }}</th>
+                <th>{{ 'ADMIN.USERS.EMAIL' | translate }}</th>
+                <th>{{ 'ADMIN.USERS.ROLE' | translate }}</th>
+                <th>{{ 'ADMIN.USERS.PROVINCE' | translate }}</th>
+                <th>{{ 'ADMIN.USERS.STATUT' | translate }}</th>
+                <th>{{ 'ADMIN.USERS.COL_CREATED_AT' | translate }}</th>
+                <th>{{ 'COMMON.ACTIONS' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -170,24 +171,24 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
                 <td>{{ u.etablissementCentreNom || u.provinceNom || u.regionNom || '-' }}</td>
                 <td>
                   <span class="badge" [class.badge-green]="u.active" [class.badge-red]="!u.active">
-                    {{ u.active ? 'Actif' : 'Inactif' }}
+                    {{ (u.active ? 'ADMIN.USERS.ACTIVE' : 'ADMIN.USERS.INACTIVE') | translate }}
                   </span>
                 </td>
                 <td>{{ u.createdAt ? (u.createdAt | date:'dd/MM/yyyy') : '-' }}</td>
                 <td class="actions">
-                  <button class="action-btn edit" (click)="openEditForm(u)" title="Modifier">
+                  <button class="action-btn edit" (click)="openEditForm(u)" [title]="'COMMON.EDIT' | translate">
                     <mat-icon>edit</mat-icon>
                   </button>
-                  <button class="action-btn" (click)="resendEmail(u)" title="Renvoyer email activation" *ngIf="!u.active">
+                  <button class="action-btn" (click)="resendEmail(u)" [title]="'ADMIN.USERS.RESEND_EMAIL_TITLE' | translate" *ngIf="!u.active">
                     <mat-icon>email</mat-icon>
                   </button>
-                  <button class="action-btn delete" (click)="deleteUser(u)" title="Supprimer">
+                  <button class="action-btn delete" (click)="deleteUser(u)" [title]="'COMMON.DELETE' | translate">
                     <mat-icon>delete</mat-icon>
                   </button>
                 </td>
               </tr>
               <tr *ngIf="paginated.length === 0">
-                <td colspan="7" class="empty-row">Aucun utilisateur trouvé</td>
+                <td colspan="7" class="empty-row">{{ 'ADMIN.USERS.EMPTY' | translate }}</td>
               </tr>
             </tbody>
           </table>
@@ -307,7 +308,8 @@ export class UsersComponent implements OnInit {
     private auth: AuthService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -385,38 +387,38 @@ export class UsersComponent implements OnInit {
           this.all = this.all.map(x => x.id === u.id ? u : x);
         } else {
           this.all.unshift(u);
-          this.snackBar.open('Utilisateur créé — email d\'activation envoyé', 'OK', { duration: 4000, panelClass: 'success-snackbar' });
+          this.snackBar.open(this.translate.instant('ADMIN.USERS.CREATED'), 'OK', { duration: 4000, panelClass: 'success-snackbar' });
         }
         this.applyFilter();
         this.saving = false;
         this.closeForm();
-        if (this.editingId) this.snackBar.open('Modifié', 'OK', { duration: 3000, panelClass: 'success-snackbar' });
+        if (this.editingId) this.snackBar.open(this.translate.instant('ADMIN.USERS.UPDATED'), 'OK', { duration: 3000, panelClass: 'success-snackbar' });
         this.cdr.detectChanges();
       },
       error: (err) => {
         this.saving = false;
-        this.snackBar.open(err.error?.message || 'Erreur', 'Fermer', { duration: 3000, panelClass: 'error-snackbar' });
+        this.snackBar.open(err.error?.message || this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000, panelClass: 'error-snackbar' });
       }
     });
   }
 
   deleteUser(u: User) {
-    if (!confirm(`Supprimer l'utilisateur ${u.nom} ${u.prenom} ?`)) return;
+    if (!confirm(this.translate.instant('ADMIN.USERS.CONFIRM_DELETE', { name: `${u.nom} ${u.prenom}` }))) return;
     this.api.deleteUser(u.id).subscribe({
       next: () => {
         this.all = this.all.filter(x => x.id !== u.id);
         this.applyFilter();
-        this.snackBar.open('Supprimé', 'OK', { duration: 3000 });
+        this.snackBar.open(this.translate.instant('ADMIN.USERS.DELETED'), 'OK', { duration: 3000 });
         this.cdr.detectChanges();
       },
-      error: () => this.snackBar.open('Erreur', 'Fermer', { duration: 3000 })
+      error: () => this.snackBar.open(this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000 })
     });
   }
 
   resendEmail(u: User) {
     this.api.resendActivation(u.id).subscribe({
-      next: () => this.snackBar.open('Email renvoyé', 'OK', { duration: 3000, panelClass: 'success-snackbar' }),
-      error: () => this.snackBar.open('Erreur', 'Fermer', { duration: 3000 })
+      next: () => this.snackBar.open(this.translate.instant('ADMIN.USERS.EMAIL_RESENT'), 'OK', { duration: 3000, panelClass: 'success-snackbar' }),
+      error: () => this.snackBar.open(this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000 })
     });
   }
 
@@ -443,7 +445,7 @@ export class UsersComponent implements OnInit {
   updatePage() { const s = this.pageIndex * this.pageSize; this.paginated = this.filtered.slice(s, s + this.pageSize); }
 
   getRoleLabel(role: string): string {
-    return ROLE_LABELS[role as Role] || role;
+    return role ? this.translate.instant('ADMIN.USERS.ROLES.' + role) : role;
   }
 
   getAvatarColor(u: User): string {
