@@ -91,7 +91,68 @@
     "TAB_JUDICIAIRE": "الوضع القضائي",
     "TAB_SCOLAIRE": "الملف المدرسي",
     "TAB_ACCOMPAGNEMENT": "المرافقة",
-    "TAB_BESOIN": "الاحتياجات المعبر عنها"
+    "TAB_BESOIN": "الاحتياجات المعبر عنها",
+    "OPTIONS": {
+      "SITUATION_SCOLAIRE": {
+        "SCOLARISE": "متمدرس",
+        "DESCOLARISE": "منقطع عن الدراسة",
+        "ANALPHABETE": "أمي",
+        "ALPHABETISATION": "يدرس محو الأمية",
+        "ECOLE_CORANIQUE": "مدرسة قرآنية",
+        "FORMATION_PROFESSIONNELLE": "التكوين المهني",
+        "NON_SCOLARISE": "غير متمدرس",
+        "EDUCATION_NON_FORMELLE": "التربية غير النظامية",
+        "EN_FORMATION_PROFESSIONNELLE": "في التكوين المهني",
+        "DECROCHAGE_SCOLAIRE": "رسوب مدرسي"
+      },
+      "ETAT_SANTE_PSYCHIQUE": {
+        "AVEC_TROUBLES": "به اضطرابات نفسية",
+        "SANS_TROUBLES": "بدون اضطرابات نفسية"
+      },
+      "SITUATION_PROFESSIONNELLE": {
+        "ELEVE": "تلميذ",
+        "ETUDIANT": "طالب(ة)",
+        "FEMME_AU_FOYER": "ربة بيت",
+        "JOURNALIER": "مياوم(ة)",
+        "SANS": "بدون",
+        "SALARIE_PRIVE": "أجير(ة) بالقطاع الخاص",
+        "SALARIE_PUBLIC": "مستخدم(ة) بالقطاع العام",
+        "RETRAITE": "محال(ة) على المعاش"
+      },
+      "COUVERTURE_SOCIALE": {
+        "RAMED": "نظام المساعدة الطبية",
+        "SANS_COUVERTURE": "بدون تغطية صحية",
+        "AMO_CNSS": "التأمين الإجباري على المرض (الصندوق الوطني للضمان الاجتماعي)",
+        "AMO_CNOPS": "التأمين الإجباري على المرض (الصندوق الوطني لمنظمات الاحتياط الاجتماعي)",
+        "ASSURANCE_PRIVEE": "التأمين الخاص",
+        "MUTUELLE": "تعاضدية"
+      },
+      "REVENU_MENSUEL": {
+        "MOINS_500": "أقل من 500 درهم",
+        "DE_500_A_1000": "ما بين 500 درهم و 1000 درهم",
+        "DE_1000_A_1500": "ما بين 1000 درهم و 1500 درهم",
+        "DE_1500_A_2000": "ما بين 1500 درهم و 2000 درهم",
+        "PLUS_2000": "أكثر من 2000 درهم"
+      },
+      "ETAT_COMPORTEMENT": {
+        "AGITATION_MOTRICE": "التململ الحركي",
+        "IMPULSIVITE": "الاندفاع",
+        "AGRESSIVITE": "عدوانية",
+        "DESOBEISSANCE": "العصيان",
+        "INSTABILITE_EMOTIONNELLE": "عدم الاستقرار العاطفي"
+      },
+      "SITUATION_DIFFICULTE": {
+        "ENFANT_EN_SITUATION_DE_RUE": "طفل في وضعية الشارع",
+        "ENFANT_EN_SITUATION_DE_HANDICAP": "طفل في وضعية إعاقة",
+        "ENFANT_EN_CONFLIT_AVEC_LA_LOI": "طفل في نزاع مع القانون",
+        "ENFANT_VICTIME_DE_VIOLENCE": "طفل ضحية عنف",
+        "ENFANT_ABANDONNE": "طفل متخلى عنه",
+        "ENFANT_EN_SITUATION_DE_TRAVAIL": "طفل في وضعية عمل",
+        "FEMME_EN_SITUATION_DE_VIOLENCE": "امرأة في وضعية عنف",
+        "PERSONNE_AGEE": "شخص مسن",
+        "AUTRE": "آخر"
+      }
+    }
   },
   "PERSONNEL": {
     "TITLE": "الموظفون",
