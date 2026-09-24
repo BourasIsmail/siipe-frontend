@@ -175,3 +175,10 @@ export function buildSatelliteLabelsStyle(): StyleSpecification {
 
 export const ESRI_WORLD_IMAGERY_URL =
   'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+
+/**
+ * Esri World Street Map raster tiles. Labels/roads/place names are baked into the
+ * tiles themselves, so this is used on its own (no separate vector label overlay).
+ */
+export const ARCGIS_STREET_MAP_URL =
+  'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}';

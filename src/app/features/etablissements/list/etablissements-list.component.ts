@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/auth/auth.service';
 import { EtablissementCentre } from '../../../core/models/etablissement.model';
@@ -18,20 +19,20 @@ import { Province } from '../../../core/models/geo.model';
   imports: [
     CommonModule, RouterModule, FormsModule,
     MatCardModule, MatButtonModule, MatIconModule,
-    MatSnackBarModule, MatProgressSpinnerModule
+    MatSnackBarModule, MatProgressSpinnerModule, TranslateModule
   ],
   template: `
     <div class="page-header">
-      <h1>Établissements / Centres</h1>
+      <h1>{{ 'ETABLISSEMENT.TITLE' | translate }}</h1>
       <div class="flex gap-2">
         <button class="btn btn-excel" (click)="exportExcel()">
-          <mat-icon>table_view</mat-icon> Excel
+          <mat-icon>table_view</mat-icon> {{ 'COMMON.EXPORT_EXCEL' | translate }}
         </button>
         <button class="btn btn-pdf" (click)="exportPdf()">
-          <mat-icon>picture_as_pdf</mat-icon> PDF
+          <mat-icon>picture_as_pdf</mat-icon> {{ 'COMMON.EXPORT_PDF' | translate }}
         </button>
         <button class="btn btn-primary" routerLink="/etablissements/add" *ngIf="canEdit()">
-          <mat-icon>add</mat-icon> Ajouter
+          <mat-icon>add</mat-icon> {{ 'COMMON.ADD' | translate }}
         </button>
       </div>
     </div>
@@ -41,38 +42,38 @@ import { Province } from '../../../core/models/geo.model';
       <mat-card-content>
         <div class="filter-grid">
           <div class="field">
-            <label>Nom</label>
-            <input type="text" [(ngModel)]="filters.nom" (ngModelChange)="applyFilters()" placeholder="Rechercher par nom...">
+            <label>{{ 'ETABLISSEMENT.LIST.NOM' | translate }}</label>
+            <input type="text" [(ngModel)]="filters.nom" (ngModelChange)="applyFilters()" [placeholder]="'ETABLISSEMENT.LIST.SEARCH_PLACEHOLDER' | translate">
           </div>
           <div class="field">
-            <label>Province</label>
+            <label>{{ 'ETABLISSEMENT.PROVINCE' | translate }}</label>
             <select [(ngModel)]="filters.provinceId" (ngModelChange)="applyFilters()">
-              <option [ngValue]="null">Toutes</option>
+              <option [ngValue]="null">{{ 'ETABLISSEMENT.LIST.ALL_PROVINCES' | translate }}</option>
               <option *ngFor="let p of provinces" [ngValue]="p.id">{{ p.nomFr }}</option>
             </select>
           </div>
           <div class="field">
-            <label>Type de local</label>
+            <label>{{ 'ETABLISSEMENT.TYPE_LOCAL' | translate }}</label>
             <select [(ngModel)]="filters.typeLocal" (ngModelChange)="applyFilters()">
-              <option [ngValue]="null">Tous</option>
-              <option value="CENTRE_SOCIALE">Centre sociale</option>
-              <option value="DELEGATION">Délégation</option>
-              <option value="COORDINATION">Coordination</option>
-              <option value="DEPOT">Dépôt</option>
-              <option value="AUTRE">Autre</option>
+              <option [ngValue]="null">{{ 'COMMON.ALL' | translate }}</option>
+              <option value="CENTRE_SOCIALE">{{ 'ETABLISSEMENT.TYPES.CENTRE_SOCIALE' | translate }}</option>
+              <option value="DELEGATION">{{ 'ETABLISSEMENT.TYPES.DELEGATION' | translate }}</option>
+              <option value="COORDINATION">{{ 'ETABLISSEMENT.TYPES.COORDINATION' | translate }}</option>
+              <option value="DEPOT">{{ 'ETABLISSEMENT.TYPES.DEPOT' | translate }}</option>
+              <option value="AUTRE">{{ 'ETABLISSEMENT.TYPES.AUTRE' | translate }}</option>
             </select>
           </div>
           <div class="field">
-            <label>Milieu</label>
+            <label>{{ 'ETABLISSEMENT.MILIEU' | translate }}</label>
             <select [(ngModel)]="filters.milieu" (ngModelChange)="applyFilters()">
-              <option [ngValue]="null">Tous</option>
-              <option value="URBAIN">Urbain</option>
-              <option value="RURAL">Rural</option>
+              <option [ngValue]="null">{{ 'COMMON.ALL' | translate }}</option>
+              <option value="URBAIN">{{ 'ETABLISSEMENT.MILIEUX.URBAIN' | translate }}</option>
+              <option value="RURAL">{{ 'ETABLISSEMENT.MILIEUX.RURAL' | translate }}</option>
             </select>
           </div>
           <div class="field" style="justify-content:flex-end;padding-top:20px">
             <button class="btn btn-outline" (click)="resetFilters()">
-              <mat-icon>clear</mat-icon> Réinitialiser
+              <mat-icon>clear</mat-icon> {{ 'COMMON.RESET' | translate }}
             </button>
           </div>
         </div>
@@ -88,14 +89,14 @@ import { Province } from '../../../core/models/geo.model';
     <mat-card *ngIf="!loading">
       <mat-card-content>
         <div class="table-meta">
-          <span class="text-secondary">{{ filtered.length }} résultat(s)</span>
+          <span class="text-secondary">{{ filtered.length }} {{ 'ETABLISSEMENT.LIST.RESULTS' | translate }}</span>
           <div class="pagination-controls">
             <select [(ngModel)]="pageSize" (ngModelChange)="onPageSizeChange()" class="page-size-select">
               <option [value]="10">10</option>
               <option [value]="25">25</option>
               <option [value]="50">50</option>
             </select>
-            <span class="text-secondary">par page</span>
+            <span class="text-secondary">{{ 'ETABLISSEMENT.LIST.PER_PAGE' | translate }}</span>
           </div>
         </div>
 
@@ -103,14 +104,14 @@ import { Province } from '../../../core/models/geo.model';
           <table class="data-table">
             <thead>
               <tr>
-                <th>Nom</th>
-                <th>Code</th>
-                <th>Province</th>
-                <th>Type</th>
-                <th>Milieu</th>
-                <th>Capacité</th>
-                <th>Téléphone</th>
-                <th>Actions</th>
+                <th>{{ 'ETABLISSEMENT.LIST.NOM' | translate }}</th>
+                <th>{{ 'ETABLISSEMENT.CODE' | translate }}</th>
+                <th>{{ 'ETABLISSEMENT.PROVINCE' | translate }}</th>
+                <th>{{ 'ETABLISSEMENT.MAP.FILTER_TYPE' | translate }}</th>
+                <th>{{ 'ETABLISSEMENT.MILIEU' | translate }}</th>
+                <th>{{ 'ETABLISSEMENT.CAPACITE' | translate }}</th>
+                <th>{{ 'ETABLISSEMENT.TELEPHONE' | translate }}</th>
+                <th>{{ 'COMMON.ACTIONS' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -122,14 +123,14 @@ import { Province } from '../../../core/models/geo.model';
                 <td>{{ e.code || '-' }}</td>
                 <td>{{ e.provinceNom || '-' }}</td>
                 <td><span class="badge badge-blue">{{ formatType(e.typeLocal) }}</span></td>
-                <td><span class="badge" [class.badge-green]="e.milieu === 'URBAIN'" [class.badge-orange]="e.milieu === 'RURAL'">{{ e.milieu || '-' }}</span></td>
+                <td><span class="badge" [class.badge-green]="e.milieu === 'URBAIN'" [class.badge-orange]="e.milieu === 'RURAL'">{{ e.milieu ? ('ETABLISSEMENT.MILIEUX.' + e.milieu | translate) : '-' }}</span></td>
                 <td>{{ e.capaciteAccueil || '-' }}</td>
                 <td>{{ e.telephone || '-' }}</td>
                 <td class="actions">
-                  <a [routerLink]="['/etablissements', e.id]" class="action-btn" title="Voir">
+                  <a [routerLink]="['/etablissements', e.id]" class="action-btn" [title]="'COMMON.VIEW' | translate">
                     <mat-icon>visibility</mat-icon>
                   </a>
-                  <a [routerLink]="['/etablissements', e.id, 'edit']" class="action-btn edit" title="Modifier" *ngIf="canEdit()">
+                  <a [routerLink]="['/etablissements', e.id, 'edit']" class="action-btn edit" [title]="'COMMON.EDIT' | translate" *ngIf="canEdit()">
                     <mat-icon>edit</mat-icon>
                   </a>
                   <button class="action-btn delete" color="warn" (click)="delete(e)" *ngIf="canDelete()">
@@ -138,7 +139,7 @@ import { Province } from '../../../core/models/geo.model';
                 </td>
               </tr>
               <tr *ngIf="paginated.length === 0">
-                <td colspan="8" class="empty-row">Aucun établissement trouvé</td>
+                <td colspan="8" class="empty-row">{{ 'ETABLISSEMENT.LIST.EMPTY' | translate }}</td>
               </tr>
             </tbody>
           </table>
@@ -322,7 +323,8 @@ export class EtablissementsListComponent implements OnInit {
     private api: ApiService,
     private auth: AuthService,
     private snackBar: MatSnackBar,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -387,14 +389,14 @@ export class EtablissementsListComponent implements OnInit {
   }
 
   delete(e: EtablissementCentre) {
-    if (!confirm(`Supprimer "${e.nomFr}" ?`)) return;
+    if (!confirm(this.translate.instant('ETABLISSEMENT.LIST.CONFIRM_DELETE', { name: e.nomFr }))) return;
     this.api.deleteEtablissement(e.id).subscribe({
       next: () => {
         this.all = this.all.filter(x => x.id !== e.id);
         this.applyFilters();
-        this.snackBar.open('Supprimé', 'OK', { duration: 3000, panelClass: 'success-snackbar' });
+        this.snackBar.open(this.translate.instant('ETABLISSEMENT.LIST.DELETED'), 'OK', { duration: 3000, panelClass: 'success-snackbar' });
       },
-      error: () => this.snackBar.open('Erreur', 'Fermer', { duration: 3000, panelClass: 'error-snackbar' })
+      error: () => this.snackBar.open(this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000, panelClass: 'error-snackbar' })
     });
   }
 
@@ -414,11 +416,7 @@ export class EtablissementsListComponent implements OnInit {
   }
 
   formatType(type: string | undefined): string {
-    const map: Record<string, string> = {
-      CENTRE_SOCIALE: 'Centre sociale', DELEGATION: 'Délégation',
-      COORDINATION: 'Coordination', DEPOT: 'Dépôt', AUTRE: 'Autre'
-    };
-    return type ? (map[type] || type) : '-';
+    return type ? this.translate.instant('ETABLISSEMENT.TYPES.' + type) : '-';
   }
 
   isAdmin() { return this.auth.isAdmin(); }

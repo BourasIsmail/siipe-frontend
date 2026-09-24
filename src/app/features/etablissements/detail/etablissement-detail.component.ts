@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/auth/auth.service';
 import { EtablissementCentre } from '../../../core/models/etablissement.model';
@@ -17,7 +18,7 @@ import { Personnel } from '../../../core/models/personnel.model';
   imports: [
     CommonModule, RouterModule,
     MatCardModule, MatButtonModule, MatIconModule,
-    MatProgressSpinnerModule, MatSnackBarModule
+    MatProgressSpinnerModule, MatSnackBarModule, TranslateModule
   ],
   template: `
     <div *ngIf="loading" class="flex-center" style="height:300px">
@@ -39,10 +40,10 @@ import { Personnel } from '../../../core/models/personnel.model';
         </div>
         <div class="header-actions">
           <button class="btn btn-outline" routerLink="/etablissements">
-            <mat-icon>arrow_back</mat-icon> Retour
+            <mat-icon>arrow_back</mat-icon> {{ 'COMMON.BACK' | translate }}
           </button>
           <a class="btn btn-primary" [routerLink]="['/etablissements', etab.id, 'edit']" *ngIf="canEdit()">
-            <mat-icon>edit</mat-icon> Modifier
+            <mat-icon>edit</mat-icon> {{ 'COMMON.EDIT' | translate }}
           </a>
         </div>
       </div>
@@ -50,16 +51,16 @@ import { Personnel } from '../../../core/models/personnel.model';
       <!-- Tabs -->
       <div class="tabs">
         <button class="tab" [class.active]="activeTab === 'info'" (click)="activeTab = 'info'">
-          <mat-icon>info</mat-icon> Informations
+          <mat-icon>info</mat-icon> {{ 'ETABLISSEMENT.DETAIL.TAB_INFO' | translate }}
         </button>
         <button class="tab" [class.active]="activeTab === 'tech'" (click)="activeTab = 'tech'">
-          <mat-icon>engineering</mat-icon> Données techniques
+          <mat-icon>engineering</mat-icon> {{ 'ETABLISSEMENT.DETAIL.TAB_TECH' | translate }}
         </button>
         <button class="tab" [class.active]="activeTab === 'personnel'" (click)="loadPersonnel(); activeTab = 'personnel'">
-          <mat-icon>people</mat-icon> Personnel ({{ personnelCount }})
+          <mat-icon>people</mat-icon> {{ 'PERSONNEL.TITLE' | translate }} ({{ personnelCount }})
         </button>
         <button class="tab" [class.active]="activeTab === 'docs'" (click)="activeTab = 'docs'">
-          <mat-icon>folder</mat-icon> Documents
+          <mat-icon>folder</mat-icon> {{ 'ETABLISSEMENT.DETAIL.TAB_DOCS' | translate }}
         </button>
       </div>
 
@@ -68,32 +69,32 @@ import { Personnel } from '../../../core/models/personnel.model';
         <mat-card-content>
           <div class="info-grid">
             <div class="info-section">
-              <h3>Identification</h3>
-              <div class="info-row"><span>Code</span><strong>{{ etab.code || '-' }}</strong></div>
-              <div class="info-row"><span>Téléphone</span><strong>{{ etab.telephone || '-' }}</strong></div>
-              <div class="info-row"><span>Fax</span><strong>{{ etab.fax || '-' }}</strong></div>
-              <div class="info-row"><span>Adresse</span><strong>{{ etab.adresse || '-' }}</strong></div>
-              <div class="info-row"><span>Utilisation</span><strong>{{ etab.utilisation || '-' }}</strong></div>
+              <h3>{{ 'ETABLISSEMENT.DETAIL.SECTION_IDENTIFICATION' | translate }}</h3>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.CODE' | translate }}</span><strong>{{ etab.code || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.TELEPHONE' | translate }}</span><strong>{{ etab.telephone || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.FAX' | translate }}</span><strong>{{ etab.fax || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.ADRESSE' | translate }}</span><strong>{{ etab.adresse || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.UTILISATION' | translate }}</span><strong>{{ etab.utilisation || '-' }}</strong></div>
             </div>
 
             <div class="info-section">
-              <h3>Classification</h3>
-              <div class="info-row"><span>Milieu</span><strong>{{ etab.milieu || '-' }}</strong></div>
-              <div class="info-row"><span>Type de local</span><strong>{{ formatType(etab.typeLocal) }}</strong></div>
-              <div class="info-row"><span>Propriété</span><strong>{{ etab.proprietecentre || '-' }}</strong></div>
-              <div class="info-row"><span>Géré par</span><strong>{{ etab.gererPar || '-' }}</strong></div>
+              <h3>{{ 'ETABLISSEMENT.DETAIL.SECTION_CLASSIFICATION' | translate }}</h3>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.MILIEU' | translate }}</span><strong>{{ etab.milieu ? ('ETABLISSEMENT.MILIEUX.' + etab.milieu | translate) : '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.TYPE_LOCAL' | translate }}</span><strong>{{ formatType(etab.typeLocal) }}</strong></div>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.DETAIL.PROPRIETE' | translate }}</span><strong>{{ etab.proprietecentre || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.DETAIL.GERE_PAR' | translate }}</span><strong>{{ etab.gererPar || '-' }}</strong></div>
             </div>
 
             <div class="info-section">
-              <h3>Localisation</h3>
-              <div class="info-row"><span>Province</span><strong>{{ etab.provinceNom || '-' }}</strong></div>
-              <div class="info-row"><span>Région</span><strong>{{ etab.regionNom || '-' }}</strong></div>
-              <div class="info-row"><span>Latitude</span><strong>{{ etab.latitude || '-' }}</strong></div>
-              <div class="info-row"><span>Longitude</span><strong>{{ etab.longitude || '-' }}</strong></div>
+              <h3>{{ 'ETABLISSEMENT.DETAIL.SECTION_LOCALISATION' | translate }}</h3>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.PROVINCE' | translate }}</span><strong>{{ etab.provinceNom || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.DETAIL.REGION' | translate }}</span><strong>{{ etab.regionNom || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.LATITUDE' | translate }}</span><strong>{{ etab.latitude || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.LONGITUDE' | translate }}</span><strong>{{ etab.longitude || '-' }}</strong></div>
             </div>
 
             <div class="info-section" *ngIf="etab.programmes?.length">
-              <h3>Programmes</h3>
+              <h3>{{ 'MENU.PROGRAMMES' | translate }}</h3>
               <div class="tags">
                 <span class="tag" *ngFor="let p of etab.programmes">{{ p.nomFr }}</span>
               </div>
@@ -102,10 +103,10 @@ import { Personnel } from '../../../core/models/personnel.model';
 
           <!-- Map preview if coordinates exist -->
           <div *ngIf="etab.latitude && etab.longitude" class="map-preview">
-            <h3>Position</h3>
+            <h3>{{ 'ETABLISSEMENT.DETAIL.POSITION' | translate }}</h3>
             <a [href]="'https://maps.google.com/?q=' + etab.latitude + ',' + etab.longitude"
                target="_blank" class="btn btn-outline">
-              <mat-icon>map</mat-icon> Voir sur Google Maps
+              <mat-icon>map</mat-icon> {{ 'ETABLISSEMENT.DETAIL.VIEW_ON_GOOGLE_MAPS' | translate }}
             </a>
           </div>
         </mat-card-content>
@@ -116,50 +117,50 @@ import { Personnel } from '../../../core/models/personnel.model';
         <mat-card-content>
           <div class="info-grid">
             <div class="info-section">
-              <h3>Superficie & Capacité</h3>
-              <div class="info-row"><span>Superficie terrain</span><strong>{{ etab.superficieTerrain ? etab.superficieTerrain + ' m²' : '-' }}</strong></div>
-              <div class="info-row"><span>Surface bâtie</span><strong>{{ etab.surfaceBatie ? etab.surfaceBatie + ' m²' : '-' }}</strong></div>
-              <div class="info-row"><span>Nombre d'étages</span><strong>{{ etab.nombreEtage ?? '-' }}</strong></div>
-              <div class="info-row"><span>Capacité d'accueil</span><strong>{{ etab.capaciteAccueil ?? '-' }}</strong></div>
+              <h3>{{ 'ETABLISSEMENT.DETAIL.SECTION_SUPERFICIE' | translate }}</h3>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.DETAIL.SUPERFICIE_TERRAIN' | translate }}</span><strong>{{ etab.superficieTerrain ? etab.superficieTerrain + ' m²' : '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.DETAIL.SURFACE_BATIE' | translate }}</span><strong>{{ etab.surfaceBatie ? etab.surfaceBatie + ' m²' : '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.DETAIL.NOMBRE_ETAGES' | translate }}</span><strong>{{ etab.nombreEtage ?? '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.CAPACITE' | translate }}</span><strong>{{ etab.capaciteAccueil ?? '-' }}</strong></div>
             </div>
 
             <div class="info-section">
-              <h3>Construction</h3>
-              <div class="info-row"><span>Date de construction</span><strong>{{ etab.dateConstruction || '-' }}</strong></div>
-              <div class="info-row"><span>Date d'exploitation</span><strong>{{ etab.dateExploitation || '-' }}</strong></div>
-              <div class="info-row"><span>État</span><strong>{{ etab.etatConstruction || '-' }}</strong></div>
+              <h3>{{ 'ETABLISSEMENT.DETAIL.SECTION_CONSTRUCTION' | translate }}</h3>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.DETAIL.DATE_CONSTRUCTION' | translate }}</span><strong>{{ etab.dateConstruction || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.DETAIL.DATE_EXPLOITATION' | translate }}</span><strong>{{ etab.dateExploitation || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.DETAIL.ETAT' | translate }}</span><strong>{{ etab.etatConstruction || '-' }}</strong></div>
             </div>
 
             <div class="info-section">
-              <h3>Loyer & Foncier</h3>
-              <div class="info-row"><span>Numéro de titre</span><strong>{{ etab.numerotitre || '-' }}</strong></div>
-              <div class="info-row"><span>Loyer</span><strong>{{ etab.loyer ? 'Oui' : 'Non' }}</strong></div>
-              <div class="info-row" *ngIf="etab.loyer"><span>Montant loyer</span><strong>{{ etab.montantLoyer ? etab.montantLoyer + ' MAD/mois' : '-' }}</strong></div>
-              <div class="info-row" *ngIf="etab.loyer"><span>Payé par</span><strong>{{ etab.paieLoyer || '-' }}</strong></div>
+              <h3>{{ 'ETABLISSEMENT.DETAIL.SECTION_LOYER' | translate }}</h3>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.DETAIL.NUMERO_TITRE' | translate }}</span><strong>{{ etab.numerotitre || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'ETABLISSEMENT.DETAIL.LOYER' | translate }}</span><strong>{{ (etab.loyer ? 'COMMON.YES' : 'COMMON.NO') | translate }}</strong></div>
+              <div class="info-row" *ngIf="etab.loyer"><span>{{ 'ETABLISSEMENT.DETAIL.MONTANT_LOYER' | translate }}</span><strong>{{ etab.montantLoyer ? etab.montantLoyer + ' MAD/mois' : '-' }}</strong></div>
+              <div class="info-row" *ngIf="etab.loyer"><span>{{ 'ETABLISSEMENT.DETAIL.PAYE_PAR' | translate }}</span><strong>{{ etab.paieLoyer || '-' }}</strong></div>
             </div>
 
             <div class="info-section">
-              <h3>Équipements</h3>
+              <h3>{{ 'ETABLISSEMENT.DETAIL.SECTION_EQUIPEMENTS' | translate }}</h3>
               <div class="info-row">
-                <span>Eau potable</span>
+                <span>{{ 'ETABLISSEMENT.DETAIL.EAU_POTABLE' | translate }}</span>
                 <strong class="bool-val" [class.yes]="etab.raccordementEauPotable">
-                  {{ etab.raccordementEauPotable ? '✓ Oui' : '✗ Non' }}
+                  {{ etab.raccordementEauPotable ? '✓ ' : '✗ ' }}{{ (etab.raccordementEauPotable ? 'COMMON.YES' : 'COMMON.NO') | translate }}
                 </strong>
               </div>
               <div class="info-row">
-                <span>Électricité</span>
+                <span>{{ 'ETABLISSEMENT.DETAIL.ELECTRICITE' | translate }}</span>
                 <strong class="bool-val" [class.yes]="etab.raccordementElectricite">
-                  {{ etab.raccordementElectricite ? '✓ Oui' : '✗ Non' }}
+                  {{ etab.raccordementElectricite ? '✓ ' : '✗ ' }}{{ (etab.raccordementElectricite ? 'COMMON.YES' : 'COMMON.NO') | translate }}
                 </strong>
               </div>
               <div class="info-row">
-                <span>Autorisé</span>
+                <span>{{ 'ETABLISSEMENT.DETAIL.AUTORISE' | translate }}</span>
                 <strong class="bool-val" [class.yes]="etab.autorise">
-                  {{ etab.autorise ? '✓ Oui' : '✗ Non' }}
+                  {{ etab.autorise ? '✓ ' : '✗ ' }}{{ (etab.autorise ? 'COMMON.YES' : 'COMMON.NO') | translate }}
                 </strong>
               </div>
               <div class="info-row" *ngIf="etab.autorise">
-                <span>N° autorisation</span>
+                <span>{{ 'ETABLISSEMENT.DETAIL.NUMERO_AUTORISATION' | translate }}</span>
                 <strong>{{ etab.numeroAutorisation || '-' }}</strong>
               </div>
             </div>
@@ -175,19 +176,19 @@ import { Personnel } from '../../../core/models/personnel.model';
           </div>
           <div *ngIf="!loadingPersonnel">
             <div class="tab-header">
-              <span class="text-secondary">{{ personnel.length }} agent(s)</span>
+              <span class="text-secondary">{{ personnel.length }} {{ 'ETABLISSEMENT.DETAIL.AGENTS_COUNT' | translate }}</span>
               <a class="btn btn-primary btn-sm" routerLink="/personnel/add" *ngIf="canEdit()">
-                <mat-icon>person_add</mat-icon> Ajouter
+                <mat-icon>person_add</mat-icon> {{ 'COMMON.ADD' | translate }}
               </a>
             </div>
             <table class="data-table" *ngIf="personnel.length > 0">
               <thead>
                 <tr>
-                  <th>Nom</th>
-                  <th>Matricule</th>
-                  <th>Grade</th>
-                  <th>Fonction</th>
-                  <th>Actions</th>
+                  <th>{{ 'PERSONNEL.NOM' | translate }}</th>
+                  <th>{{ 'PERSONNEL.MATRICULE' | translate }}</th>
+                  <th>{{ 'PERSONNEL.GRADE' | translate }}</th>
+                  <th>{{ 'PERSONNEL.FONCTION' | translate }}</th>
+                  <th>{{ 'COMMON.ACTIONS' | translate }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -208,7 +209,7 @@ import { Personnel } from '../../../core/models/personnel.model';
             </table>
             <div *ngIf="personnel.length === 0" class="empty-state">
               <mat-icon>people_outline</mat-icon>
-              <p>Aucun personnel dans cet établissement</p>
+              <p>{{ 'ETABLISSEMENT.DETAIL.NO_PERSONNEL' | translate }}</p>
             </div>
           </div>
         </mat-card-content>
@@ -223,11 +224,11 @@ import { Personnel } from '../../../core/models/personnel.model';
                 <mat-icon>description</mat-icon>
               </div>
               <div class="doc-info">
-                <div class="doc-name">{{ doc.label }}</div>
+                <div class="doc-name">{{ doc.label | translate }}</div>
                 <div *ngIf="doc.url">
-                  <a [href]="getFileUrl(doc.url)" target="_blank" class="doc-link">Voir le fichier</a>
+                  <a [href]="getFileUrl(doc.url)" target="_blank" class="doc-link">{{ 'ETABLISSEMENT.DETAIL.VIEW_FILE' | translate }}</a>
                 </div>
-                <div *ngIf="!doc.url" class="text-secondary" style="font-size:12px">Non disponible</div>
+                <div *ngIf="!doc.url" class="text-secondary" style="font-size:12px">{{ 'ETABLISSEMENT.DETAIL.NOT_AVAILABLE' | translate }}</div>
               </div>
               <div class="doc-upload" *ngIf="canEdit()">
                 <label class="upload-btn">
@@ -242,8 +243,8 @@ import { Personnel } from '../../../core/models/personnel.model';
 
       <!-- Audit info -->
       <div class="audit-info">
-        <span>Créé par {{ etab.createdBy }} le {{ etab.createdAt | date:'dd/MM/yyyy' }}</span>
-        <span *ngIf="etab.updatedAt"> — Modifié le {{ etab.updatedAt | date:'dd/MM/yyyy' }}</span>
+        <span>{{ 'ETABLISSEMENT.DETAIL.CREATED_BY' | translate: { name: etab.createdBy, date: (etab.createdAt | date:'dd/MM/yyyy') } }}</span>
+        <span *ngIf="etab.updatedAt"> — {{ 'ETABLISSEMENT.DETAIL.UPDATED_AT' | translate: { date: (etab.updatedAt | date:'dd/MM/yyyy') } }}</span>
       </div>
     </ng-container>
   `,
@@ -378,11 +379,11 @@ export class EtablissementDetailComponent implements OnInit {
   personnelCount = 0;
 
   documents = [
-    { label: 'Mappe cadastrale', type: 'mappeCadastrale', url: '' },
-    { label: 'Certificat de propriété', type: 'certificatPropriete', url: '' },
-    { label: 'Plan de situation', type: 'planSituation', url: '' },
-    { label: 'Plan d\'architecture', type: 'planArchitecture', url: '' },
-    { label: 'Photo', type: 'photo', url: '' },
+    { label: 'ETABLISSEMENT.DETAIL.DOC_MAPPE_CADASTRALE', type: 'mappeCadastrale', url: '' },
+    { label: 'ETABLISSEMENT.DETAIL.DOC_CERTIFICAT_PROPRIETE', type: 'certificatPropriete', url: '' },
+    { label: 'ETABLISSEMENT.DETAIL.DOC_PLAN_SITUATION', type: 'planSituation', url: '' },
+    { label: 'ETABLISSEMENT.DETAIL.DOC_PLAN_ARCHITECTURE', type: 'planArchitecture', url: '' },
+    { label: 'ETABLISSEMENT.DETAIL.DOC_PHOTO', type: 'photo', url: '' },
   ];
 
   constructor(
@@ -390,7 +391,8 @@ export class EtablissementDetailComponent implements OnInit {
     private auth: AuthService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -437,10 +439,10 @@ export class EtablissementDetailComponent implements OnInit {
         this.documents = this.documents.map(d => ({
           ...d, url: (e as any)[d.type + 'Url'] || ''
         }));
-        this.snackBar.open('Fichier uploadé', 'OK', { duration: 3000, panelClass: 'success-snackbar' });
+        this.snackBar.open(this.translate.instant('ETABLISSEMENT.DETAIL.FILE_UPLOADED'), 'OK', { duration: 3000, panelClass: 'success-snackbar' });
         this.cdr.detectChanges();
       },
-      error: () => this.snackBar.open('Erreur upload', 'Fermer', { duration: 3000, panelClass: 'error-snackbar' })
+      error: () => this.snackBar.open(this.translate.instant('ETABLISSEMENT.DETAIL.UPLOAD_ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000, panelClass: 'error-snackbar' })
     });
   }
 
@@ -449,11 +451,7 @@ export class EtablissementDetailComponent implements OnInit {
   }
 
   formatType(type: string | undefined): string {
-    const map: Record<string, string> = {
-      CENTRE_SOCIALE: 'Centre sociale', DELEGATION: 'Délégation',
-      COORDINATION: 'Coordination', DEPOT: 'Dépôt', AUTRE: 'Autre'
-    };
-    return type ? (map[type] || type) : '-';
+    return type ? this.translate.instant('ETABLISSEMENT.TYPES.' + type) : '-';
   }
 
   formatEnum(val: string | undefined): string {
