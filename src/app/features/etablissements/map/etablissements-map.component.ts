@@ -6,10 +6,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import * as L from 'leaflet';
+import '@maplibre/maplibre-gl-leaflet';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api.service';
 import { EtablissementCentre } from '../../../core/models/etablissement.model';
-import { ARCGIS_STREET_MAP_URL } from '../../../shared/map/satellite-labels-style';
+import { buildSatelliteLabelsStyle, ESRI_WORLD_IMAGERY_URL } from '../../../shared/map/satellite-labels-style';
 
 @Component({
   selector: 'app-etablissements-map',
@@ -224,9 +225,14 @@ export class EtablissementsMapComponent implements OnInit, AfterViewInit {
 
     this.map = L.map('main-map', { zoomControl: true }).setView([31.7917, -7.0926], 6);
 
-    L.tileLayer(ARCGIS_STREET_MAP_URL, {
-      attribution: 'Tiles © Esri',
+    L.tileLayer(ESRI_WORLD_IMAGERY_URL, {
+      attribution: 'Imagery © Esri',
       maxZoom: 19
+    }).addTo(this.map);
+
+    L.maplibreGL({
+      style: buildSatelliteLabelsStyle(),
+      interactive: false
     }).addTo(this.map);
 
     this.markersLayer = L.layerGroup().addTo(this.map);
@@ -242,6 +248,11 @@ export class EtablissementsMapComponent implements OnInit, AfterViewInit {
           <div><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png" height="16" style="vertical-align:middle;margin-right:6px"> ${this.translate.instant('ETABLISSEMENT.TYPES.DELEGATION')}</div>
           <div><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png" height="16" style="vertical-align:middle;margin-right:6px"> ${this.translate.instant('ETABLISSEMENT.TYPES.COORDINATION')}</div>
           <div><img src="https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png" height="16" style="vertical-align:middle;margin-right:6px"> ${this.translate.instant('ETABLISSEMENT.TYPES.AUTRE')}</div>
+          <hr style="margin:8px 0;border:none;border-top:1px solid #eee">
+          <div><span style="display:inline-block;width:16px;height:2px;background:#fff;margin-right:6px;vertical-align:middle"></span> ${this.translate.instant('ETABLISSEMENT.MAP.LEGEND_BORDER')}</div>
+          <div><span style="display:inline-block;width:16px;height:2px;background:repeating-linear-gradient(90deg,#ffd54f 0 3px,transparent 3px 5px);margin-right:6px;vertical-align:middle"></span> ${this.translate.instant('ETABLISSEMENT.MAP.LEGEND_REGION')}</div>
+          <div><span style="display:inline-block;width:16px;height:2px;background:repeating-linear-gradient(90deg,#f5f5f5 0 1px,transparent 1px 3px);margin-right:6px;vertical-align:middle"></span> ${this.translate.instant('ETABLISSEMENT.MAP.LEGEND_PROVINCE')}</div>
+          <div><span style="display:inline-block;width:16px;height:3px;background:#ffb300;margin-right:6px;vertical-align:middle"></span> ${this.translate.instant('ETABLISSEMENT.MAP.LEGEND_ROAD')}</div>
         </div>
       `;
       return div;
