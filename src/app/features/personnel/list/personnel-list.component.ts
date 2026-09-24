@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/auth/auth.service';
 import { Personnel } from '../../../core/models/personnel.model';
@@ -18,20 +19,20 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
   imports: [
     CommonModule, RouterModule, FormsModule,
     MatCardModule, MatButtonModule, MatIconModule,
-    MatSnackBarModule, MatProgressSpinnerModule
+    MatSnackBarModule, MatProgressSpinnerModule, TranslateModule
   ],
   template: `
     <div class="page-header">
-      <h1>Gestion du Personnel</h1>
+      <h1>{{ 'PERSONNEL.LIST.TITLE' | translate }}</h1>
       <div class="flex gap-2">
         <button class="btn btn-excel" (click)="exportExcel()">
-          <mat-icon>table_view</mat-icon> Excel
+          <mat-icon>table_view</mat-icon> {{ 'COMMON.EXPORT_EXCEL' | translate }}
         </button>
         <button class="btn btn-pdf" (click)="exportPdf()">
-          <mat-icon>picture_as_pdf</mat-icon> PDF
+          <mat-icon>picture_as_pdf</mat-icon> {{ 'COMMON.EXPORT_PDF' | translate }}
         </button>
         <a class="btn btn-primary" routerLink="/personnel/add" *ngIf="canEdit()">
-          <mat-icon>person_add</mat-icon> Ajouter
+          <mat-icon>person_add</mat-icon> {{ 'COMMON.ADD' | translate }}
         </a>
       </div>
     </div>
@@ -41,60 +42,60 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
       <mat-card-content>
         <div class="filter-grid">
           <div class="field">
-            <label>Nom / Prénom</label>
-            <input type="text" [(ngModel)]="filters.nom" (ngModelChange)="applyFilters()" placeholder="Rechercher...">
+            <label>{{ 'PERSONNEL.LIST.NOM_PRENOM' | translate }}</label>
+            <input type="text" [(ngModel)]="filters.nom" (ngModelChange)="applyFilters()" [placeholder]="'PERSONNEL.LIST.SEARCH_PLACEHOLDER' | translate">
           </div>
           <div class="field">
-            <label>Matricule</label>
-            <input type="text" [(ngModel)]="filters.matricule" (ngModelChange)="applyFilters()" placeholder="Matricule...">
+            <label>{{ 'PERSONNEL.MATRICULE' | translate }}</label>
+            <input type="text" [(ngModel)]="filters.matricule" (ngModelChange)="applyFilters()" [placeholder]="'PERSONNEL.LIST.MATRICULE_PLACEHOLDER' | translate">
           </div>
           <div class="field">
-            <label>Établissement</label>
+            <label>{{ 'PERSONNEL.ETABLISSEMENT' | translate }}</label>
             <select [(ngModel)]="filters.etablissementId" (ngModelChange)="applyFilters()">
-              <option [ngValue]="null">Tous</option>
+              <option [ngValue]="null">{{ 'COMMON.ALL' | translate }}</option>
               <option *ngFor="let e of etablissements" [ngValue]="e.id">{{ e.nomFr }}</option>
             </select>
           </div>
           <div class="field">
-            <label>Grade</label>
+            <label>{{ 'PERSONNEL.GRADE' | translate }}</label>
             <select [(ngModel)]="filters.grade" (ngModelChange)="applyFilters()">
-              <option value="">Tous</option>
-              <option value="ADMINISTRATEUR_1ER_GRADE">Administrateur 1er grade</option>
-              <option value="ADMINISTRATEUR_2EME_GRADE">Administrateur 2ème grade</option>
-              <option value="ADMINISTRATEUR_3EME_GRADE">Administrateur 3ème grade</option>
-              <option value="REDACTEUR_1ER_GRADE">Rédacteur 1er grade</option>
-              <option value="REDACTEUR_2EME_GRADE">Rédacteur 2ème grade</option>
-              <option value="REDACTEUR_3EME_GRADE">Rédacteur 3ème grade</option>
-              <option value="TECHNICIEN_PREMIER_GRADE">Technicien 1er grade</option>
-              <option value="TECHNICIEN_DEUXIEME_GRADE">Technicien 2ème grade</option>
-              <option value="TECHNICIEN_TROISIEME_GRADE">Technicien 3ème grade</option>
-              <option value="ADJOINT_ADMINISTRATIF_1ER_GRADE">Adjoint admin 1er grade</option>
-              <option value="ADJOINT_TECHNIQUE_1ER_GRADE">Adjoint technique 1er grade</option>
-              <option value="AGENTS_A_CONTRAT">Agents à contrat</option>
+              <option value="">{{ 'COMMON.ALL' | translate }}</option>
+              <option value="ADMINISTRATEUR_1ER_GRADE">{{ 'PERSONNEL.LIST.GRADES.ADMINISTRATEUR_1ER_GRADE' | translate }}</option>
+              <option value="ADMINISTRATEUR_2EME_GRADE">{{ 'PERSONNEL.LIST.GRADES.ADMINISTRATEUR_2EME_GRADE' | translate }}</option>
+              <option value="ADMINISTRATEUR_3EME_GRADE">{{ 'PERSONNEL.LIST.GRADES.ADMINISTRATEUR_3EME_GRADE' | translate }}</option>
+              <option value="REDACTEUR_1ER_GRADE">{{ 'PERSONNEL.LIST.GRADES.REDACTEUR_1ER_GRADE' | translate }}</option>
+              <option value="REDACTEUR_2EME_GRADE">{{ 'PERSONNEL.LIST.GRADES.REDACTEUR_2EME_GRADE' | translate }}</option>
+              <option value="REDACTEUR_3EME_GRADE">{{ 'PERSONNEL.LIST.GRADES.REDACTEUR_3EME_GRADE' | translate }}</option>
+              <option value="TECHNICIEN_PREMIER_GRADE">{{ 'PERSONNEL.LIST.GRADES.TECHNICIEN_PREMIER_GRADE' | translate }}</option>
+              <option value="TECHNICIEN_DEUXIEME_GRADE">{{ 'PERSONNEL.LIST.GRADES.TECHNICIEN_DEUXIEME_GRADE' | translate }}</option>
+              <option value="TECHNICIEN_TROISIEME_GRADE">{{ 'PERSONNEL.LIST.GRADES.TECHNICIEN_TROISIEME_GRADE' | translate }}</option>
+              <option value="ADJOINT_ADMINISTRATIF_1ER_GRADE">{{ 'PERSONNEL.LIST.GRADES.ADJOINT_ADMINISTRATIF_1ER_GRADE' | translate }}</option>
+              <option value="ADJOINT_TECHNIQUE_1ER_GRADE">{{ 'PERSONNEL.LIST.GRADES.ADJOINT_TECHNIQUE_1ER_GRADE' | translate }}</option>
+              <option value="AGENTS_A_CONTRAT">{{ 'PERSONNEL.LIST.GRADES.AGENTS_A_CONTRAT' | translate }}</option>
             </select>
           </div>
           <div class="field">
-            <label>Fonction</label>
+            <label>{{ 'PERSONNEL.FONCTION' | translate }}</label>
             <select [(ngModel)]="filters.fonction" (ngModelChange)="applyFilters()">
-              <option value="">Toutes</option>
-              <option value="DIRECTEUR">Directeur</option>
-              <option value="DIRECTEUR_DU_CENTRE">Directeur du centre</option>
-              <option value="DIRECTEUR_PROVINCIAL">Directeur provincial</option>
-              <option value="DIRECTEUR_REGIONAL">Directeur régional</option>
-              <option value="CHEF_DE_SERVICE">Chef de service</option>
-              <option value="CHEF_DE_DIVISION">Chef de division</option>
-              <option value="SOUS_DIRECTEUR">Sous directeur</option>
-              <option value="ASSISTANT_SOCIAL">Assistant social</option>
-              <option value="MEDECIN">Médecin</option>
-              <option value="INFIRMIER">Infirmier</option>
-              <option value="PSYCHOLOGUE">Psychologue</option>
-              <option value="EDUCATEUR">Éducateur</option>
-              <option value="FORMATEUR">Formateur</option>
+              <option value="">{{ 'COMMON.ALL' | translate }}</option>
+              <option value="DIRECTEUR">{{ 'PERSONNEL.LIST.FONCTIONS.DIRECTEUR' | translate }}</option>
+              <option value="DIRECTEUR_DU_CENTRE">{{ 'PERSONNEL.LIST.FONCTIONS.DIRECTEUR_DU_CENTRE' | translate }}</option>
+              <option value="DIRECTEUR_PROVINCIAL">{{ 'PERSONNEL.LIST.FONCTIONS.DIRECTEUR_PROVINCIAL' | translate }}</option>
+              <option value="DIRECTEUR_REGIONAL">{{ 'PERSONNEL.LIST.FONCTIONS.DIRECTEUR_REGIONAL' | translate }}</option>
+              <option value="CHEF_DE_SERVICE">{{ 'PERSONNEL.LIST.FONCTIONS.CHEF_DE_SERVICE' | translate }}</option>
+              <option value="CHEF_DE_DIVISION">{{ 'PERSONNEL.LIST.FONCTIONS.CHEF_DE_DIVISION' | translate }}</option>
+              <option value="SOUS_DIRECTEUR">{{ 'PERSONNEL.LIST.FONCTIONS.SOUS_DIRECTEUR' | translate }}</option>
+              <option value="ASSISTANT_SOCIAL">{{ 'PERSONNEL.LIST.FONCTIONS.ASSISTANT_SOCIAL' | translate }}</option>
+              <option value="MEDECIN">{{ 'PERSONNEL.LIST.FONCTIONS.MEDECIN' | translate }}</option>
+              <option value="INFIRMIER">{{ 'PERSONNEL.LIST.FONCTIONS.INFIRMIER' | translate }}</option>
+              <option value="PSYCHOLOGUE">{{ 'PERSONNEL.LIST.FONCTIONS.PSYCHOLOGUE' | translate }}</option>
+              <option value="EDUCATEUR">{{ 'PERSONNEL.LIST.FONCTIONS.EDUCATEUR' | translate }}</option>
+              <option value="FORMATEUR">{{ 'PERSONNEL.LIST.FONCTIONS.FORMATEUR' | translate }}</option>
             </select>
           </div>
           <div class="field" style="justify-content:flex-end;padding-top:20px">
             <button class="btn btn-outline" (click)="resetFilters()">
-              <mat-icon>clear</mat-icon> Réinitialiser
+              <mat-icon>clear</mat-icon> {{ 'COMMON.RESET' | translate }}
             </button>
           </div>
         </div>
@@ -110,14 +111,14 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
     <mat-card *ngIf="!loading">
       <mat-card-content>
         <div class="table-meta">
-          <span class="text-secondary">{{ filtered.length }} agent(s)</span>
+          <span class="text-secondary">{{ filtered.length }} {{ 'PERSONNEL.LIST.AGENTS_COUNT' | translate }}</span>
           <div class="pagination-controls">
             <select [(ngModel)]="pageSize" (ngModelChange)="onPageSizeChange()" class="page-size-select">
               <option [value]="10">10</option>
               <option [value]="25">25</option>
               <option [value]="50">50</option>
             </select>
-            <span class="text-secondary">par page</span>
+            <span class="text-secondary">{{ 'PERSONNEL.LIST.PER_PAGE' | translate }}</span>
           </div>
         </div>
 
@@ -125,14 +126,14 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
           <table class="data-table">
             <thead>
               <tr>
-                <th>Nom / Prénom</th>
-                <th>Matricule</th>
-                <th>Sexe</th>
-                <th>Grade</th>
-                <th>Fonction</th>
-                <th>Établissement</th>
-                <th>Date recrutement</th>
-                <th>Actions</th>
+                <th>{{ 'PERSONNEL.LIST.NOM_PRENOM' | translate }}</th>
+                <th>{{ 'PERSONNEL.MATRICULE' | translate }}</th>
+                <th>{{ 'PERSONNEL.LIST.SEXE' | translate }}</th>
+                <th>{{ 'PERSONNEL.GRADE' | translate }}</th>
+                <th>{{ 'PERSONNEL.FONCTION' | translate }}</th>
+                <th>{{ 'PERSONNEL.ETABLISSEMENT' | translate }}</th>
+                <th>{{ 'PERSONNEL.DATE_RECRUTEMENT' | translate }}</th>
+                <th>{{ 'COMMON.ACTIONS' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -150,27 +151,27 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
                 </td>
                 <td><span class="badge badge-gray">{{ p.matricule }}</span></td>
                 <td>{{ p.sexe === 'MASCULIN' ? 'M' : p.sexe === 'FEMININ' ? 'F' : '-' }}</td>
-                <td>{{ formatEnum(p.grade) }}</td>
-                <td>{{ formatEnum(p.fonction) }}</td>
+                <td>{{ formatEnum(p.grade, 'GRADES') }}</td>
+                <td>{{ formatEnum(p.fonction, 'FONCTIONS') }}</td>
                 <td>{{ p.etablissementCentreNom || '-' }}</td>
                 <td>{{ p.dateRecrutement ? (p.dateRecrutement | date:'dd/MM/yyyy') : '-' }}</td>
                 <td class="actions">
-                  <a [routerLink]="['/personnel', p.id]" class="action-btn" title="Voir">
+                  <a [routerLink]="['/personnel', p.id]" class="action-btn" [title]="'COMMON.VIEW' | translate">
                     <mat-icon>visibility</mat-icon>
                   </a>
-                  <a [routerLink]="['/personnel', p.id, 'evaluation']" class="action-btn" title="Évaluation" style="color:#1565c0">
+                  <a [routerLink]="['/personnel', p.id, 'evaluation']" class="action-btn" [title]="'PERSONNEL.LIST.EVALUATION_TOOLTIP' | translate" style="color:#1565c0">
                     <mat-icon>assignment</mat-icon>
                   </a>
-                  <a [routerLink]="['/personnel', p.id, 'edit']" class="action-btn edit" title="Modifier" *ngIf="canEdit()">
+                  <a [routerLink]="['/personnel', p.id, 'edit']" class="action-btn edit" [title]="'COMMON.EDIT' | translate" *ngIf="canEdit()">
                     <mat-icon>edit</mat-icon>
                   </a>
-                  <button class="action-btn delete" (click)="delete(p)" title="Supprimer" *ngIf="isAdmin()">
+                  <button class="action-btn delete" (click)="delete(p)" [title]="'COMMON.DELETE' | translate" *ngIf="isAdmin()">
                     <mat-icon>delete</mat-icon>
                   </button>
                 </td>
               </tr>
               <tr *ngIf="paginated.length === 0">
-                <td colspan="8" class="empty-row">Aucun personnel trouvé</td>
+                <td colspan="8" class="empty-row">{{ 'PERSONNEL.LIST.EMPTY' | translate }}</td>
               </tr>
             </tbody>
           </table>
@@ -293,7 +294,8 @@ export class PersonnelListComponent implements OnInit {
     private api: ApiService,
     private auth: AuthService,
     private snackBar: MatSnackBar,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -352,14 +354,14 @@ export class PersonnelListComponent implements OnInit {
   }
 
   delete(p: Personnel) {
-    if (!confirm(`Supprimer ${p.nom} ${p.prenom} ?`)) return;
+    if (!confirm(this.translate.instant('PERSONNEL.LIST.CONFIRM_DELETE', { name: `${p.nom} ${p.prenom}` }))) return;
     this.api.deletePersonnel(p.id).subscribe({
       next: () => {
         this.all = this.all.filter(x => x.id !== p.id);
         this.applyFilters();
-        this.snackBar.open('Personnel supprimé', 'OK', { duration: 3000, panelClass: 'success-snackbar' });
+        this.snackBar.open(this.translate.instant('PERSONNEL.LIST.DELETED'), 'OK', { duration: 3000, panelClass: 'success-snackbar' });
       },
-      error: () => this.snackBar.open('Erreur', 'Fermer', { duration: 3000, panelClass: 'error-snackbar' })
+      error: () => this.snackBar.open(this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000, panelClass: 'error-snackbar' })
     });
   }
 
@@ -383,8 +385,11 @@ export class PersonnelListComponent implements OnInit {
     return this.avatarColors[index];
   }
 
-  formatEnum(val: string | undefined): string {
+  formatEnum(val: string | undefined, group: string): string {
     if (!val) return '-';
+    const key = 'PERSONNEL.LIST.' + group + '.' + val;
+    const translated = this.translate.instant(key);
+    if (translated !== key) return translated;
     return val.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
   }
 

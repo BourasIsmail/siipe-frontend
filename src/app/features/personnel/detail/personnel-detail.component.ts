@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/auth/auth.service';
 import { Personnel } from '../../../core/models/personnel.model';
@@ -16,7 +17,7 @@ import { Personnel } from '../../../core/models/personnel.model';
   imports: [
     CommonModule, RouterModule,
     MatCardModule, MatButtonModule, MatIconModule,
-    MatProgressSpinnerModule, MatSnackBarModule
+    MatProgressSpinnerModule, MatSnackBarModule, TranslateModule
   ],
   template: `
     <div *ngIf="loading" class="flex-center" style="height:300px">
@@ -34,8 +35,8 @@ import { Personnel } from '../../../core/models/personnel.model';
           <div>
             <h1>{{ personnel.nom }} {{ personnel.prenom }}</h1>
             <div class="meta-row">
-              <span class="badge badge-blue">{{ formatEnum(personnel.grade) }}</span>
-              <span class="badge badge-green">{{ formatEnum(personnel.fonction) }}</span>
+              <span class="badge badge-blue">{{ formatEnum(personnel.grade, 'GRADES') }}</span>
+              <span class="badge badge-green">{{ formatEnum(personnel.fonction, 'FONCTIONS') }}</span>
               <span class="text-secondary">{{ personnel.matricule }}</span>
             </div>
             <div class="meta-row mt-1">
@@ -48,10 +49,10 @@ import { Personnel } from '../../../core/models/personnel.model';
         </div>
         <div class="header-actions">
           <button class="btn btn-outline" routerLink="/personnel">
-            <mat-icon>arrow_back</mat-icon> Retour
+            <mat-icon>arrow_back</mat-icon> {{ 'COMMON.BACK' | translate }}
           </button>
           <a class="btn btn-primary" [routerLink]="['/personnel', personnel.id, 'edit']" *ngIf="canEdit()">
-            <mat-icon>edit</mat-icon> Modifier
+            <mat-icon>edit</mat-icon> {{ 'COMMON.EDIT' | translate }}
           </a>
         </div>
       </div>
@@ -59,13 +60,13 @@ import { Personnel } from '../../../core/models/personnel.model';
       <!-- Tabs -->
       <div class="tabs">
         <button class="tab" [class.active]="activeTab==='identite'" (click)="activeTab='identite'">
-          <mat-icon>person</mat-icon> Identité
+          <mat-icon>person</mat-icon> {{ 'PERSONNEL.DETAIL.TAB_IDENTITE' | translate }}
         </button>
         <button class="tab" [class.active]="activeTab==='profil'" (click)="activeTab='profil'">
-          <mat-icon>work</mat-icon> Profil professionnel
+          <mat-icon>work</mat-icon> {{ 'PERSONNEL.DETAIL.TAB_PROFIL' | translate }}
         </button>
         <button class="tab" [class.active]="activeTab==='evaluation'" (click)="activeTab='evaluation'">
-          <mat-icon>star</mat-icon> Évaluation
+          <mat-icon>star</mat-icon> {{ 'PERSONNEL.DETAIL.TAB_EVALUATION' | translate }}
         </button>
       </div>
 
@@ -74,39 +75,39 @@ import { Personnel } from '../../../core/models/personnel.model';
         <mat-card-content>
           <div class="info-grid">
             <div class="info-section">
-              <h3>Informations personnelles</h3>
-              <div class="info-row"><span>Nom complet</span><strong>{{ personnel.nom }} {{ personnel.prenom }}</strong></div>
-              <div class="info-row"><span>CIN</span><strong>{{ personnel.cin || '-' }}</strong></div>
-              <div class="info-row"><span>Sexe</span><strong>{{ personnel.sexe === 'MASCULIN' ? 'Masculin' : personnel.sexe === 'FEMININ' ? 'Féminin' : '-' }}</strong></div>
-              <div class="info-row"><span>Date de naissance</span><strong>{{ personnel.dateNaissance ? (personnel.dateNaissance | date:'dd/MM/yyyy') : '-' }}</strong></div>
-              <div class="info-row"><span>Lieu de naissance</span><strong>{{ personnel.lieuNaissance || '-' }}</strong></div>
-              <div class="info-row"><span>Situation familiale</span><strong>{{ formatEnum(personnel.situationFamille) }}</strong></div>
-              <div class="info-row"><span>Nombre d'enfants</span><strong>{{ personnel.nombreEnfant ?? '-' }}</strong></div>
+              <h3>{{ 'PERSONNEL.DETAIL.SECTION_INFOS_PERSONNELLES' | translate }}</h3>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.NOM_COMPLET' | translate }}</span><strong>{{ personnel.nom }} {{ personnel.prenom }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.CIN' | translate }}</span><strong>{{ personnel.cin || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.SEXE' | translate }}</span><strong>{{ personnel.sexe ? (('PERSONNEL.DETAIL.SEXES.' + personnel.sexe) | translate) : '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.DATE_NAISSANCE' | translate }}</span><strong>{{ personnel.dateNaissance ? (personnel.dateNaissance | date:'dd/MM/yyyy') : '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.LIEU_NAISSANCE' | translate }}</span><strong>{{ personnel.lieuNaissance || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.SITUATION_FAMILLE' | translate }}</span><strong>{{ formatEnum(personnel.situationFamille, 'SITUATIONS_FAMILLE') }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.NOMBRE_ENFANTS' | translate }}</span><strong>{{ personnel.nombreEnfant ?? '-' }}</strong></div>
             </div>
 
             <div class="info-section">
-              <h3>Contact</h3>
-              <div class="info-row"><span>Email</span><strong>{{ personnel.email || '-' }}</strong></div>
-              <div class="info-row"><span>Téléphone</span><strong>{{ personnel.telephone || '-' }}</strong></div>
+              <h3>{{ 'PERSONNEL.DETAIL.SECTION_CONTACT' | translate }}</h3>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.EMAIL' | translate }}</span><strong>{{ personnel.email || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.TELEPHONE' | translate }}</span><strong>{{ personnel.telephone || '-' }}</strong></div>
             </div>
 
             <div class="info-section">
-              <h3>Formation</h3>
-              <div class="info-row"><span>Niveau scolaire</span><strong>{{ formatEnum(personnel.niveauScolaire) }}</strong></div>
-              <div class="info-row"><span>Diplôme</span><strong>{{ personnel.diplome || '-' }}</strong></div>
+              <h3>{{ 'PERSONNEL.DETAIL.SECTION_FORMATION' | translate }}</h3>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.NIVEAU_SCOLAIRE' | translate }}</span><strong>{{ formatEnum(personnel.niveauScolaire, 'NIVEAUX_SCOLAIRE') }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.DIPLOME' | translate }}</span><strong>{{ personnel.diplome || '-' }}</strong></div>
             </div>
           </div>
 
           <!-- Photo upload -->
           <div class="photo-section" *ngIf="canEdit()">
-            <h3>Photo</h3>
+            <h3>{{ 'PERSONNEL.DETAIL.PHOTO' | translate }}</h3>
             <div class="photo-upload">
               <img *ngIf="personnel.photoUrl" [src]="getFileUrl(personnel.photoUrl)"
-                   class="photo-preview" alt="Photo">
+                   class="photo-preview" [alt]="'PERSONNEL.DETAIL.PHOTO' | translate">
               <div class="upload-zone">
                 <label class="upload-btn">
                   <mat-icon>upload</mat-icon>
-                  <span>{{ personnel.photoUrl ? 'Changer la photo' : 'Ajouter une photo' }}</span>
+                  <span>{{ (personnel.photoUrl ? 'PERSONNEL.DETAIL.CHANGE_PHOTO' : 'PERSONNEL.DETAIL.ADD_PHOTO') | translate }}</span>
                   <input type="file" hidden accept="image/*" (change)="uploadPhoto($event)">
                 </label>
               </div>
@@ -120,28 +121,28 @@ import { Personnel } from '../../../core/models/personnel.model';
         <mat-card-content>
           <div class="info-grid">
             <div class="info-section">
-              <h3>Situation administrative</h3>
-              <div class="info-row"><span>Matricule</span><strong>{{ personnel.matricule }}</strong></div>
-              <div class="info-row"><span>N° couverture sociale</span><strong>{{ personnel.numCouvertureSociale || '-' }}</strong></div>
-              <div class="info-row"><span>Situation</span><strong>{{ personnel.situationAdministratif || '-' }}</strong></div>
-              <div class="info-row"><span>Date de recrutement</span><strong>{{ personnel.dateRecrutement ? (personnel.dateRecrutement | date:'dd/MM/yyyy') : '-' }}</strong></div>
-              <div class="info-row"><span>Salaire</span><strong>{{ personnel.salaire ? (personnel.salaire | number) + ' MAD' : '-' }}</strong></div>
+              <h3>{{ 'PERSONNEL.DETAIL.SECTION_SITUATION_ADMIN' | translate }}</h3>
+              <div class="info-row"><span>{{ 'PERSONNEL.MATRICULE' | translate }}</span><strong>{{ personnel.matricule }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.NUM_COUVERTURE_SOCIALE' | translate }}</span><strong>{{ personnel.numCouvertureSociale || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.SITUATION' | translate }}</span><strong>{{ personnel.situationAdministratif || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.DATE_RECRUTEMENT' | translate }}</span><strong>{{ personnel.dateRecrutement ? (personnel.dateRecrutement | date:'dd/MM/yyyy') : '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.SALAIRE' | translate }}</span><strong>{{ personnel.salaire ? (personnel.salaire | number) + ' MAD' : '-' }}</strong></div>
             </div>
 
             <div class="info-section">
-              <h3>Poste & Grade</h3>
-              <div class="info-row"><span>Grade</span><strong>{{ formatEnum(personnel.grade) }}</strong></div>
-              <div class="info-row"><span>Fonction</span><strong>{{ formatEnum(personnel.fonction) }}</strong></div>
-              <div class="info-row"><span>Poste occupé</span><strong>{{ formatEnum(personnel.posteOccupe) }}</strong></div>
-              <div class="info-row"><span>Catégorie</span><strong>{{ personnel.categorie || '-' }}</strong></div>
+              <h3>{{ 'PERSONNEL.DETAIL.SECTION_POSTE_GRADE' | translate }}</h3>
+              <div class="info-row"><span>{{ 'PERSONNEL.GRADE' | translate }}</span><strong>{{ formatEnum(personnel.grade, 'GRADES') }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.FONCTION' | translate }}</span><strong>{{ formatEnum(personnel.fonction, 'FONCTIONS') }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.POSTE_OCCUPE' | translate }}</span><strong>{{ formatEnum(personnel.posteOccupe, 'POSTES') }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.CATEGORIE' | translate }}</span><strong>{{ personnel.categorie || '-' }}</strong></div>
             </div>
 
             <div class="info-section">
-              <h3>Affectation</h3>
-              <div class="info-row"><span>Établissement</span><strong>{{ personnel.etablissementCentreNom || '-' }}</strong></div>
-              <div class="info-row"><span>Province</span><strong>{{ personnel.provinceNom || '-' }}</strong></div>
-              <div class="info-row"><span>Programme</span><strong>{{ personnel.programmeNom || '-' }}</strong></div>
-              <div class="info-row"><span>Prestation</span><strong>{{ personnel.prestationNom || '-' }}</strong></div>
+              <h3>{{ 'PERSONNEL.DETAIL.SECTION_AFFECTATION' | translate }}</h3>
+              <div class="info-row"><span>{{ 'PERSONNEL.ETABLISSEMENT' | translate }}</span><strong>{{ personnel.etablissementCentreNom || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.PROVINCE' | translate }}</span><strong>{{ personnel.provinceNom || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.PROGRAMME' | translate }}</span><strong>{{ personnel.programmeNom || '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.PRESTATION' | translate }}</span><strong>{{ personnel.prestationNom || '-' }}</strong></div>
             </div>
           </div>
         </mat-card-content>
@@ -151,12 +152,12 @@ import { Personnel } from '../../../core/models/personnel.model';
       <mat-card *ngIf="activeTab==='evaluation'" class="tab-card">
         <mat-card-content>
           <div class="eval-header">
-            <h3>Scores d'évaluation</h3>
+            <h3>{{ 'PERSONNEL.DETAIL.SCORES_EVALUATION' | translate }}</h3>
             <div class="overall-score">
               <div class="score-circle" [style.background]="getScoreColor(overallScore)">
                 {{ overallScore | number:'1.1-1' }}
               </div>
-              <span class="text-secondary">Score global / 5</span>
+              <span class="text-secondary">{{ 'PERSONNEL.DETAIL.SCORE_GLOBAL' | translate }}</span>
             </div>
           </div>
 
@@ -172,10 +173,10 @@ import { Personnel } from '../../../core/models/personnel.model';
           </div>
 
           <div class="observations mt-3" *ngIf="hasObservations()">
-            <h3>Observations</h3>
+            <h3>{{ 'PERSONNEL.DETAIL.OBSERVATIONS' | translate }}</h3>
             <div class="obs-grid">
               <div class="obs-item" *ngFor="let obs of observations; let i = index" [hidden]="!obs">
-                <div class="obs-label">Observation {{ i + 1 }}</div>
+                <div class="obs-label">{{ 'PERSONNEL.DETAIL.OBSERVATION_N' | translate:{ n: i + 1 } }}</div>
                 <div class="obs-text">{{ obs }}</div>
               </div>
             </div>
@@ -185,8 +186,8 @@ import { Personnel } from '../../../core/models/personnel.model';
 
       <!-- Audit -->
       <div class="audit-info">
-        <span>Créé par {{ personnel.createdBy }} le {{ personnel.createdAt | date:'dd/MM/yyyy' }}</span>
-        <span *ngIf="personnel.updatedAt"> — Modifié le {{ personnel.updatedAt | date:'dd/MM/yyyy' }}</span>
+        <span>{{ 'PERSONNEL.DETAIL.CREATED_BY' | translate: { name: personnel.createdBy, date: (personnel.createdAt | date:'dd/MM/yyyy') } }}</span>
+        <span *ngIf="personnel.updatedAt"> — {{ 'PERSONNEL.DETAIL.UPDATED_AT' | translate: { date: (personnel.updatedAt | date:'dd/MM/yyyy') } }}</span>
       </div>
 
     </ng-container>
@@ -301,7 +302,8 @@ export class PersonnelDetailComponent implements OnInit {
     private auth: AuthService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -322,18 +324,18 @@ export class PersonnelDetailComponent implements OnInit {
   get evalItems() {
     if (!this.personnel) return [];
     return [
-      { label: 'Organisation', value: this.personnel.organisation },
-      { label: 'Activité', value: this.personnel.activite },
-      { label: 'Spécialisation', value: this.personnel.specialisation },
-      { label: 'Initiative', value: this.personnel.initiative },
-      { label: 'Autonomie', value: this.personnel.autonomie },
-      { label: 'Adaptation professionnelle', value: this.personnel.adaptationProfessionnelle },
-      { label: 'Relations de travail', value: this.personnel.relationsTravail },
-      { label: 'Technique d\'exécution', value: this.personnel.techniqueExecution },
-      { label: 'Communication', value: this.personnel.communication },
-      { label: 'Tolérance au stress', value: this.personnel.toleranceStress },
-      { label: 'Assiduité & Pointage', value: this.personnel.assiduitePointage },
-      { label: 'Service à la population', value: this.personnel.servicePopulation },
+      { label: this.translate.instant('PERSONNEL.DETAIL.EVAL.ORGANISATION'), value: this.personnel.organisation },
+      { label: this.translate.instant('PERSONNEL.DETAIL.EVAL.ACTIVITE'), value: this.personnel.activite },
+      { label: this.translate.instant('PERSONNEL.DETAIL.EVAL.SPECIALISATION'), value: this.personnel.specialisation },
+      { label: this.translate.instant('PERSONNEL.DETAIL.EVAL.INITIATIVE'), value: this.personnel.initiative },
+      { label: this.translate.instant('PERSONNEL.DETAIL.EVAL.AUTONOMIE'), value: this.personnel.autonomie },
+      { label: this.translate.instant('PERSONNEL.DETAIL.EVAL.ADAPTATION_PROFESSIONNELLE'), value: this.personnel.adaptationProfessionnelle },
+      { label: this.translate.instant('PERSONNEL.DETAIL.EVAL.RELATIONS_TRAVAIL'), value: this.personnel.relationsTravail },
+      { label: this.translate.instant('PERSONNEL.DETAIL.EVAL.TECHNIQUE_EXECUTION'), value: this.personnel.techniqueExecution },
+      { label: this.translate.instant('PERSONNEL.DETAIL.EVAL.COMMUNICATION'), value: this.personnel.communication },
+      { label: this.translate.instant('PERSONNEL.DETAIL.EVAL.TOLERANCE_STRESS'), value: this.personnel.toleranceStress },
+      { label: this.translate.instant('PERSONNEL.DETAIL.EVAL.ASSIDUITE_POINTAGE'), value: this.personnel.assiduitePointage },
+      { label: this.translate.instant('PERSONNEL.DETAIL.EVAL.SERVICE_POPULATION'), value: this.personnel.servicePopulation },
     ];
   }
 
@@ -369,10 +371,10 @@ export class PersonnelDetailComponent implements OnInit {
     this.api.uploadPersonnelPhoto(this.personnel.id, file).subscribe({
       next: p => {
         this.personnel = p;
-        this.snackBar.open('Photo mise à jour', 'OK', { duration: 3000, panelClass: 'success-snackbar' });
+        this.snackBar.open(this.translate.instant('PERSONNEL.DETAIL.PHOTO_UPDATED'), 'OK', { duration: 3000, panelClass: 'success-snackbar' });
         this.cdr.detectChanges();
       },
-      error: () => this.snackBar.open('Erreur upload', 'Fermer', { duration: 3000, panelClass: 'error-snackbar' })
+      error: () => this.snackBar.open(this.translate.instant('PERSONNEL.DETAIL.PHOTO_UPLOAD_ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000, panelClass: 'error-snackbar' })
     });
   }
 
@@ -380,8 +382,11 @@ export class PersonnelDetailComponent implements OnInit {
     return `http://localhost:8080/api/files?path=${path}`;
   }
 
-  formatEnum(val: string | undefined): string {
+  formatEnum(val: string | undefined, group: string): string {
     if (!val) return '-';
+    const key = 'PERSONNEL.DETAIL.' + group + '.' + val;
+    const translated = this.translate.instant(key);
+    if (translated !== key) return translated;
     return val.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
   }
 
