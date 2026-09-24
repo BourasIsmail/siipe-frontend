@@ -6,23 +6,23 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import * as L from 'leaflet';
-import '@maplibre/maplibre-gl-leaflet';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api.service';
 import { EtablissementCentre } from '../../../core/models/etablissement.model';
-import { buildSatelliteLabelsStyle, ESRI_WORLD_IMAGERY_URL } from '../../../shared/map/satellite-labels-style';
+import { ARCGIS_STREET_MAP_URL } from '../../../shared/map/satellite-labels-style';
 
 @Component({
   selector: 'app-etablissements-map',
   standalone: true,
   imports: [
     CommonModule, RouterModule, FormsModule,
-    MatCardModule, MatProgressSpinnerModule, MatIconModule
+    MatCardModule, MatProgressSpinnerModule, MatIconModule, TranslateModule
   ],
   template: `
     <div class="page-header">
-      <h1>Cartographie des Établissements</h1>
+      <h1>{{ 'ETABLISSEMENT.MAP.TITLE' | translate }}</h1>
       <a class="btn btn-outline" routerLink="/etablissements">
-        <mat-icon>list</mat-icon> Vue liste
+        <mat-icon>list</mat-icon> {{ 'ETABLISSEMENT.MAP.LIST_VIEW' | translate }}
       </a>
     </div>
 
@@ -30,33 +30,33 @@ import { buildSatelliteLabelsStyle, ESRI_WORLD_IMAGERY_URL } from '../../../shar
     <div class="stats-bar">
       <div class="stat">
         <mat-icon>business</mat-icon>
-        <span><strong>{{ total }}</strong> établissements</span>
+        <span><strong>{{ total }}</strong> {{ 'ETABLISSEMENT.MAP.TOTAL' | translate }}</span>
       </div>
       <div class="stat">
         <mat-icon>location_on</mat-icon>
-        <span><strong>{{ withCoords }}</strong> géolocalisés</span>
+        <span><strong>{{ withCoords }}</strong> {{ 'ETABLISSEMENT.MAP.GEOLOCATED' | translate }}</span>
       </div>
       <div class="stat">
         <mat-icon>location_off</mat-icon>
-        <span><strong>{{ total - withCoords }}</strong> sans coordonnées</span>
+        <span><strong>{{ total - withCoords }}</strong> {{ 'ETABLISSEMENT.MAP.NO_COORDS' | translate }}</span>
       </div>
       <div class="filter-group">
-        <label>Type</label>
+        <label>{{ 'ETABLISSEMENT.MAP.FILTER_TYPE' | translate }}</label>
         <select [(ngModel)]="selectedType" (ngModelChange)="applyFilter()">
-          <option value="">Tous</option>
-          <option value="CENTRE_SOCIALE">Centre sociale</option>
-          <option value="DELEGATION">Délégation</option>
-          <option value="COORDINATION">Coordination</option>
-          <option value="DEPOT">Dépôt</option>
-          <option value="AUTRE">Autre</option>
+          <option value="">{{ 'COMMON.ALL' | translate }}</option>
+          <option value="CENTRE_SOCIALE">{{ 'ETABLISSEMENT.TYPES.CENTRE_SOCIALE' | translate }}</option>
+          <option value="DELEGATION">{{ 'ETABLISSEMENT.TYPES.DELEGATION' | translate }}</option>
+          <option value="COORDINATION">{{ 'ETABLISSEMENT.TYPES.COORDINATION' | translate }}</option>
+          <option value="DEPOT">{{ 'ETABLISSEMENT.TYPES.DEPOT' | translate }}</option>
+          <option value="AUTRE">{{ 'ETABLISSEMENT.TYPES.AUTRE' | translate }}</option>
         </select>
       </div>
       <div class="filter-group">
-        <label>Milieu</label>
+        <label>{{ 'ETABLISSEMENT.MAP.FILTER_MILIEU' | translate }}</label>
         <select [(ngModel)]="selectedMilieu" (ngModelChange)="applyFilter()">
-          <option value="">Tous</option>
-          <option value="URBAIN">Urbain</option>
-          <option value="RURAL">Rural</option>
+          <option value="">{{ 'COMMON.ALL' | translate }}</option>
+          <option value="URBAIN">{{ 'ETABLISSEMENT.MILIEUX.URBAIN' | translate }}</option>
+          <option value="RURAL">{{ 'ETABLISSEMENT.MILIEUX.RURAL' | translate }}</option>
         </select>
       </div>
     </div>
@@ -75,13 +75,13 @@ import { buildSatelliteLabelsStyle, ESRI_WORLD_IMAGERY_URL } from '../../../shar
     <div *ngIf="noCoordsList.length > 0" class="no-coords-panel">
       <h3>
         <mat-icon>warning</mat-icon>
-        Établissements sans coordonnées GPS ({{ noCoordsList.length }})
+        {{ 'ETABLISSEMENT.MAP.NO_COORDS_WARNING' | translate }} ({{ noCoordsList.length }})
       </h3>
       <div class="no-coords-list">
         <div class="no-coords-item" *ngFor="let e of noCoordsList">
           <span>{{ e.nomFr }}</span>
           <span class="text-secondary">{{ e.provinceNom || '-' }}</span>
-          <a [routerLink]="['/etablissements', e.id, 'edit']" class="link">Ajouter coordonnées</a>
+          <a [routerLink]="['/etablissements', e.id, 'edit']" class="link">{{ 'ETABLISSEMENT.MAP.ADD_COORDS' | translate }}</a>
         </div>
       </div>
     </div>
@@ -187,7 +187,7 @@ export class EtablissementsMapComponent implements OnInit, AfterViewInit {
     }),
   };
 
-  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
+  constructor(private api: ApiService, private cdr: ChangeDetectorRef, private translate: TranslateService) {}
 
   ngOnInit() {
     this.api.getEtablissements().subscribe({
@@ -224,14 +224,9 @@ export class EtablissementsMapComponent implements OnInit, AfterViewInit {
 
     this.map = L.map('main-map', { zoomControl: true }).setView([31.7917, -7.0926], 6);
 
-    L.tileLayer(ESRI_WORLD_IMAGERY_URL, {
-      attribution: 'Imagery © Esri',
+    L.tileLayer(ARCGIS_STREET_MAP_URL, {
+      attribution: 'Tiles © Esri',
       maxZoom: 19
-    }).addTo(this.map);
-
-    L.maplibreGL({
-      style: buildSatelliteLabelsStyle(),
-      interactive: false
     }).addTo(this.map);
 
     this.markersLayer = L.layerGroup().addTo(this.map);
@@ -242,11 +237,11 @@ export class EtablissementsMapComponent implements OnInit, AfterViewInit {
       const div = L.DomUtil.create('div');
       div.innerHTML = `
         <div style="background:white;padding:12px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);font-size:12px;line-height:1.8">
-          <strong style="display:block;margin-bottom:6px;color:#2e7d32">Légende</strong>
-          <div><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png" height="16" style="vertical-align:middle;margin-right:6px"> Centre sociale</div>
-          <div><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png" height="16" style="vertical-align:middle;margin-right:6px"> Délégation</div>
-          <div><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png" height="16" style="vertical-align:middle;margin-right:6px"> Coordination</div>
-          <div><img src="https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png" height="16" style="vertical-align:middle;margin-right:6px"> Autre</div>
+          <strong style="display:block;margin-bottom:6px;color:#2e7d32">${this.translate.instant('ETABLISSEMENT.MAP.LEGEND')}</strong>
+          <div><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png" height="16" style="vertical-align:middle;margin-right:6px"> ${this.translate.instant('ETABLISSEMENT.TYPES.CENTRE_SOCIALE')}</div>
+          <div><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png" height="16" style="vertical-align:middle;margin-right:6px"> ${this.translate.instant('ETABLISSEMENT.TYPES.DELEGATION')}</div>
+          <div><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png" height="16" style="vertical-align:middle;margin-right:6px"> ${this.translate.instant('ETABLISSEMENT.TYPES.COORDINATION')}</div>
+          <div><img src="https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png" height="16" style="vertical-align:middle;margin-right:6px"> ${this.translate.instant('ETABLISSEMENT.TYPES.AUTRE')}</div>
         </div>
       `;
       return div;
@@ -275,16 +270,16 @@ export class EtablissementsMapComponent implements OnInit, AfterViewInit {
           <div style="color:#666;font-size:12px">${e.nomAr || ''}</div>
           <hr style="margin:8px 0;border:none;border-top:1px solid #eee">
           <table style="font-size:12px;width:100%;border-collapse:collapse">
-            <tr><td style="color:#888;padding:2px 0">Province</td><td><strong>${e.provinceNom || '-'}</strong></td></tr>
-            <tr><td style="color:#888;padding:2px 0">Type</td><td>${this.formatType(e.typeLocal)}</td></tr>
-            <tr><td style="color:#888;padding:2px 0">Milieu</td><td>${e.milieu || '-'}</td></tr>
-            <tr><td style="color:#888;padding:2px 0">Capacité</td><td>${e.capaciteAccueil || '-'}</td></tr>
-            <tr><td style="color:#888;padding:2px 0">Tél</td><td>${e.telephone || '-'}</td></tr>
+            <tr><td style="color:#888;padding:2px 0">${this.translate.instant('ETABLISSEMENT.PROVINCE')}</td><td><strong>${e.provinceNom || '-'}</strong></td></tr>
+            <tr><td style="color:#888;padding:2px 0">${this.translate.instant('ETABLISSEMENT.TYPE_LOCAL')}</td><td>${this.formatType(e.typeLocal)}</td></tr>
+            <tr><td style="color:#888;padding:2px 0">${this.translate.instant('ETABLISSEMENT.MILIEU')}</td><td>${e.milieu ? this.translate.instant('ETABLISSEMENT.MILIEUX.' + e.milieu) : '-'}</td></tr>
+            <tr><td style="color:#888;padding:2px 0">${this.translate.instant('ETABLISSEMENT.CAPACITE')}</td><td>${e.capaciteAccueil || '-'}</td></tr>
+            <tr><td style="color:#888;padding:2px 0">${this.translate.instant('ETABLISSEMENT.TELEPHONE')}</td><td>${e.telephone || '-'}</td></tr>
           </table>
           <div style="margin-top:10px;text-align:center">
             <a href="/etablissements/${e.id}"
                style="background:#2e7d32;color:white;padding:6px 14px;border-radius:4px;text-decoration:none;font-size:12px">
-              Voir détails
+              ${this.translate.instant('ETABLISSEMENT.MAP.VIEW_DETAILS')}
             </a>
           </div>
         </div>
@@ -294,10 +289,6 @@ export class EtablissementsMapComponent implements OnInit, AfterViewInit {
   }
 
   formatType(type: string | undefined): string {
-    const map: Record<string, string> = {
-      CENTRE_SOCIALE: 'Centre sociale', DELEGATION: 'Délégation',
-      COORDINATION: 'Coordination', DEPOT: 'Dépôt', AUTRE: 'Autre'
-    };
-    return type ? (map[type] || type) : '-';
+    return type ? this.translate.instant('ETABLISSEMENT.TYPES.' + type) : '-';
   }
 }

@@ -68,7 +68,8 @@
     "CLOSE": "Fermer",
     "DETAILS": "Détails",
     "BACK": "Retour",
-    "PRINT": "Imprimer"
+    "PRINT": "Imprimer",
+    "ALL": "Tous"
   },
   "BENEFICIAIRE": {
     "TITLE": "Bénéficiaires",
@@ -113,6 +114,30 @@
     "TYPE_LOCAL": "Type de local",
     "CAPACITE": "Capacité d'accueil",
     "LATITUDE": "Latitude",
-    "LONGITUDE": "Longitude"
+    "LONGITUDE": "Longitude",
+    "TYPES": {
+      "CENTRE_SOCIALE": "Centre sociale",
+      "DELEGATION": "Délégation",
+      "COORDINATION": "Coordination",
+      "DEPOT": "Dépôt",
+      "AUTRE": "Autre"
+    },
+    "MILIEUX": {
+      "URBAIN": "Urbain",
+      "RURAL": "Rural"
+    },
+    "MAP": {
+      "TITLE": "Cartographie des Établissements",
+      "LIST_VIEW": "Vue liste",
+      "TOTAL": "établissements",
+      "GEOLOCATED": "géolocalisés",
+      "NO_COORDS": "sans coordonnées",
+      "FILTER_TYPE": "Type",
+      "FILTER_MILIEU": "Milieu",
+      "LEGEND": "Légende",
+      "NO_COORDS_WARNING": "Établissements sans coordonnées GPS",
+      "ADD_COORDS": "Ajouter coordonnées",
+      "VIEW_DETAILS": "Voir détails"
+    }
   }
 }

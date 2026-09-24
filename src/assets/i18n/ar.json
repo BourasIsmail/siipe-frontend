@@ -68,7 +68,8 @@
     "CLOSE": "إغلاق",
     "DETAILS": "التفاصيل",
     "BACK": "رجوع",
-    "PRINT": "طباعة"
+    "PRINT": "طباعة",
+    "ALL": "الكل"
   },
   "BENEFICIAIRE": {
     "TITLE": "المستفيدون",
@@ -113,6 +114,30 @@
     "TYPE_LOCAL": "نوع المحل",
     "CAPACITE": "طاقة الاستيعاب",
     "LATITUDE": "خط العرض",
-    "LONGITUDE": "خط الطول"
+    "LONGITUDE": "خط الطول",
+    "TYPES": {
+      "CENTRE_SOCIALE": "مركز اجتماعي",
+      "DELEGATION": "مندوبية",
+      "COORDINATION": "تنسيقية",
+      "DEPOT": "مستودع",
+      "AUTRE": "أخرى"
+    },
+    "MILIEUX": {
+      "URBAIN": "حضري",
+      "RURAL": "قروي"
+    },
+    "MAP": {
+      "TITLE": "خريطة المؤسسات",
+      "LIST_VIEW": "عرض القائمة",
+      "TOTAL": "مؤسسة",
+      "GEOLOCATED": "محددة الموقع",
+      "NO_COORDS": "بدون إحداثيات",
+      "FILTER_TYPE": "النوع",
+      "FILTER_MILIEU": "الوسط",
+      "LEGEND": "المفتاح",
+      "NO_COORDS_WARNING": "مؤسسات بدون إحداثيات GPS",
+      "ADD_COORDS": "إضافة الإحداثيات",
+      "VIEW_DETAILS": "عرض التفاصيل"
+    }
   }
 }

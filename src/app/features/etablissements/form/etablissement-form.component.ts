@@ -8,10 +8,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import * as L from 'leaflet';
-import '@maplibre/maplibre-gl-leaflet';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/auth/auth.service';
-import { buildSatelliteLabelsStyle, ESRI_WORLD_IMAGERY_URL } from '../../../shared/map/satellite-labels-style';
+import { ARCGIS_STREET_MAP_URL } from '../../../shared/map/satellite-labels-style';
 import { Province, Region } from '../../../core/models/geo.model';
 import { Programme, Prestation } from '../../../core/models/etablissement.model';
 
@@ -756,13 +755,8 @@ export class EtablissementFormComponent implements OnInit, AfterViewInit {
       maxBounds: [[-90, -180], [90, 180]], maxBoundsViscosity: 1.0
     }).setView([lat, lng], 6);
 
-    L.tileLayer(ESRI_WORLD_IMAGERY_URL, {
-      attribution: 'Imagery © Esri', noWrap: true, maxZoom: 19
-    }).addTo(this.map);
-
-    L.maplibreGL({
-      style: buildSatelliteLabelsStyle(),
-      interactive: false
+    L.tileLayer(ARCGIS_STREET_MAP_URL, {
+      attribution: 'Tiles © Esri', noWrap: true, maxZoom: 19
     }).addTo(this.map);
 
     if (this.form.get('latitude')?.value && this.form.get('longitude')?.value) {
