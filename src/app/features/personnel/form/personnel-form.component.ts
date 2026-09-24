@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api.service';
 import { EtablissementCentre, Programme, Prestation } from '../../../core/models/etablissement.model';
 
@@ -16,13 +17,13 @@ import { EtablissementCentre, Programme, Prestation } from '../../../core/models
   imports: [
     CommonModule, ReactiveFormsModule, RouterModule,
     MatCardModule, MatButtonModule, MatIconModule,
-    MatSnackBarModule, MatProgressSpinnerModule
+    MatSnackBarModule, MatProgressSpinnerModule, TranslateModule
   ],
   template: `
     <div class="page-header">
-      <h1>{{ isEdit ? 'Modifier' : 'Ajouter' }} un Agent</h1>
+      <h1>{{ (isEdit ? 'PERSONNEL.FORM.TITLE_EDIT' : 'PERSONNEL.FORM.TITLE_ADD') | translate }}</h1>
       <button mat-button routerLink="/personnel">
-        <mat-icon>arrow_back</mat-icon> Retour
+        <mat-icon>arrow_back</mat-icon> {{ 'COMMON.BACK' | translate }}
       </button>
     </div>
 
@@ -34,63 +35,63 @@ import { EtablissementCentre, Programme, Prestation } from '../../../core/models
 
       <!-- Section 1: Identité -->
       <mat-card class="mb-2">
-        <mat-card-header><mat-card-title>Identité</mat-card-title></mat-card-header>
+        <mat-card-header><mat-card-title>{{ 'PERSONNEL.FORM.SECTION_IDENTITE' | translate }}</mat-card-title></mat-card-header>
         <mat-card-content>
           <div class="form-row">
             <div class="field">
-              <label>Nom *</label>
-              <input type="text" formControlName="nom" placeholder="Nom de famille">
-              <span class="err" *ngIf="form.get('nom')?.invalid && form.get('nom')?.touched">Champ requis</span>
+              <label>{{ 'PERSONNEL.NOM' | translate }} *</label>
+              <input type="text" formControlName="nom" [placeholder]="'PERSONNEL.FORM.NOM_PLACEHOLDER' | translate">
+              <span class="err" *ngIf="form.get('nom')?.invalid && form.get('nom')?.touched">{{ 'PERSONNEL.FORM.REQUIRED_FIELD' | translate }}</span>
             </div>
             <div class="field">
-              <label>Prénom *</label>
-              <input type="text" formControlName="prenom" placeholder="Prénom">
-              <span class="err" *ngIf="form.get('prenom')?.invalid && form.get('prenom')?.touched">Champ requis</span>
+              <label>{{ 'PERSONNEL.PRENOM' | translate }} *</label>
+              <input type="text" formControlName="prenom" [placeholder]="'PERSONNEL.PRENOM' | translate">
+              <span class="err" *ngIf="form.get('prenom')?.invalid && form.get('prenom')?.touched">{{ 'PERSONNEL.FORM.REQUIRED_FIELD' | translate }}</span>
             </div>
             <div class="field">
-              <label>CIN</label>
+              <label>{{ 'PERSONNEL.FORM.CIN' | translate }}</label>
               <input type="text" formControlName="cin" placeholder="AA000000">
             </div>
             <div class="field">
-              <label>Sexe</label>
+              <label>{{ 'PERSONNEL.FORM.SEXE' | translate }}</label>
               <select formControlName="sexe">
-                <option value="">-- Sélectionner --</option>
-                <option value="MASCULIN">Masculin</option>
-                <option value="FEMININ">Féminin</option>
+                <option value="">{{ 'PERSONNEL.FORM.SELECT_PLACEHOLDER' | translate }}</option>
+                <option value="MASCULIN">{{ 'PERSONNEL.FORM.SEXES.MASCULIN' | translate }}</option>
+                <option value="FEMININ">{{ 'PERSONNEL.FORM.SEXES.FEMININ' | translate }}</option>
               </select>
             </div>
           </div>
           <div class="form-row">
             <div class="field">
-              <label>Date de naissance</label>
+              <label>{{ 'PERSONNEL.FORM.DATE_NAISSANCE' | translate }}</label>
               <input type="date" formControlName="dateNaissance">
             </div>
             <div class="field">
-              <label>Lieu de naissance</label>
-              <input type="text" formControlName="lieuNaissance" placeholder="Ville">
+              <label>{{ 'PERSONNEL.FORM.LIEU_NAISSANCE' | translate }}</label>
+              <input type="text" formControlName="lieuNaissance" [placeholder]="'PERSONNEL.FORM.VILLE_PLACEHOLDER' | translate">
             </div>
             <div class="field">
-              <label>Situation familiale</label>
+              <label>{{ 'PERSONNEL.FORM.SITUATION_FAMILLE' | translate }}</label>
               <select formControlName="situationFamille">
-                <option value="">-- Sélectionner --</option>
-                <option value="CELIBATAIRE">Célibataire</option>
-                <option value="MARIE">Marié(e)</option>
-                <option value="DIVORCE">Divorcé(e)</option>
-                <option value="VEUF">Veuf/Veuve</option>
+                <option value="">{{ 'PERSONNEL.FORM.SELECT_PLACEHOLDER' | translate }}</option>
+                <option value="CELIBATAIRE">{{ 'PERSONNEL.FORM.SITUATIONS_FAMILLE.CELIBATAIRE' | translate }}</option>
+                <option value="MARIE">{{ 'PERSONNEL.FORM.SITUATIONS_FAMILLE.MARIE' | translate }}</option>
+                <option value="DIVORCE">{{ 'PERSONNEL.FORM.SITUATIONS_FAMILLE.DIVORCE' | translate }}</option>
+                <option value="VEUF">{{ 'PERSONNEL.FORM.SITUATIONS_FAMILLE.VEUF' | translate }}</option>
               </select>
             </div>
             <div class="field">
-              <label>Nombre d'enfants</label>
+              <label>{{ 'PERSONNEL.FORM.NOMBRE_ENFANTS' | translate }}</label>
               <input type="number" formControlName="nombreEnfant" placeholder="0">
             </div>
           </div>
           <div class="form-row">
             <div class="field">
-              <label>Email</label>
+              <label>{{ 'PERSONNEL.FORM.EMAIL' | translate }}</label>
               <input type="email" formControlName="email" placeholder="email@entraide.ma">
             </div>
             <div class="field">
-              <label>Téléphone</label>
+              <label>{{ 'PERSONNEL.FORM.TELEPHONE' | translate }}</label>
               <input type="text" formControlName="telephone" placeholder="0600000000">
             </div>
           </div>
@@ -99,113 +100,113 @@ import { EtablissementCentre, Programme, Prestation } from '../../../core/models
 
       <!-- Section 2: Informations professionnelles -->
       <mat-card class="mb-2">
-        <mat-card-header><mat-card-title>Informations professionnelles</mat-card-title></mat-card-header>
+        <mat-card-header><mat-card-title>{{ 'PERSONNEL.FORM.SECTION_INFOS_PRO' | translate }}</mat-card-title></mat-card-header>
         <mat-card-content>
           <div class="form-row">
             <div class="field">
-              <label>Matricule *</label>
+              <label>{{ 'PERSONNEL.MATRICULE' | translate }} *</label>
               <input type="text" formControlName="matricule" placeholder="P0000">
-              <span class="err" *ngIf="form.get('matricule')?.invalid && form.get('matricule')?.touched">Champ requis</span>
+              <span class="err" *ngIf="form.get('matricule')?.invalid && form.get('matricule')?.touched">{{ 'PERSONNEL.FORM.REQUIRED_FIELD' | translate }}</span>
             </div>
             <div class="field">
-              <label>N° couverture sociale</label>
-              <input type="text" formControlName="numCouvertureSociale" placeholder="Numéro">
+              <label>{{ 'PERSONNEL.FORM.NUM_COUVERTURE_SOCIALE' | translate }}</label>
+              <input type="text" formControlName="numCouvertureSociale" [placeholder]="'PERSONNEL.FORM.NUMERO_PLACEHOLDER' | translate">
             </div>
             <div class="field">
-              <label>Situation administrative</label>
+              <label>{{ 'PERSONNEL.FORM.SITUATION_ADMINISTRATIVE' | translate }}</label>
               <select formControlName="situationAdministratif">
-                <option value="">-- Sélectionner --</option>
-                <option value="EN">Entraide Nationale</option>
-                <option value="DETACHEMENT">Détachement</option>
-                <option value="MIS_DISPOSITION">Mis à disposition</option>
-                <option value="CONTRAT">Contrat</option>
+                <option value="">{{ 'PERSONNEL.FORM.SELECT_PLACEHOLDER' | translate }}</option>
+                <option value="EN">{{ 'PERSONNEL.FORM.SITUATIONS_ADMINISTRATIVES.EN' | translate }}</option>
+                <option value="DETACHEMENT">{{ 'PERSONNEL.FORM.SITUATIONS_ADMINISTRATIVES.DETACHEMENT' | translate }}</option>
+                <option value="MIS_DISPOSITION">{{ 'PERSONNEL.FORM.SITUATIONS_ADMINISTRATIVES.MIS_DISPOSITION' | translate }}</option>
+                <option value="CONTRAT">{{ 'PERSONNEL.FORM.SITUATIONS_ADMINISTRATIVES.CONTRAT' | translate }}</option>
               </select>
             </div>
             <div class="field">
-              <label>Date de recrutement</label>
+              <label>{{ 'PERSONNEL.DATE_RECRUTEMENT' | translate }}</label>
               <input type="date" formControlName="dateRecrutement">
             </div>
           </div>
           <div class="form-row">
             <div class="field">
-              <label>Grade</label>
+              <label>{{ 'PERSONNEL.GRADE' | translate }}</label>
               <select formControlName="grade">
-                <option value="">-- Sélectionner --</option>
-                <option value="ADMINISTRATEUR_1ER_GRADE">Administrateur 1er grade</option>
-                <option value="ADMINISTRATEUR_2EME_GRADE">Administrateur 2ème grade</option>
-                <option value="ADMINISTRATEUR_3EME_GRADE">Administrateur 3ème grade</option>
-                <option value="REDACTEUR_1ER_GRADE">Rédacteur 1er grade</option>
-                <option value="REDACTEUR_2EME_GRADE">Rédacteur 2ème grade</option>
-                <option value="REDACTEUR_3EME_GRADE">Rédacteur 3ème grade</option>
-                <option value="REDACTEUR_4EME_GRADE">Rédacteur 4ème grade</option>
-                <option value="TECHNICIEN_PREMIER_GRADE">Technicien 1er grade</option>
-                <option value="TECHNICIEN_DEUXIEME_GRADE">Technicien 2ème grade</option>
-                <option value="TECHNICIEN_TROISIEME_GRADE">Technicien 3ème grade</option>
-                <option value="TECHNICIEN_QUATRIEME_GRADE">Technicien 4ème grade</option>
-                <option value="ADJOINT_ADMINISTRATIF_1ER_GRADE">Adjoint admin 1er grade</option>
-                <option value="ADJOINT_ADMINISTRATIF_GRADE_PRINCIPAL">Adjoint admin grade principal</option>
-                <option value="ADJOINT_TECHNIQUE_1ER_GRADE">Adjoint technique 1er grade</option>
-                <option value="ADJOINT_TECHNIQUE_GRADE_PRINCIPAL">Adjoint technique grade principal</option>
-                <option value="AGENTS_A_CONTRAT">Agents à contrat</option>
-                <option value="AGENT_EXECUTION">Agent d'exécution</option>
-                <option value="AGENT_EXECUTION_PRINCIPAL">Agent d'exécution principal</option>
-                <option value="AGENT_DE_SERVICE">Agent de service</option>
-                <option value="INGENIEUR_EN_CHEF_PREMIER_GRADE">Ingénieur en chef 1er grade</option>
-                <option value="ARCHITECTE_PREMIER_GRADE">Architecte 1er grade</option>
+                <option value="">{{ 'PERSONNEL.FORM.SELECT_PLACEHOLDER' | translate }}</option>
+                <option value="ADMINISTRATEUR_1ER_GRADE">{{ 'PERSONNEL.FORM.GRADES.ADMINISTRATEUR_1ER_GRADE' | translate }}</option>
+                <option value="ADMINISTRATEUR_2EME_GRADE">{{ 'PERSONNEL.FORM.GRADES.ADMINISTRATEUR_2EME_GRADE' | translate }}</option>
+                <option value="ADMINISTRATEUR_3EME_GRADE">{{ 'PERSONNEL.FORM.GRADES.ADMINISTRATEUR_3EME_GRADE' | translate }}</option>
+                <option value="REDACTEUR_1ER_GRADE">{{ 'PERSONNEL.FORM.GRADES.REDACTEUR_1ER_GRADE' | translate }}</option>
+                <option value="REDACTEUR_2EME_GRADE">{{ 'PERSONNEL.FORM.GRADES.REDACTEUR_2EME_GRADE' | translate }}</option>
+                <option value="REDACTEUR_3EME_GRADE">{{ 'PERSONNEL.FORM.GRADES.REDACTEUR_3EME_GRADE' | translate }}</option>
+                <option value="REDACTEUR_4EME_GRADE">{{ 'PERSONNEL.FORM.GRADES.REDACTEUR_4EME_GRADE' | translate }}</option>
+                <option value="TECHNICIEN_PREMIER_GRADE">{{ 'PERSONNEL.FORM.GRADES.TECHNICIEN_PREMIER_GRADE' | translate }}</option>
+                <option value="TECHNICIEN_DEUXIEME_GRADE">{{ 'PERSONNEL.FORM.GRADES.TECHNICIEN_DEUXIEME_GRADE' | translate }}</option>
+                <option value="TECHNICIEN_TROISIEME_GRADE">{{ 'PERSONNEL.FORM.GRADES.TECHNICIEN_TROISIEME_GRADE' | translate }}</option>
+                <option value="TECHNICIEN_QUATRIEME_GRADE">{{ 'PERSONNEL.FORM.GRADES.TECHNICIEN_QUATRIEME_GRADE' | translate }}</option>
+                <option value="ADJOINT_ADMINISTRATIF_1ER_GRADE">{{ 'PERSONNEL.FORM.GRADES.ADJOINT_ADMINISTRATIF_1ER_GRADE' | translate }}</option>
+                <option value="ADJOINT_ADMINISTRATIF_GRADE_PRINCIPAL">{{ 'PERSONNEL.FORM.GRADES.ADJOINT_ADMINISTRATIF_GRADE_PRINCIPAL' | translate }}</option>
+                <option value="ADJOINT_TECHNIQUE_1ER_GRADE">{{ 'PERSONNEL.FORM.GRADES.ADJOINT_TECHNIQUE_1ER_GRADE' | translate }}</option>
+                <option value="ADJOINT_TECHNIQUE_GRADE_PRINCIPAL">{{ 'PERSONNEL.FORM.GRADES.ADJOINT_TECHNIQUE_GRADE_PRINCIPAL' | translate }}</option>
+                <option value="AGENTS_A_CONTRAT">{{ 'PERSONNEL.FORM.GRADES.AGENTS_A_CONTRAT' | translate }}</option>
+                <option value="AGENT_EXECUTION">{{ 'PERSONNEL.FORM.GRADES.AGENT_EXECUTION' | translate }}</option>
+                <option value="AGENT_EXECUTION_PRINCIPAL">{{ 'PERSONNEL.FORM.GRADES.AGENT_EXECUTION_PRINCIPAL' | translate }}</option>
+                <option value="AGENT_DE_SERVICE">{{ 'PERSONNEL.FORM.GRADES.AGENT_DE_SERVICE' | translate }}</option>
+                <option value="INGENIEUR_EN_CHEF_PREMIER_GRADE">{{ 'PERSONNEL.FORM.GRADES.INGENIEUR_EN_CHEF_PREMIER_GRADE' | translate }}</option>
+                <option value="ARCHITECTE_PREMIER_GRADE">{{ 'PERSONNEL.FORM.GRADES.ARCHITECTE_PREMIER_GRADE' | translate }}</option>
               </select>
             </div>
             <div class="field">
-              <label>Fonction</label>
+              <label>{{ 'PERSONNEL.FONCTION' | translate }}</label>
               <select formControlName="fonction">
-                <option value="">-- Sélectionner --</option>
-                <option value="DIRECTEUR">Directeur</option>
-                <option value="DIRECTEUR_DU_CENTRE">Directeur du centre</option>
-                <option value="DIRECTEUR_PROVINCIAL">Directeur provincial</option>
-                <option value="DIRECTEUR_REGIONAL">Directeur régional</option>
-                <option value="SOUS_DIRECTEUR">Sous directeur</option>
-                <option value="CHEF_DE_DIVISION">Chef de division</option>
-                <option value="CHEF_DE_SERVICE">Chef de service</option>
-                <option value="INSPECTEUR">Inspecteur</option>
-                <option value="RESPONSABLE_ADMINISTRATIF_FINANCIER">Responsable administratif et financier</option>
-                <option value="CHEF_BUREAU_ADMINISTRATIF_TECHNIQUE">Chef bureau administratif et technique</option>
-                <option value="ASSISTANT_SOCIAL">Assistant social</option>
-                <option value="MEDECIN">Médecin</option>
-                <option value="INFIRMIER">Infirmier</option>
-                <option value="PSYCHOLOGUE">Psychologue</option>
-                <option value="EDUCATEUR">Éducateur</option>
-                <option value="FORMATEUR">Formateur</option>
-                <option value="AGENT_SURVEILLANCE_SECURITE">Agent de surveillance et sécurité</option>
+                <option value="">{{ 'PERSONNEL.FORM.SELECT_PLACEHOLDER' | translate }}</option>
+                <option value="DIRECTEUR">{{ 'PERSONNEL.FORM.FONCTIONS.DIRECTEUR' | translate }}</option>
+                <option value="DIRECTEUR_DU_CENTRE">{{ 'PERSONNEL.FORM.FONCTIONS.DIRECTEUR_DU_CENTRE' | translate }}</option>
+                <option value="DIRECTEUR_PROVINCIAL">{{ 'PERSONNEL.FORM.FONCTIONS.DIRECTEUR_PROVINCIAL' | translate }}</option>
+                <option value="DIRECTEUR_REGIONAL">{{ 'PERSONNEL.FORM.FONCTIONS.DIRECTEUR_REGIONAL' | translate }}</option>
+                <option value="SOUS_DIRECTEUR">{{ 'PERSONNEL.FORM.FONCTIONS.SOUS_DIRECTEUR' | translate }}</option>
+                <option value="CHEF_DE_DIVISION">{{ 'PERSONNEL.FORM.FONCTIONS.CHEF_DE_DIVISION' | translate }}</option>
+                <option value="CHEF_DE_SERVICE">{{ 'PERSONNEL.FORM.FONCTIONS.CHEF_DE_SERVICE' | translate }}</option>
+                <option value="INSPECTEUR">{{ 'PERSONNEL.FORM.FONCTIONS.INSPECTEUR' | translate }}</option>
+                <option value="RESPONSABLE_ADMINISTRATIF_FINANCIER">{{ 'PERSONNEL.FORM.FONCTIONS.RESPONSABLE_ADMINISTRATIF_FINANCIER' | translate }}</option>
+                <option value="CHEF_BUREAU_ADMINISTRATIF_TECHNIQUE">{{ 'PERSONNEL.FORM.FONCTIONS.CHEF_BUREAU_ADMINISTRATIF_TECHNIQUE' | translate }}</option>
+                <option value="ASSISTANT_SOCIAL">{{ 'PERSONNEL.FORM.FONCTIONS.ASSISTANT_SOCIAL' | translate }}</option>
+                <option value="MEDECIN">{{ 'PERSONNEL.FORM.FONCTIONS.MEDECIN' | translate }}</option>
+                <option value="INFIRMIER">{{ 'PERSONNEL.FORM.FONCTIONS.INFIRMIER' | translate }}</option>
+                <option value="PSYCHOLOGUE">{{ 'PERSONNEL.FORM.FONCTIONS.PSYCHOLOGUE' | translate }}</option>
+                <option value="EDUCATEUR">{{ 'PERSONNEL.FORM.FONCTIONS.EDUCATEUR' | translate }}</option>
+                <option value="FORMATEUR">{{ 'PERSONNEL.FORM.FONCTIONS.FORMATEUR' | translate }}</option>
+                <option value="AGENT_SURVEILLANCE_SECURITE">{{ 'PERSONNEL.FORM.FONCTIONS.AGENT_SURVEILLANCE_SECURITE' | translate }}</option>
               </select>
             </div>
             <div class="field">
-              <label>Poste occupé</label>
+              <label>{{ 'PERSONNEL.FORM.POSTE_OCCUPE' | translate }}</label>
               <select formControlName="posteOccupe">
-                <option value="">-- Sélectionner --</option>
-                <option value="DIRECTEUR">Directeur</option>
-                <option value="DIRECTEUR_DU_CENTRE">Directeur du centre</option>
-                <option value="DIRECTEUR_PROVINCIAL">Directeur provincial</option>
-                <option value="DIRECTEUR_REGIONAL">Directeur régional</option>
-                <option value="SOUS_DIRECTEUR">Sous directeur</option>
-                <option value="CHEF_DE_DIVISION">Chef de division</option>
-                <option value="CHEF_DU_SERVICE">Chef du service</option>
-                <option value="INSPECTEUR">Inspecteur</option>
-                <option value="CHEF_BUREAU_ADMINISTRATIF_TECHNIQUE">Chef bureau administratif et technique</option>
+                <option value="">{{ 'PERSONNEL.FORM.SELECT_PLACEHOLDER' | translate }}</option>
+                <option value="DIRECTEUR">{{ 'PERSONNEL.FORM.POSTES.DIRECTEUR' | translate }}</option>
+                <option value="DIRECTEUR_DU_CENTRE">{{ 'PERSONNEL.FORM.POSTES.DIRECTEUR_DU_CENTRE' | translate }}</option>
+                <option value="DIRECTEUR_PROVINCIAL">{{ 'PERSONNEL.FORM.POSTES.DIRECTEUR_PROVINCIAL' | translate }}</option>
+                <option value="DIRECTEUR_REGIONAL">{{ 'PERSONNEL.FORM.POSTES.DIRECTEUR_REGIONAL' | translate }}</option>
+                <option value="SOUS_DIRECTEUR">{{ 'PERSONNEL.FORM.POSTES.SOUS_DIRECTEUR' | translate }}</option>
+                <option value="CHEF_DE_DIVISION">{{ 'PERSONNEL.FORM.POSTES.CHEF_DE_DIVISION' | translate }}</option>
+                <option value="CHEF_DU_SERVICE">{{ 'PERSONNEL.FORM.POSTES.CHEF_DU_SERVICE' | translate }}</option>
+                <option value="INSPECTEUR">{{ 'PERSONNEL.FORM.POSTES.INSPECTEUR' | translate }}</option>
+                <option value="CHEF_BUREAU_ADMINISTRATIF_TECHNIQUE">{{ 'PERSONNEL.FORM.POSTES.CHEF_BUREAU_ADMINISTRATIF_TECHNIQUE' | translate }}</option>
               </select>
             </div>
             <div class="field">
-              <label>Catégorie</label>
+              <label>{{ 'PERSONNEL.FORM.CATEGORIE' | translate }}</label>
               <select formControlName="categorie">
-                <option value="">-- Sélectionner --</option>
-                <option value="agent administratif">Agent administratif</option>
-                <option value="cadre">Cadre</option>
-                <option value="technicien">Technicien</option>
-                <option value="ouvrier">Ouvrier</option>
+                <option value="">{{ 'PERSONNEL.FORM.SELECT_PLACEHOLDER' | translate }}</option>
+                <option value="agent administratif">{{ 'PERSONNEL.FORM.CATEGORIES.AGENT_ADMINISTRATIF' | translate }}</option>
+                <option value="cadre">{{ 'PERSONNEL.FORM.CATEGORIES.CADRE' | translate }}</option>
+                <option value="technicien">{{ 'PERSONNEL.FORM.CATEGORIES.TECHNICIEN' | translate }}</option>
+                <option value="ouvrier">{{ 'PERSONNEL.FORM.CATEGORIES.OUVRIER' | translate }}</option>
               </select>
             </div>
           </div>
           <div class="form-row">
             <div class="field">
-              <label>Salaire (MAD)</label>
+              <label>{{ 'PERSONNEL.FORM.SALAIRE' | translate }}</label>
               <input type="number" formControlName="salaire" placeholder="0">
             </div>
           </div>
@@ -214,37 +215,37 @@ import { EtablissementCentre, Programme, Prestation } from '../../../core/models
 
       <!-- Section 3: Formation -->
       <mat-card class="mb-2">
-        <mat-card-header><mat-card-title>Formation & Diplôme</mat-card-title></mat-card-header>
+        <mat-card-header><mat-card-title>{{ 'PERSONNEL.FORM.SECTION_FORMATION' | translate }}</mat-card-title></mat-card-header>
         <mat-card-content>
           <div class="form-row">
             <div class="field">
-              <label>Niveau scolaire</label>
+              <label>{{ 'PERSONNEL.FORM.NIVEAU_SCOLAIRE' | translate }}</label>
               <select formControlName="niveauScolaire">
-                <option value="">-- Sélectionner --</option>
-                <option value="PRESCOLAIRE_PRIMAIRE">Préscolaire & Primaire</option>
-                <option value="COLLEGE">Collège</option>
-                <option value="LYCEE">Lycée</option>
-                <option value="FORMATION_PROFESSIONNELLE">Formation professionnelle</option>
-                <option value="ETUDES_SUPERIEURES">Études supérieures</option>
+                <option value="">{{ 'PERSONNEL.FORM.SELECT_PLACEHOLDER' | translate }}</option>
+                <option value="PRESCOLAIRE_PRIMAIRE">{{ 'PERSONNEL.FORM.NIVEAUX_SCOLAIRE.PRESCOLAIRE_PRIMAIRE' | translate }}</option>
+                <option value="COLLEGE">{{ 'PERSONNEL.FORM.NIVEAUX_SCOLAIRE.COLLEGE' | translate }}</option>
+                <option value="LYCEE">{{ 'PERSONNEL.FORM.NIVEAUX_SCOLAIRE.LYCEE' | translate }}</option>
+                <option value="FORMATION_PROFESSIONNELLE">{{ 'PERSONNEL.FORM.NIVEAUX_SCOLAIRE.FORMATION_PROFESSIONNELLE' | translate }}</option>
+                <option value="ETUDES_SUPERIEURES">{{ 'PERSONNEL.FORM.NIVEAUX_SCOLAIRE.ETUDES_SUPERIEURES' | translate }}</option>
               </select>
             </div>
             <div class="field">
-              <label>Diplôme</label>
+              <label>{{ 'PERSONNEL.FORM.DIPLOME' | translate }}</label>
               <select formControlName="diplome">
-                <option value="">-- Sélectionner --</option>
-                <option value="BTS">BTS</option>
-                <option value="DUT">DUT</option>
-                <option value="BEP">BEP</option>
-                <option value="DEUG">DEUG</option>
-                <option value="LICENCE">Licence</option>
-                <option value="MASTER">Master</option>
-                <option value="DOCTORAT">Doctorat</option>
-                <option value="DT">Diplôme de Technicien</option>
-                <option value="DTS">Diplôme de Technicien Spécialisé</option>
-                <option value="CQP">CQP</option>
-                <option value="CSP">CSP</option>
-                <option value="DQP">DQP</option>
-                <option value="DSP">DSP</option>
+                <option value="">{{ 'PERSONNEL.FORM.SELECT_PLACEHOLDER' | translate }}</option>
+                <option value="BTS">{{ 'PERSONNEL.FORM.DIPLOMES.BTS' | translate }}</option>
+                <option value="DUT">{{ 'PERSONNEL.FORM.DIPLOMES.DUT' | translate }}</option>
+                <option value="BEP">{{ 'PERSONNEL.FORM.DIPLOMES.BEP' | translate }}</option>
+                <option value="DEUG">{{ 'PERSONNEL.FORM.DIPLOMES.DEUG' | translate }}</option>
+                <option value="LICENCE">{{ 'PERSONNEL.FORM.DIPLOMES.LICENCE' | translate }}</option>
+                <option value="MASTER">{{ 'PERSONNEL.FORM.DIPLOMES.MASTER' | translate }}</option>
+                <option value="DOCTORAT">{{ 'PERSONNEL.FORM.DIPLOMES.DOCTORAT' | translate }}</option>
+                <option value="DT">{{ 'PERSONNEL.FORM.DIPLOMES.DT' | translate }}</option>
+                <option value="DTS">{{ 'PERSONNEL.FORM.DIPLOMES.DTS' | translate }}</option>
+                <option value="CQP">{{ 'PERSONNEL.FORM.DIPLOMES.CQP' | translate }}</option>
+                <option value="CSP">{{ 'PERSONNEL.FORM.DIPLOMES.CSP' | translate }}</option>
+                <option value="DQP">{{ 'PERSONNEL.FORM.DIPLOMES.DQP' | translate }}</option>
+                <option value="DSP">{{ 'PERSONNEL.FORM.DIPLOMES.DSP' | translate }}</option>
               </select>
             </div>
           </div>
@@ -253,28 +254,28 @@ import { EtablissementCentre, Programme, Prestation } from '../../../core/models
 
       <!-- Section 4: Affectation -->
       <mat-card class="mb-2">
-        <mat-card-header><mat-card-title>Affectation</mat-card-title></mat-card-header>
+        <mat-card-header><mat-card-title>{{ 'PERSONNEL.FORM.SECTION_AFFECTATION' | translate }}</mat-card-title></mat-card-header>
         <mat-card-content>
           <div class="form-row">
             <div class="field">
-              <label>Établissement / Centre *</label>
+              <label>{{ 'PERSONNEL.FORM.ETABLISSEMENT_CENTRE' | translate }} *</label>
               <select formControlName="etablissementCentreId" (change)="onEtabChange($event)">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'PERSONNEL.FORM.SELECT_PLACEHOLDER' | translate }}</option>
                 <option *ngFor="let e of etablissements" [value]="e.id">{{ e.nomFr }}</option>
               </select>
-              <span class="err" *ngIf="form.get('etablissementCentreId')?.invalid && form.get('etablissementCentreId')?.touched">Champ requis</span>
+              <span class="err" *ngIf="form.get('etablissementCentreId')?.invalid && form.get('etablissementCentreId')?.touched">{{ 'PERSONNEL.FORM.REQUIRED_FIELD' | translate }}</span>
             </div>
             <div class="field">
-              <label>Programme</label>
+              <label>{{ 'PERSONNEL.FORM.PROGRAMME' | translate }}</label>
               <select formControlName="programmeId" (change)="onProgrammeChange($event)">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'PERSONNEL.FORM.SELECT_PLACEHOLDER' | translate }}</option>
                 <option *ngFor="let p of programmes" [value]="p.id">{{ p.nomFr }}</option>
               </select>
             </div>
             <div class="field">
-              <label>Prestation</label>
+              <label>{{ 'PERSONNEL.FORM.PRESTATION' | translate }}</label>
               <select formControlName="prestationId">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'PERSONNEL.FORM.SELECT_PLACEHOLDER' | translate }}</option>
                 <option *ngFor="let p of prestations" [value]="p.id">{{ p.nomFr }}</option>
               </select>
             </div>
@@ -284,10 +285,10 @@ import { EtablissementCentre, Programme, Prestation } from '../../../core/models
 
       <!-- Actions -->
       <div class="form-actions">
-        <button mat-button type="button" routerLink="/personnel">Annuler</button>
+        <button mat-button type="button" routerLink="/personnel">{{ 'COMMON.CANCEL' | translate }}</button>
         <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || saving">
           <mat-spinner diameter="18" *ngIf="saving" style="display:inline-block;margin-right:8px"></mat-spinner>
-          <span>{{ saving ? '' : (isEdit ? 'Enregistrer' : 'Créer') }}</span>
+          <span>{{ saving ? '' : ((isEdit ? 'COMMON.SAVE' : 'PERSONNEL.FORM.CREATE') | translate) }}</span>
         </button>
       </div>
 
@@ -332,7 +333,8 @@ export class PersonnelFormComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -437,14 +439,14 @@ export class PersonnelFormComponent implements OnInit {
     request.subscribe({
       next: () => {
         this.snackBar.open(
-          this.isEdit ? 'Agent modifié' : 'Agent créé',
+          this.translate.instant(this.isEdit ? 'PERSONNEL.FORM.UPDATED' : 'PERSONNEL.FORM.CREATED'),
           'OK', { duration: 3000, panelClass: 'success-snackbar' }
         );
         this.router.navigate(['/personnel']);
       },
       error: () => {
         this.saving = false;
-        this.snackBar.open('Erreur', 'Fermer', { duration: 3000, panelClass: 'error-snackbar' });
+        this.snackBar.open(this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000, panelClass: 'error-snackbar' });
       }
     });
   }

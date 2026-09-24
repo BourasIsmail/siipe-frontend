@@ -7,13 +7,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api.service';
 import { Personnel } from '../../../core/models/personnel.model';
 
 interface EvalCritere {
   key: string;
-  label: string;
-  description: string;
   obsKey: string;
 }
 
@@ -23,7 +22,7 @@ interface EvalCritere {
   imports: [
     CommonModule, FormsModule, RouterModule,
     MatCardModule, MatButtonModule, MatIconModule,
-    MatProgressSpinnerModule, MatSnackBarModule
+    MatProgressSpinnerModule, MatSnackBarModule, TranslateModule
   ],
   template: `
     <div *ngIf="loading" class="flex-center" style="height:300px">
@@ -33,32 +32,32 @@ interface EvalCritere {
     <ng-container *ngIf="!loading && personnel">
       <div class="page-header">
         <button class="btn btn-outline" [routerLink]="['/personnel', personnel.id]">
-          <mat-icon>arrow_back</mat-icon> Retour
+          <mat-icon>arrow_back</mat-icon> {{ 'COMMON.BACK' | translate }}
         </button>
         <button class="btn btn-primary" (click)="save()" [disabled]="saving">
           <mat-spinner diameter="16" *ngIf="saving" style="display:inline-block;margin-right:6px"></mat-spinner>
           <mat-icon *ngIf="!saving">save</mat-icon>
-          {{ saving ? 'Enregistrement...' : 'Enregistrer' }}
+          {{ saving ? ('PERSONNEL.EVALUATION.SAVING' | translate) : ('COMMON.SAVE' | translate) }}
         </button>
       </div>
 
       <mat-card>
         <mat-card-content>
-          <div class="eval-title">FICHE ÉVALUATION DES BESOINS EN FORMATION</div>
+          <div class="eval-title">{{ 'PERSONNEL.EVALUATION.SHEET_TITLE' | translate }}</div>
           <div class="eval-subtitle">{{ personnel.nom }} {{ personnel.prenom }} — {{ personnel.matricule }}</div>
 
           <div class="table-wrap">
             <table class="eval-table">
               <thead>
                 <tr>
-                  <th class="col-competence">COMPÉTENCES</th>
+                  <th class="col-competence">{{ 'PERSONNEL.EVALUATION.COMPETENCES' | translate }}</th>
                   <th class="col-note" *ngFor="let n of [1,2,3,4,5]">{{ n }}</th>
-                  <th class="col-total">TOTAL POINTS</th>
-                  <th class="col-obs">Commentaire / Observation<br><small>ACTIONS OU RECOMMANDATION</small></th>
+                  <th class="col-total">{{ 'PERSONNEL.EVALUATION.TOTAL_POINTS' | translate }}</th>
+                  <th class="col-obs">{{ 'PERSONNEL.EVALUATION.COMMENT_OBSERVATION' | translate }}<br><small>{{ 'PERSONNEL.EVALUATION.ACTIONS_RECOMMENDATION' | translate }}</small></th>
                 </tr>
                 <tr class="sub-header">
                   <th></th>
-                  <th colspan="5" class="cote-header">COTE D'APPRÉCIATION</th>
+                  <th colspan="5" class="cote-header">{{ 'PERSONNEL.EVALUATION.APPRECIATION_SCALE' | translate }}</th>
                   <th></th>
                   <th></th>
                 </tr>
@@ -66,8 +65,8 @@ interface EvalCritere {
               <tbody>
                 <tr *ngFor="let c of criteres">
                   <td class="col-competence">
-                    <div class="competence-label">{{ c.label }}</div>
-                    <div class="competence-desc">{{ c.description }}</div>
+                    <div class="competence-label">{{ getCriterionLabel(c.key) }}</div>
+                    <div class="competence-desc">{{ getCriterionDescription(c.key) }}</div>
                   </td>
                   <td class="col-note" *ngFor="let n of [1,2,3,4,5]">
                     <label class="radio-label">
@@ -84,13 +83,13 @@ interface EvalCritere {
                       [(ngModel)]="observations[c.obsKey]"
                       rows="3"
                       class="obs-textarea"
-                      placeholder="Observation...">
+                      [placeholder]="'PERSONNEL.EVALUATION.OBSERVATION_PLACEHOLDER' | translate">
                     </textarea>
                   </td>
                 </tr>
                 <!-- Total row -->
                 <tr class="total-row">
-                  <td class="col-competence"><strong>TOTAL GÉNÉRAL</strong></td>
+                  <td class="col-competence"><strong>{{ 'PERSONNEL.EVALUATION.TOTAL_GENERAL' | translate }}</strong></td>
                   <td colspan="5"></td>
                   <td class="col-total">
                     <strong class="total-score" [style.color]="getTotalColor()">{{ totalScore }}</strong>
@@ -194,66 +193,18 @@ export class PersonnelEvaluationComponent implements OnInit {
   observations: Record<string, string> = {};
 
   readonly criteres: EvalCritere[] = [
-    {
-      key: 'organisation', obsKey: 'observation1',
-      label: 'Organisation',
-      description: 'Identifie les ressources requises pour son travail. Répartit ses tâches. Choisit des moyens économiques. Planifie ses activités.'
-    },
-    {
-      key: 'activite', obsKey: 'observation1',
-      label: 'Quantité de travail',
-      description: 'Exécute les activités dans le cadre du planning opérationnel dans le respect des délais. Produit le volume de travail attendu.'
-    },
-    {
-      key: 'specialisation', obsKey: 'observation2',
-      label: 'Qualité du travail',
-      description: 'Produit des résultats conformes à ce qui est demandé. Recherche du feed-back sur ses résultats. Anticipe les problèmes ou les obstacles.'
-    },
-    {
-      key: 'initiative', obsKey: 'observation2',
-      label: 'Initiative',
-      description: 'Propose des améliorations. Prend des décisions appropriées dans son domaine. Agit de façon proactive face aux situations nouvelles.'
-    },
-    {
-      key: 'autonomie', obsKey: 'observation2',
-      label: 'Autonomie',
-      description: 'Travaille de façon indépendante. Gère son temps efficacement. Prend les décisions relevant de sa compétence sans solliciter constamment son supérieur.'
-    },
-    {
-      key: 'adaptationProfessionnelle', obsKey: 'observation2',
-      label: 'Adaptation professionnelle',
-      description: 'S\'adapte aux changements d\'organisation. Accepte de nouvelles tâches. Fait preuve de flexibilité dans son travail.'
-    },
-    {
-      key: 'relationsTravail', obsKey: 'observation3',
-      label: 'Relations de travail',
-      description: 'Entretient des relations professionnelles constructives. Coopère avec ses collègues. Contribue à un climat de travail positif.'
-    },
-    {
-      key: 'techniqueExecution', obsKey: 'observation3',
-      label: 'Technique d\'exécution',
-      description: 'Maîtrise les techniques propres à son métier. Applique les procédures et les normes. Met à jour ses connaissances techniques.'
-    },
-    {
-      key: 'communication', obsKey: 'observation3',
-      label: 'Communication',
-      description: 'S\'exprime clairement à l\'oral et à l\'écrit. Écoute activement. Transmet l\'information de façon appropriée et dans les délais.'
-    },
-    {
-      key: 'toleranceStress', obsKey: 'observation3',
-      label: 'Tolérance au stress',
-      description: 'Maintient son efficacité dans les situations difficiles. Gère positivement la pression. Reste calme et professionnel face aux situations d\'urgence.'
-    },
-    {
-      key: 'assiduitePointage', obsKey: 'observation3',
-      label: 'Assiduité & Pointage',
-      description: 'Respecte les horaires de travail. Est régulièrement présent. Signale ses absences dans les délais requis.'
-    },
-    {
-      key: 'servicePopulation', obsKey: 'observation3',
-      label: 'Service à la population',
-      description: 'Accueille les bénéficiaires avec courtoisie. Répond à leurs besoins avec efficacité. Maintient une attitude professionnelle et bienveillante.'
-    },
+    { key: 'organisation', obsKey: 'observation1' },
+    { key: 'activite', obsKey: 'observation1' },
+    { key: 'specialisation', obsKey: 'observation2' },
+    { key: 'initiative', obsKey: 'observation2' },
+    { key: 'autonomie', obsKey: 'observation2' },
+    { key: 'adaptationProfessionnelle', obsKey: 'observation2' },
+    { key: 'relationsTravail', obsKey: 'observation3' },
+    { key: 'techniqueExecution', obsKey: 'observation3' },
+    { key: 'communication', obsKey: 'observation3' },
+    { key: 'toleranceStress', obsKey: 'observation3' },
+    { key: 'assiduitePointage', obsKey: 'observation3' },
+    { key: 'servicePopulation', obsKey: 'observation3' },
   ];
 
   constructor(
@@ -261,7 +212,8 @@ export class PersonnelEvaluationComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private snackBar: MatSnackBar,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -301,6 +253,14 @@ export class PersonnelEvaluationComponent implements OnInit {
     return Object.values(this.scores).reduce((sum, v) => sum + (v || 0), 0);
   }
 
+  getCriterionLabel(key: string): string {
+    return this.translate.instant('PERSONNEL.EVALUATION.CRITERES.' + key + '.LABEL');
+  }
+
+  getCriterionDescription(key: string): string {
+    return this.translate.instant('PERSONNEL.EVALUATION.CRITERES.' + key + '.DESCRIPTION');
+  }
+
   getTotalColor(): string {
     const max = this.criteres.length * 5;
     const pct = this.totalScore / max;
@@ -313,10 +273,10 @@ export class PersonnelEvaluationComponent implements OnInit {
   getAppreciation(): string {
     const max = this.criteres.length * 5;
     const pct = this.totalScore / max;
-    if (pct >= 0.8) return 'Très bien';
-    if (pct >= 0.6) return 'Bien';
-    if (pct >= 0.4) return 'Assez bien';
-    return 'Insuffisant';
+    if (pct >= 0.8) return this.translate.instant('PERSONNEL.EVALUATION.APPRECIATIONS.TRES_BIEN');
+    if (pct >= 0.6) return this.translate.instant('PERSONNEL.EVALUATION.APPRECIATIONS.BIEN');
+    if (pct >= 0.4) return this.translate.instant('PERSONNEL.EVALUATION.APPRECIATIONS.ASSEZ_BIEN');
+    return this.translate.instant('PERSONNEL.EVALUATION.APPRECIATIONS.INSUFFISANT');
   }
 
   save() {
@@ -329,12 +289,12 @@ export class PersonnelEvaluationComponent implements OnInit {
     this.api.updatePersonnel(this.personnel.id, { ...this.personnel, ...data }).subscribe({
       next: () => {
         this.saving = false;
-        this.snackBar.open('Évaluation enregistrée', 'OK', { duration: 3000, panelClass: 'success-snackbar' });
+        this.snackBar.open(this.translate.instant('PERSONNEL.EVALUATION.SAVED'), 'OK', { duration: 3000, panelClass: 'success-snackbar' });
         this.router.navigate(['/personnel', this.personnel!.id]);
       },
       error: () => {
         this.saving = false;
-        this.snackBar.open('Erreur', 'Fermer', { duration: 3000, panelClass: 'error-snackbar' });
+        this.snackBar.open(this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000, panelClass: 'error-snackbar' });
       }
     });
   }

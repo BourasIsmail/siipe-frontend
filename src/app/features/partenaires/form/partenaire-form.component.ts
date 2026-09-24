@@ -12,11 +12,11 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [CommonModule, RouterModule, MatCardModule, MatButtonModule, MatIconModule, TranslateModule],
   template: `
     <div class="page-header">
-      <h1>Formulaire Partenaire</h1>
+      <h1>{{ 'PARTENAIRE.FORM.TITLE' | translate }}</h1>
     </div>
     <mat-card>
       <mat-card-content>
-        <p class="text-secondary">Composant en cours de développement...</p>
+        <p class="text-secondary">{{ 'COMMON.UNDER_DEVELOPMENT' | translate }}</p>
       </mat-card-content>
     </mat-card>
   `

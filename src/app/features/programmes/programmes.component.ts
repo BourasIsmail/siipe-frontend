@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../core/services/api.service';
 import { AuthService } from '../../core/auth/auth.service';
 import { Programme, Prestation } from '../../core/models/etablissement.model';
@@ -16,13 +17,13 @@ import { Programme, Prestation } from '../../core/models/etablissement.model';
   imports: [
     CommonModule, FormsModule, ReactiveFormsModule,
     MatCardModule, MatButtonModule, MatIconModule,
-    MatSnackBarModule, MatProgressSpinnerModule
+    MatSnackBarModule, MatProgressSpinnerModule, TranslateModule
   ],
   template: `
     <div class="page-header">
-      <h1>Programmes & Prestations</h1>
+      <h1>{{ 'PROGRAMME.TITLE' | translate }}</h1>
       <button class="btn btn-primary" (click)="openProgrammeForm()">
-        <mat-icon>add</mat-icon> Nouveau programme
+        <mat-icon>add</mat-icon> {{ 'PROGRAMME.NEW' | translate }}
       </button>
     </div>
 
@@ -33,31 +34,31 @@ import { Programme, Prestation } from '../../core/models/etablissement.model';
     <!-- Programme Form -->
     <mat-card class="mb-2" *ngIf="showProgrammeForm">
       <mat-card-header>
-        <mat-card-title>{{ editingProgrammeId ? 'Modifier' : 'Nouveau' }} programme</mat-card-title>
+        <mat-card-title>{{ (editingProgrammeId ? 'PROGRAMME.FORM_TITLE_EDIT' : 'PROGRAMME.NEW') | translate }}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <form [formGroup]="programmeForm" (ngSubmit)="onSubmitProgramme()">
           <div class="form-row">
             <div class="field">
-              <label>Nom (Français) *</label>
-              <input type="text" formControlName="nomFr" placeholder="Nom du programme">
-              <span class="err" *ngIf="programmeForm.get('nomFr')?.invalid && programmeForm.get('nomFr')?.touched">Champ requis</span>
+              <label>{{ 'PROGRAMME.NOM_FR_LABEL' | translate }}</label>
+              <input type="text" formControlName="nomFr" [placeholder]="'PROGRAMME.NOM_PLACEHOLDER' | translate">
+              <span class="err" *ngIf="programmeForm.get('nomFr')?.invalid && programmeForm.get('nomFr')?.touched">{{ 'PROGRAMME.REQUIRED' | translate }}</span>
             </div>
             <div class="field">
-              <label>Nom (Arabe) *</label>
+              <label>{{ 'PROGRAMME.NOM_AR_LABEL' | translate }}</label>
               <input type="text" formControlName="nomAr" dir="rtl" placeholder="اسم البرنامج">
-              <span class="err" *ngIf="programmeForm.get('nomAr')?.invalid && programmeForm.get('nomAr')?.touched">Champ requis</span>
+              <span class="err" *ngIf="programmeForm.get('nomAr')?.invalid && programmeForm.get('nomAr')?.touched">{{ 'PROGRAMME.REQUIRED' | translate }}</span>
             </div>
           </div>
           <div class="field mb-2">
-            <label>Description</label>
-            <textarea formControlName="description" rows="2" class="textarea" placeholder="Description..."></textarea>
+            <label>{{ 'PROGRAMME.DESCRIPTION' | translate }}</label>
+            <textarea formControlName="description" rows="2" class="textarea" [placeholder]="'PROGRAMME.DESCRIPTION_PLACEHOLDER' | translate"></textarea>
           </div>
           <div class="form-btns">
-            <button type="button" class="btn btn-outline" (click)="closeProgrammeForm()">Annuler</button>
+            <button type="button" class="btn btn-outline" (click)="closeProgrammeForm()">{{ 'COMMON.CANCEL' | translate }}</button>
             <button type="submit" class="btn btn-primary" [disabled]="programmeForm.invalid || savingProgramme">
               <mat-spinner diameter="16" *ngIf="savingProgramme" style="display:inline-block;margin-right:6px"></mat-spinner>
-              {{ savingProgramme ? '' : (editingProgrammeId ? 'Enregistrer' : 'Créer') }}
+              {{ savingProgramme ? '' : ((editingProgrammeId ? 'COMMON.SAVE' : 'PROGRAMME.CREATE') | translate) }}
             </button>
           </div>
         </form>
@@ -75,10 +76,10 @@ import { Programme, Prestation } from '../../core/models/etablissement.model';
               <div class="description text-secondary" *ngIf="p.description">{{ p.description }}</div>
             </div>
             <div class="programme-actions">
-              <button class="action-btn edit" (click)="openEditProgramme(p)" title="Modifier">
+              <button class="action-btn edit" (click)="openEditProgramme(p)" [title]="'COMMON.EDIT' | translate">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button class="action-btn delete" (click)="deleteProgramme(p)" title="Supprimer">
+              <button class="action-btn delete" (click)="deleteProgramme(p)" [title]="'COMMON.DELETE' | translate">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
@@ -87,9 +88,9 @@ import { Programme, Prestation } from '../../core/models/etablissement.model';
           <!-- Prestations section -->
           <div class="prestations-section">
             <div class="prestations-header">
-              <span class="badge badge-blue">{{ getPrestations(p.id).length }} prestation(s)</span>
+              <span class="badge badge-blue">{{ getPrestations(p.id).length }} {{ 'PROGRAMME.PRESTATIONS_COUNT_SUFFIX' | translate }}</span>
               <button class="btn-add-prest" (click)="openPrestationForm(p.id)">
-                <mat-icon>add</mat-icon> Ajouter prestation
+                <mat-icon>add</mat-icon> {{ 'PROGRAMME.ADD_PRESTATION' | translate }}
               </button>
             </div>
 
@@ -98,24 +99,24 @@ import { Programme, Prestation } from '../../core/models/etablissement.model';
               <form [formGroup]="prestationForm" (ngSubmit)="onSubmitPrestation(p.id)">
                 <div class="form-row-sm">
                   <div class="field">
-                    <label>Nom (Français) *</label>
-                    <input type="text" formControlName="nomFr" placeholder="Nom de la prestation">
-                    <span class="err" *ngIf="prestationForm.get('nomFr')?.invalid && prestationForm.get('nomFr')?.touched">Champ requis</span>
+                    <label>{{ 'PROGRAMME.NOM_FR_LABEL' | translate }}</label>
+                    <input type="text" formControlName="nomFr" [placeholder]="'PROGRAMME.PRESTATION_NOM_PLACEHOLDER' | translate">
+                    <span class="err" *ngIf="prestationForm.get('nomFr')?.invalid && prestationForm.get('nomFr')?.touched">{{ 'PROGRAMME.REQUIRED' | translate }}</span>
                   </div>
                   <div class="field">
-                    <label>Nom (Arabe) *</label>
+                    <label>{{ 'PROGRAMME.NOM_AR_LABEL' | translate }}</label>
                     <input type="text" formControlName="nomAr" dir="rtl" placeholder="اسم الخدمة">
-                    <span class="err" *ngIf="prestationForm.get('nomAr')?.invalid && prestationForm.get('nomAr')?.touched">Champ requis</span>
+                    <span class="err" *ngIf="prestationForm.get('nomAr')?.invalid && prestationForm.get('nomAr')?.touched">{{ 'PROGRAMME.REQUIRED' | translate }}</span>
                   </div>
                   <div class="field">
-                    <label>Description</label>
-                    <input type="text" formControlName="description" placeholder="Description (optionnel)">
+                    <label>{{ 'PROGRAMME.DESCRIPTION' | translate }}</label>
+                    <input type="text" formControlName="description" [placeholder]="'PROGRAMME.PRESTATION_DESCRIPTION_PLACEHOLDER' | translate">
                   </div>
                 </div>
                 <div class="form-btns-sm">
-                  <button type="button" class="btn-sm btn-outline-sm" (click)="closePrestationForm()">Annuler</button>
+                  <button type="button" class="btn-sm btn-outline-sm" (click)="closePrestationForm()">{{ 'COMMON.CANCEL' | translate }}</button>
                   <button type="submit" class="btn-sm btn-primary-sm" [disabled]="prestationForm.invalid || savingPrestation">
-                    {{ savingPrestation ? 'Enregistrement...' : 'Créer la prestation' }}
+                    {{ (savingPrestation ? 'PROGRAMME.SAVING' : 'PROGRAMME.CREATE_PRESTATION') | translate }}
                   </button>
                 </div>
               </form>
@@ -132,13 +133,13 @@ import { Programme, Prestation } from '../../core/models/etablissement.model';
                     <div class="text-secondary" style="font-size:12px" *ngIf="pr.description">{{ pr.description }}</div>
                   </div>
                 </div>
-                <button class="action-btn-sm delete" (click)="deletePrestation(pr, p.id)" title="Supprimer">
+                <button class="action-btn-sm delete" (click)="deletePrestation(pr, p.id)" [title]="'COMMON.DELETE' | translate">
                   <mat-icon>close</mat-icon>
                 </button>
               </div>
               <div class="empty-prestations" *ngIf="getPrestations(p.id).length === 0">
                 <mat-icon>info_outline</mat-icon>
-                Aucune prestation — cliquez sur "Ajouter prestation" pour en créer
+                {{ 'PROGRAMME.EMPTY_PRESTATIONS' | translate }}
               </div>
             </div>
           </div>
@@ -147,7 +148,7 @@ import { Programme, Prestation } from '../../core/models/etablissement.model';
 
       <div class="empty-state" *ngIf="programmes.length === 0">
         <mat-icon>category</mat-icon>
-        <p>Aucun programme — cliquez sur "Nouveau programme" pour commencer</p>
+        <p>{{ 'PROGRAMME.EMPTY' | translate }}</p>
       </div>
     </div>
   `,
@@ -274,7 +275,8 @@ export class ProgrammesComponent implements OnInit {
     private auth: AuthService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -366,29 +368,29 @@ export class ProgrammesComponent implements OnInit {
         this.savingProgramme = false;
         this.closeProgrammeForm();
         this.snackBar.open(
-          this.editingProgrammeId ? 'Programme modifié' : 'Programme créé',
+          this.editingProgrammeId ? this.translate.instant('PROGRAMME.UPDATED') : this.translate.instant('PROGRAMME.CREATED'),
           'OK', { duration: 3000, panelClass: 'success-snackbar' }
         );
         this.cdr.detectChanges();
       },
       error: () => {
         this.savingProgramme = false;
-        this.snackBar.open('Erreur', 'Fermer', { duration: 3000, panelClass: 'error-snackbar' });
+        this.snackBar.open(this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000, panelClass: 'error-snackbar' });
       }
     });
   }
 
   deleteProgramme(p: Programme) {
-    if (!confirm(`Supprimer le programme "${p.nomFr}" et toutes ses prestations ?`)) return;
+    if (!confirm(this.translate.instant('PROGRAMME.CONFIRM_DELETE', { name: p.nomFr }))) return;
     this.api.deleteProgramme(p.id).subscribe({
       next: () => {
         this.programmes = this.programmes.filter(x => x.id !== p.id);
         this.prestationsMap.delete(p.id);
         this.prestationsMap = new Map(this.prestationsMap);
-        this.snackBar.open('Programme supprimé', 'OK', { duration: 3000 });
+        this.snackBar.open(this.translate.instant('PROGRAMME.DELETED'), 'OK', { duration: 3000 });
         this.cdr.detectChanges();
       },
-      error: () => this.snackBar.open('Erreur', 'Fermer', { duration: 3000 })
+      error: () => this.snackBar.open(this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000 })
     });
   }
 
@@ -412,27 +414,27 @@ export class ProgrammesComponent implements OnInit {
         this.prestationsMap = new Map(this.prestationsMap);
         this.savingPrestation = false;
         this.closePrestationForm();
-        this.snackBar.open('Prestation créée', 'OK', { duration: 3000, panelClass: 'success-snackbar' });
+        this.snackBar.open(this.translate.instant('PROGRAMME.PRESTATION_CREATED'), 'OK', { duration: 3000, panelClass: 'success-snackbar' });
         this.cdr.detectChanges();
       },
       error: () => {
         this.savingPrestation = false;
-        this.snackBar.open('Erreur', 'Fermer', { duration: 3000, panelClass: 'error-snackbar' });
+        this.snackBar.open(this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000, panelClass: 'error-snackbar' });
       }
     });
   }
 
   deletePrestation(pr: Prestation, programmeId: number) {
-    if (!confirm(`Supprimer la prestation "${pr.nomFr}" ?`)) return;
+    if (!confirm(this.translate.instant('PROGRAMME.CONFIRM_DELETE_PRESTATION', { name: pr.nomFr }))) return;
     this.api.deletePrestation(pr.id).subscribe({
       next: () => {
         const existing = this.prestationsMap.get(programmeId) || [];
         this.prestationsMap.set(programmeId, existing.filter(x => x.id !== pr.id));
         this.prestationsMap = new Map(this.prestationsMap);
-        this.snackBar.open('Prestation supprimée', 'OK', { duration: 3000 });
+        this.snackBar.open(this.translate.instant('PROGRAMME.PRESTATION_DELETED'), 'OK', { duration: 3000 });
         this.cdr.detectChanges();
       },
-      error: () => this.snackBar.open('Erreur', 'Fermer', { duration: 3000 })
+      error: () => this.snackBar.open(this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000 })
     });
   }
 }

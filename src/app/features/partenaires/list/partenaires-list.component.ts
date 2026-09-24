@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/auth/auth.service';
 import { Partenaire } from '../../../core/models/etablissement.model';
@@ -18,13 +19,13 @@ import { Province } from '../../../core/models/geo.model';
   imports: [
     CommonModule, RouterModule, FormsModule, ReactiveFormsModule,
     MatCardModule, MatButtonModule, MatIconModule,
-    MatSnackBarModule, MatProgressSpinnerModule
+    MatSnackBarModule, MatProgressSpinnerModule, TranslateModule
   ],
   template: `
     <div class="page-header">
-      <h1>Partenaires</h1>
+      <h1>{{ 'PARTENAIRE.LIST.TITLE' | translate }}</h1>
       <button class="btn btn-primary" (click)="openForm()" *ngIf="canEdit()">
-        <mat-icon>add</mat-icon> Ajouter
+        <mat-icon>add</mat-icon> {{ 'COMMON.ADD' | translate }}
       </button>
     </div>
 
@@ -33,31 +34,31 @@ import { Province } from '../../../core/models/geo.model';
       <mat-card-content>
         <div class="filter-grid">
           <div class="field">
-            <label>Nom</label>
-            <input type="text" [(ngModel)]="filterNom" (ngModelChange)="applyFilter()" placeholder="Rechercher...">
+            <label>{{ 'PARTENAIRE.LIST.NOM' | translate }}</label>
+            <input type="text" [(ngModel)]="filterNom" (ngModelChange)="applyFilter()" [placeholder]="'PARTENAIRE.LIST.SEARCH_PLACEHOLDER' | translate">
           </div>
           <div class="field">
-            <label>Type</label>
+            <label>{{ 'PARTENAIRE.LIST.TYPE' | translate }}</label>
             <select [(ngModel)]="filterType" (ngModelChange)="applyFilter()">
-              <option value="">Tous</option>
-              <option value="ONG">ONG</option>
-              <option value="ASSOCIATION">Association</option>
-              <option value="INSTITUTION_PUBLIQUE">Institution publique</option>
-              <option value="ENTREPRISE_PRIVEE">Entreprise privée</option>
-              <option value="ORGANISME_INTERNATIONAL">Organisme international</option>
-              <option value="AUTRE">Autre</option>
+              <option value="">{{ 'COMMON.ALL' | translate }}</option>
+              <option value="ONG">{{ 'PARTENAIRE.LIST.TYPES.ONG' | translate }}</option>
+              <option value="ASSOCIATION">{{ 'PARTENAIRE.LIST.TYPES.ASSOCIATION' | translate }}</option>
+              <option value="INSTITUTION_PUBLIQUE">{{ 'PARTENAIRE.LIST.TYPES.INSTITUTION_PUBLIQUE' | translate }}</option>
+              <option value="ENTREPRISE_PRIVEE">{{ 'PARTENAIRE.LIST.TYPES.ENTREPRISE_PRIVEE' | translate }}</option>
+              <option value="ORGANISME_INTERNATIONAL">{{ 'PARTENAIRE.LIST.TYPES.ORGANISME_INTERNATIONAL' | translate }}</option>
+              <option value="AUTRE">{{ 'PARTENAIRE.LIST.TYPES.AUTRE' | translate }}</option>
             </select>
           </div>
           <div class="field">
-            <label>Province</label>
+            <label>{{ 'PARTENAIRE.LIST.PROVINCE' | translate }}</label>
             <select [(ngModel)]="filterProvinceId" (ngModelChange)="applyFilter()">
-              <option [ngValue]="null">Toutes</option>
+              <option [ngValue]="null">{{ 'PARTENAIRE.LIST.ALL_PROVINCES' | translate }}</option>
               <option *ngFor="let p of provinces" [ngValue]="p.id">{{ p.nomFr }}</option>
             </select>
           </div>
           <div class="field" style="justify-content:flex-end;padding-top:20px">
             <button class="btn btn-outline" (click)="resetFilter()">
-              <mat-icon>clear</mat-icon> Réinitialiser
+              <mat-icon>clear</mat-icon> {{ 'COMMON.RESET' | translate }}
             </button>
           </div>
         </div>
@@ -72,66 +73,66 @@ import { Province } from '../../../core/models/geo.model';
     <!-- Add/Edit Form -->
     <mat-card class="mb-2" *ngIf="showForm">
       <mat-card-header>
-        <mat-card-title>{{ editingId ? 'Modifier' : 'Ajouter' }} un partenaire</mat-card-title>
+        <mat-card-title>{{ (editingId ? 'PARTENAIRE.LIST.FORM_TITLE_EDIT' : 'PARTENAIRE.LIST.FORM_TITLE_ADD') | translate }}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="form-row">
             <div class="field">
-              <label>Nom (Français) *</label>
-              <input type="text" formControlName="nomFr" placeholder="Nom">
-              <span class="err" *ngIf="form.get('nomFr')?.invalid && form.get('nomFr')?.touched">Champ requis</span>
+              <label>{{ 'PARTENAIRE.LIST.NOM_FR_LABEL' | translate }}</label>
+              <input type="text" formControlName="nomFr" [placeholder]="'PARTENAIRE.LIST.NOM_PLACEHOLDER' | translate">
+              <span class="err" *ngIf="form.get('nomFr')?.invalid && form.get('nomFr')?.touched">{{ 'PARTENAIRE.LIST.REQUIRED' | translate }}</span>
             </div>
             <div class="field">
-              <label>Nom (Arabe) *</label>
+              <label>{{ 'PARTENAIRE.LIST.NOM_AR_LABEL' | translate }}</label>
               <input type="text" formControlName="nomAr" dir="rtl" placeholder="الاسم">
-              <span class="err" *ngIf="form.get('nomAr')?.invalid && form.get('nomAr')?.touched">Champ requis</span>
+              <span class="err" *ngIf="form.get('nomAr')?.invalid && form.get('nomAr')?.touched">{{ 'PARTENAIRE.LIST.REQUIRED' | translate }}</span>
             </div>
             <div class="field">
-              <label>Type</label>
+              <label>{{ 'PARTENAIRE.LIST.TYPE' | translate }}</label>
               <select formControlName="type">
-                <option value="">-- Sélectionner --</option>
-                <option value="ONG">ONG</option>
-                <option value="ASSOCIATION">Association</option>
-                <option value="INSTITUTION_PUBLIQUE">Institution publique</option>
-                <option value="ENTREPRISE_PRIVEE">Entreprise privée</option>
-                <option value="ORGANISME_INTERNATIONAL">Organisme international</option>
-                <option value="AUTRE">Autre</option>
+                <option value="">{{ 'PARTENAIRE.LIST.SELECT_PLACEHOLDER' | translate }}</option>
+                <option value="ONG">{{ 'PARTENAIRE.LIST.TYPES.ONG' | translate }}</option>
+                <option value="ASSOCIATION">{{ 'PARTENAIRE.LIST.TYPES.ASSOCIATION' | translate }}</option>
+                <option value="INSTITUTION_PUBLIQUE">{{ 'PARTENAIRE.LIST.TYPES.INSTITUTION_PUBLIQUE' | translate }}</option>
+                <option value="ENTREPRISE_PRIVEE">{{ 'PARTENAIRE.LIST.TYPES.ENTREPRISE_PRIVEE' | translate }}</option>
+                <option value="ORGANISME_INTERNATIONAL">{{ 'PARTENAIRE.LIST.TYPES.ORGANISME_INTERNATIONAL' | translate }}</option>
+                <option value="AUTRE">{{ 'PARTENAIRE.LIST.TYPES.AUTRE' | translate }}</option>
               </select>
             </div>
             <div class="field">
-              <label>Responsable</label>
-              <input type="text" formControlName="responsable" placeholder="Nom du responsable">
+              <label>{{ 'PARTENAIRE.LIST.RESPONSABLE' | translate }}</label>
+              <input type="text" formControlName="responsable" [placeholder]="'PARTENAIRE.LIST.RESPONSABLE_PLACEHOLDER' | translate">
             </div>
             <div class="field">
-              <label>Téléphone</label>
+              <label>{{ 'PARTENAIRE.LIST.TELEPHONE' | translate }}</label>
               <input type="text" formControlName="telephone" placeholder="0600000000">
             </div>
             <div class="field">
-              <label>Email</label>
+              <label>{{ 'PARTENAIRE.LIST.EMAIL' | translate }}</label>
               <input type="email" formControlName="email" placeholder="contact@partenaire.ma">
             </div>
             <div class="field">
-              <label>Adresse</label>
-              <input type="text" formControlName="adresse" placeholder="Adresse">
+              <label>{{ 'PARTENAIRE.LIST.ADRESSE' | translate }}</label>
+              <input type="text" formControlName="adresse" [placeholder]="'PARTENAIRE.LIST.ADRESSE' | translate">
             </div>
             <div class="field">
-              <label>Province</label>
+              <label>{{ 'PARTENAIRE.LIST.PROVINCE' | translate }}</label>
               <select formControlName="provinceId">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'PARTENAIRE.LIST.SELECT_PLACEHOLDER' | translate }}</option>
                 <option *ngFor="let p of provinces" [value]="p.id">{{ p.nomFr }}</option>
               </select>
             </div>
           </div>
           <div class="field mb-2">
-            <label>Description</label>
-            <textarea formControlName="description" rows="3" class="textarea" placeholder="Description du partenaire..."></textarea>
+            <label>{{ 'PARTENAIRE.LIST.DESCRIPTION' | translate }}</label>
+            <textarea formControlName="description" rows="3" class="textarea" [placeholder]="'PARTENAIRE.LIST.DESCRIPTION_PLACEHOLDER' | translate"></textarea>
           </div>
           <div class="form-btns">
-            <button type="button" class="btn btn-outline" (click)="closeForm()">Annuler</button>
+            <button type="button" class="btn btn-outline" (click)="closeForm()">{{ 'COMMON.CANCEL' | translate }}</button>
             <button type="submit" class="btn btn-primary" [disabled]="form.invalid || saving">
               <mat-spinner diameter="16" *ngIf="saving" style="display:inline-block;margin-right:6px"></mat-spinner>
-              {{ saving ? '' : (editingId ? 'Enregistrer' : 'Créer') }}
+              {{ saving ? '' : ((editingId ? 'COMMON.SAVE' : 'PARTENAIRE.LIST.CREATE') | translate) }}
             </button>
           </div>
         </form>
@@ -142,19 +143,19 @@ import { Province } from '../../../core/models/geo.model';
     <mat-card *ngIf="!loading">
       <mat-card-content>
         <div class="table-meta">
-          <span class="text-secondary">{{ filtered.length }} partenaire(s)</span>
+          <span class="text-secondary">{{ filtered.length }} {{ 'PARTENAIRE.LIST.COUNT_SUFFIX' | translate }}</span>
         </div>
         <div class="table-wrap">
           <table class="data-table">
             <thead>
               <tr>
-                <th>Nom</th>
-                <th>Type</th>
-                <th>Responsable</th>
-                <th>Téléphone</th>
-                <th>Email</th>
-                <th>Province</th>
-                <th>Actions</th>
+                <th>{{ 'PARTENAIRE.LIST.NOM' | translate }}</th>
+                <th>{{ 'PARTENAIRE.LIST.TYPE' | translate }}</th>
+                <th>{{ 'PARTENAIRE.LIST.RESPONSABLE' | translate }}</th>
+                <th>{{ 'PARTENAIRE.LIST.TELEPHONE' | translate }}</th>
+                <th>{{ 'PARTENAIRE.LIST.EMAIL' | translate }}</th>
+                <th>{{ 'PARTENAIRE.LIST.PROVINCE' | translate }}</th>
+                <th>{{ 'COMMON.ACTIONS' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -171,7 +172,7 @@ import { Province } from '../../../core/models/geo.model';
                 <td>{{ p.email || '-' }}</td>
                 <td>{{ p.provinceNom || '-' }}</td>
                 <td class="actions">
-                  <button class="action-btn edit" (click)="openEditForm(p)" title="Modifier" *ngIf="canEdit()">
+                  <button class="action-btn edit" (click)="openEditForm(p)" [title]="'COMMON.EDIT' | translate" *ngIf="canEdit()">
                     <mat-icon>edit</mat-icon>
                   </button>
                   <button mat-icon-button color="warn" (click)="delete(p)" *ngIf="canDelete()">
@@ -180,7 +181,7 @@ import { Province } from '../../../core/models/geo.model';
                 </td>
               </tr>
               <tr *ngIf="paginated.length === 0">
-                <td colspan="7" class="empty-row">Aucun partenaire trouvé</td>
+                <td colspan="7" class="empty-row">{{ 'PARTENAIRE.LIST.EMPTY' | translate }}</td>
               </tr>
             </tbody>
           </table>
@@ -281,7 +282,8 @@ export class PartenairesListComponent implements OnInit {
     private auth: AuthService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -337,18 +339,18 @@ export class PartenairesListComponent implements OnInit {
         this.applyFilter();
         this.saving = false;
         this.closeForm();
-        this.snackBar.open(this.editingId ? 'Modifié' : 'Créé', 'OK', { duration: 3000, panelClass: 'success-snackbar' });
+        this.snackBar.open(this.editingId ? this.translate.instant('PARTENAIRE.LIST.UPDATED') : this.translate.instant('PARTENAIRE.LIST.CREATED'), 'OK', { duration: 3000, panelClass: 'success-snackbar' });
         this.cdr.detectChanges();
       },
-      error: () => { this.saving = false; this.snackBar.open('Erreur', 'Fermer', { duration: 3000, panelClass: 'error-snackbar' }); }
+      error: () => { this.saving = false; this.snackBar.open(this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000, panelClass: 'error-snackbar' }); }
     });
   }
 
   delete(p: Partenaire) {
-    if (!confirm(`Supprimer "${p.nomFr}" ?`)) return;
+    if (!confirm(this.translate.instant('PARTENAIRE.LIST.CONFIRM_DELETE', { name: p.nomFr }))) return;
     this.api.deletePartenaire(p.id).subscribe({
-      next: () => { this.all = this.all.filter(x => x.id !== p.id); this.applyFilter(); this.snackBar.open('Supprimé', 'OK', { duration: 3000 }); },
-      error: () => this.snackBar.open('Erreur', 'Fermer', { duration: 3000 })
+      next: () => { this.all = this.all.filter(x => x.id !== p.id); this.applyFilter(); this.snackBar.open(this.translate.instant('PARTENAIRE.LIST.DELETED'), 'OK', { duration: 3000 }); },
+      error: () => this.snackBar.open(this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000 })
     });
   }
 
@@ -374,11 +376,7 @@ export class PartenairesListComponent implements OnInit {
   updatePage() { const s = this.pageIndex * this.pageSize; this.paginated = this.filtered.slice(s, s + this.pageSize); }
 
   formatType(type: string | undefined): string {
-    const map: Record<string, string> = {
-      ONG: 'ONG', ASSOCIATION: 'Association', INSTITUTION_PUBLIQUE: 'Institution publique',
-      ENTREPRISE_PRIVEE: 'Entreprise privée', ORGANISME_INTERNATIONAL: 'Org. international', AUTRE: 'Autre'
-    };
-    return type ? (map[type] || type) : '-';
+    return type ? this.translate.instant('PARTENAIRE.LIST.TYPES.' + type) : '-';
   }
 
   isAdmin() { return this.auth.isAdmin(); }

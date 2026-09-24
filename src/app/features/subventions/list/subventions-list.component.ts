@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/auth/auth.service';
 import { Subvention, Partenaire, EtablissementCentre, Programme } from '../../../core/models/etablissement.model';
@@ -17,13 +18,13 @@ import { Subvention, Partenaire, EtablissementCentre, Programme } from '../../..
   imports: [
     CommonModule, RouterModule, FormsModule, ReactiveFormsModule,
     MatCardModule, MatButtonModule, MatIconModule,
-    MatSnackBarModule, MatProgressSpinnerModule
+    MatSnackBarModule, MatProgressSpinnerModule, TranslateModule
   ],
   template: `
     <div class="page-header">
-      <h1>Subventions</h1>
+      <h1>{{ 'SUBVENTION.LIST.TITLE' | translate }}</h1>
       <button class="btn btn-primary" (click)="openForm()" *ngIf="canEdit()">
-        <mat-icon>add</mat-icon> Ajouter
+        <mat-icon>add</mat-icon> {{ 'COMMON.ADD' | translate }}
       </button>
     </div>
 
@@ -31,19 +32,19 @@ import { Subvention, Partenaire, EtablissementCentre, Programme } from '../../..
     <div class="stats-row mb-2">
       <div class="stat-mini">
         <span class="stat-val">{{ all.length }}</span>
-        <span class="stat-lbl">Total</span>
+        <span class="stat-lbl">{{ 'SUBVENTION.LIST.STAT_TOTAL' | translate }}</span>
       </div>
       <div class="stat-mini green">
         <span class="stat-val">{{ countByStatut('EN_COURS') }}</span>
-        <span class="stat-lbl">En cours</span>
+        <span class="stat-lbl">{{ 'SUBVENTION.LIST.STATUTS.EN_COURS' | translate }}</span>
       </div>
       <div class="stat-mini blue">
         <span class="stat-val">{{ totalMontant | number:'1.0-0' }} MAD</span>
-        <span class="stat-lbl">Montant total</span>
+        <span class="stat-lbl">{{ 'SUBVENTION.LIST.STAT_MONTANT_TOTAL' | translate }}</span>
       </div>
       <div class="stat-mini orange">
         <span class="stat-val">{{ countByStatut('TERMINEE') }}</span>
-        <span class="stat-lbl">Terminées</span>
+        <span class="stat-lbl">{{ 'SUBVENTION.LIST.STATUTS.TERMINEE' | translate }}</span>
       </div>
     </div>
 
@@ -52,29 +53,29 @@ import { Subvention, Partenaire, EtablissementCentre, Programme } from '../../..
       <mat-card-content>
         <div class="filter-grid">
           <div class="field">
-            <label>Titre</label>
-            <input type="text" [(ngModel)]="filterTitre" (ngModelChange)="applyFilter()" placeholder="Rechercher...">
+            <label>{{ 'SUBVENTION.LIST.TITRE' | translate }}</label>
+            <input type="text" [(ngModel)]="filterTitre" (ngModelChange)="applyFilter()" [placeholder]="'SUBVENTION.LIST.SEARCH_PLACEHOLDER' | translate">
           </div>
           <div class="field">
-            <label>Statut</label>
+            <label>{{ 'SUBVENTION.LIST.STATUT' | translate }}</label>
             <select [(ngModel)]="filterStatut" (ngModelChange)="applyFilter()">
-              <option value="">Tous</option>
-              <option value="EN_COURS">En cours</option>
-              <option value="TERMINEE">Terminée</option>
-              <option value="SUSPENDUE">Suspendue</option>
-              <option value="ANNULEE">Annulée</option>
+              <option value="">{{ 'COMMON.ALL' | translate }}</option>
+              <option value="EN_COURS">{{ 'SUBVENTION.LIST.STATUTS.EN_COURS' | translate }}</option>
+              <option value="TERMINEE">{{ 'SUBVENTION.LIST.STATUTS.TERMINEE' | translate }}</option>
+              <option value="SUSPENDUE">{{ 'SUBVENTION.LIST.STATUTS.SUSPENDUE' | translate }}</option>
+              <option value="ANNULEE">{{ 'SUBVENTION.LIST.STATUTS.ANNULEE' | translate }}</option>
             </select>
           </div>
           <div class="field">
-            <label>Partenaire</label>
+            <label>{{ 'SUBVENTION.LIST.PARTENAIRE' | translate }}</label>
             <select [(ngModel)]="filterPartenaireId" (ngModelChange)="applyFilter()">
-              <option [ngValue]="null">Tous</option>
+              <option [ngValue]="null">{{ 'COMMON.ALL' | translate }}</option>
               <option *ngFor="let p of partenaires" [ngValue]="p.id">{{ p.nomFr }}</option>
             </select>
           </div>
           <div class="field" style="justify-content:flex-end;padding-top:20px">
             <button class="btn btn-outline" (click)="resetFilter()">
-              <mat-icon>clear</mat-icon> Réinitialiser
+              <mat-icon>clear</mat-icon> {{ 'COMMON.RESET' | translate }}
             </button>
           </div>
         </div>
@@ -89,70 +90,70 @@ import { Subvention, Partenaire, EtablissementCentre, Programme } from '../../..
     <!-- Add/Edit Form -->
     <mat-card class="mb-2" *ngIf="showForm">
       <mat-card-header>
-        <mat-card-title>{{ editingId ? 'Modifier' : 'Ajouter' }} une subvention</mat-card-title>
+        <mat-card-title>{{ (editingId ? 'COMMON.EDIT' : 'COMMON.ADD') | translate }} {{ 'SUBVENTION.LIST.FORM_TITLE' | translate }}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="form-row">
             <div class="field">
-              <label>Titre *</label>
-              <input type="text" formControlName="titre" placeholder="Titre de la subvention">
-              <span class="err" *ngIf="form.get('titre')?.invalid && form.get('titre')?.touched">Champ requis</span>
+              <label>{{ 'SUBVENTION.LIST.TITRE' | translate }} *</label>
+              <input type="text" formControlName="titre" [placeholder]="'SUBVENTION.LIST.TITRE_PLACEHOLDER' | translate">
+              <span class="err" *ngIf="form.get('titre')?.invalid && form.get('titre')?.touched">{{ 'SUBVENTION.LIST.FIELD_REQUIRED' | translate }}</span>
             </div>
             <div class="field">
-              <label>Montant (MAD) *</label>
+              <label>{{ 'SUBVENTION.LIST.MONTANT_MAD' | translate }} *</label>
               <input type="number" formControlName="montant" placeholder="0">
-              <span class="err" *ngIf="form.get('montant')?.invalid && form.get('montant')?.touched">Champ requis</span>
+              <span class="err" *ngIf="form.get('montant')?.invalid && form.get('montant')?.touched">{{ 'SUBVENTION.LIST.FIELD_REQUIRED' | translate }}</span>
             </div>
             <div class="field">
-              <label>Statut</label>
+              <label>{{ 'SUBVENTION.LIST.STATUT' | translate }}</label>
               <select formControlName="statut">
-                <option value="">-- Sélectionner --</option>
-                <option value="EN_COURS">En cours</option>
-                <option value="TERMINEE">Terminée</option>
-                <option value="SUSPENDUE">Suspendue</option>
-                <option value="ANNULEE">Annulée</option>
+                <option value="">{{ 'SUBVENTION.LIST.SELECT_PLACEHOLDER' | translate }}</option>
+                <option value="EN_COURS">{{ 'SUBVENTION.LIST.STATUTS.EN_COURS' | translate }}</option>
+                <option value="TERMINEE">{{ 'SUBVENTION.LIST.STATUTS.TERMINEE' | translate }}</option>
+                <option value="SUSPENDUE">{{ 'SUBVENTION.LIST.STATUTS.SUSPENDUE' | translate }}</option>
+                <option value="ANNULEE">{{ 'SUBVENTION.LIST.STATUTS.ANNULEE' | translate }}</option>
               </select>
             </div>
             <div class="field">
-              <label>Date début</label>
+              <label>{{ 'SUBVENTION.LIST.DATE_DEBUT' | translate }}</label>
               <input type="date" formControlName="dateDebut">
             </div>
             <div class="field">
-              <label>Date fin</label>
+              <label>{{ 'SUBVENTION.LIST.DATE_FIN' | translate }}</label>
               <input type="date" formControlName="dateFin">
             </div>
             <div class="field">
-              <label>Partenaire</label>
+              <label>{{ 'SUBVENTION.LIST.PARTENAIRE' | translate }}</label>
               <select formControlName="partenaireId">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'SUBVENTION.LIST.SELECT_PLACEHOLDER' | translate }}</option>
                 <option *ngFor="let p of partenaires" [value]="p.id">{{ p.nomFr }}</option>
               </select>
             </div>
             <div class="field">
-              <label>Établissement</label>
+              <label>{{ 'SUBVENTION.LIST.ETABLISSEMENT' | translate }}</label>
               <select formControlName="etablissementId">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'SUBVENTION.LIST.SELECT_PLACEHOLDER' | translate }}</option>
                 <option *ngFor="let e of etablissements" [value]="e.id">{{ e.nomFr }}</option>
               </select>
             </div>
             <div class="field">
-              <label>Programme</label>
+              <label>{{ 'SUBVENTION.LIST.PROGRAMME' | translate }}</label>
               <select formControlName="programmeId">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'SUBVENTION.LIST.SELECT_PLACEHOLDER' | translate }}</option>
                 <option *ngFor="let p of programmes" [value]="p.id">{{ p.nomFr }}</option>
               </select>
             </div>
           </div>
           <div class="field mb-2">
-            <label>Description</label>
-            <textarea formControlName="description" rows="3" class="textarea" placeholder="Description..."></textarea>
+            <label>{{ 'SUBVENTION.LIST.DESCRIPTION' | translate }}</label>
+            <textarea formControlName="description" rows="3" class="textarea" [placeholder]="'SUBVENTION.LIST.DESCRIPTION_PLACEHOLDER' | translate"></textarea>
           </div>
           <div class="form-btns">
-            <button type="button" class="btn btn-outline" (click)="closeForm()">Annuler</button>
+            <button type="button" class="btn btn-outline" (click)="closeForm()">{{ 'COMMON.CANCEL' | translate }}</button>
             <button type="submit" class="btn btn-primary" [disabled]="form.invalid || saving">
               <mat-spinner diameter="16" *ngIf="saving" style="display:inline-block;margin-right:6px"></mat-spinner>
-              {{ saving ? '' : (editingId ? 'Enregistrer' : 'Créer') }}
+              {{ saving ? '' : (editingId ? ('COMMON.SAVE' | translate) : ('SUBVENTION.LIST.CREATE' | translate)) }}
             </button>
           </div>
         </form>
@@ -163,21 +164,21 @@ import { Subvention, Partenaire, EtablissementCentre, Programme } from '../../..
     <mat-card *ngIf="!loading">
       <mat-card-content>
         <div class="table-meta">
-          <span class="text-secondary">{{ filtered.length }} subvention(s)</span>
+          <span class="text-secondary">{{ filtered.length }} {{ 'SUBVENTION.LIST.RESULTS' | translate }}</span>
         </div>
         <div class="table-wrap">
           <table class="data-table">
             <thead>
               <tr>
-                <th>Titre</th>
-                <th>Montant</th>
-                <th>Statut</th>
-                <th>Partenaire</th>
-                <th>Établissement</th>
-                <th>Programme</th>
-                <th>Date début</th>
-                <th>Date fin</th>
-                <th>Actions</th>
+                <th>{{ 'SUBVENTION.LIST.TITRE' | translate }}</th>
+                <th>{{ 'SUBVENTION.LIST.MONTANT' | translate }}</th>
+                <th>{{ 'SUBVENTION.LIST.STATUT' | translate }}</th>
+                <th>{{ 'SUBVENTION.LIST.PARTENAIRE' | translate }}</th>
+                <th>{{ 'SUBVENTION.LIST.ETABLISSEMENT' | translate }}</th>
+                <th>{{ 'SUBVENTION.LIST.PROGRAMME' | translate }}</th>
+                <th>{{ 'SUBVENTION.LIST.DATE_DEBUT' | translate }}</th>
+                <th>{{ 'SUBVENTION.LIST.DATE_FIN' | translate }}</th>
+                <th>{{ 'COMMON.ACTIONS' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -195,7 +196,7 @@ import { Subvention, Partenaire, EtablissementCentre, Programme } from '../../..
                 <td>{{ s.dateDebut ? (s.dateDebut | date:'dd/MM/yyyy') : '-' }}</td>
                 <td>{{ s.dateFin ? (s.dateFin | date:'dd/MM/yyyy') : '-' }}</td>
                 <td class="actions">
-                  <button class="action-btn edit" (click)="openEditForm(s)" title="Modifier" *ngIf="canEdit()">
+                  <button class="action-btn edit" (click)="openEditForm(s)" [title]="'COMMON.EDIT' | translate" *ngIf="canEdit()">
                     <mat-icon>edit</mat-icon>
                   </button>
                   <button mat-icon-button color="warn" (click)="delete(s)" *ngIf="canDelete()">
@@ -204,7 +205,7 @@ import { Subvention, Partenaire, EtablissementCentre, Programme } from '../../..
                 </td>
               </tr>
               <tr *ngIf="paginated.length === 0">
-                <td colspan="9" class="empty-row">Aucune subvention trouvée</td>
+                <td colspan="9" class="empty-row">{{ 'SUBVENTION.LIST.EMPTY' | translate }}</td>
               </tr>
             </tbody>
           </table>
@@ -325,7 +326,8 @@ export class SubventionsListComponent implements OnInit {
     private auth: AuthService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -385,18 +387,18 @@ export class SubventionsListComponent implements OnInit {
         this.applyFilter();
         this.saving = false;
         this.closeForm();
-        this.snackBar.open(this.editingId ? 'Modifiée' : 'Créée', 'OK', { duration: 3000, panelClass: 'success-snackbar' });
+        this.snackBar.open(this.editingId ? this.translate.instant('SUBVENTION.LIST.UPDATED') : this.translate.instant('SUBVENTION.LIST.CREATED'), 'OK', { duration: 3000, panelClass: 'success-snackbar' });
         this.cdr.detectChanges();
       },
-      error: () => { this.saving = false; this.snackBar.open('Erreur', 'Fermer', { duration: 3000, panelClass: 'error-snackbar' }); }
+      error: () => { this.saving = false; this.snackBar.open(this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000, panelClass: 'error-snackbar' }); }
     });
   }
 
   delete(s: Subvention) {
-    if (!confirm(`Supprimer "${s.titre}" ?`)) return;
+    if (!confirm(this.translate.instant('SUBVENTION.LIST.CONFIRM_DELETE', { titre: s.titre }))) return;
     this.api.deleteSubvention(s.id).subscribe({
-      next: () => { this.all = this.all.filter(x => x.id !== s.id); this.applyFilter(); this.snackBar.open('Supprimée', 'OK', { duration: 3000 }); },
-      error: () => this.snackBar.open('Erreur', 'Fermer', { duration: 3000 })
+      next: () => { this.all = this.all.filter(x => x.id !== s.id); this.applyFilter(); this.snackBar.open(this.translate.instant('SUBVENTION.LIST.DELETED'), 'OK', { duration: 3000 }); },
+      error: () => this.snackBar.open(this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000 })
     });
   }
 
@@ -433,11 +435,7 @@ export class SubventionsListComponent implements OnInit {
   }
 
   formatStatut(statut: string | undefined): string {
-    const map: Record<string, string> = {
-      EN_COURS: 'En cours', TERMINEE: 'Terminée',
-      SUSPENDUE: 'Suspendue', ANNULEE: 'Annulée'
-    };
-    return statut ? (map[statut] || statut) : '-';
+    return statut ? this.translate.instant('SUBVENTION.LIST.STATUTS.' + statut) : '-';
   }
 
   isAdmin() { return this.auth.isAdmin(); }
