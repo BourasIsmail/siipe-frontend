@@ -9,7 +9,10 @@ import { routes } from './app.routes';
 import { jwtInterceptor } from './core/interceptors/jwt.interceptor';
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  // Cache-bust with a per-session timestamp so the browser can't silently
+  // keep serving a stale disk-cached copy of fr.json/ar.json after a
+  // deploy — these files are small and change often during development.
+  return new TranslateHttpLoader(http, './assets/i18n/', `.json?v=${Date.now()}`);
 }
 
 export const appConfig: ApplicationConfig = {
