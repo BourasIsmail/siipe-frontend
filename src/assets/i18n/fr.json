@@ -20,7 +20,8 @@
     "FORMATION_CONTINUE": "Formation continue",
     "POSTE_PROFIL": "Gestion poste-profil",
     "UTILISATEURS": "Utilisateurs",
-    "PROGRAMMES": "Programmes"
+    "PROGRAMMES": "Programmes",
+    "ETABLISSEMENTS": "Établissements"
   },
   "AUTH": {
     "LOGIN": "Connexion",
@@ -45,7 +46,8 @@
     "BENEFICIAIRES_PAR_MOIS": "Bénéficiaires par mois",
     "BENEFICIAIRES_PAR_SITUATION": "Par situation de difficulté",
     "PERSONNEL_PAR_GRADE": "Personnel par grade",
-    "ETABLISSEMENTS_PAR_PROVINCE": "Établissements par province"
+    "ETABLISSEMENTS_PAR_PROVINCE": "Établissements par province",
+    "WELCOME": "Bienvenue"
   },
   "COMMON": {
     "ADD": "Ajouter",

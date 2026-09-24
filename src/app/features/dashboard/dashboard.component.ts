@@ -20,7 +20,7 @@ import { AuthService } from '../../core/auth/auth.service';
     <div class="dashboard">
       <div class="page-header">
         <h1>{{ 'DASHBOARD.TITLE' | translate }}</h1>
-        <span class="text-secondary">Bienvenue, {{ user?.nom }} {{ user?.prenom }}</span>
+        <span class="text-secondary">{{ 'DASHBOARD.WELCOME' | translate }}, {{ user?.nom }} {{ user?.prenom }}</span>
       </div>
 
       <div *ngIf="loading" class="flex-center" style="height: 300px">
