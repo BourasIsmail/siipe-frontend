@@ -70,7 +70,8 @@
     "BACK": "رجوع",
     "PRINT": "طباعة",
     "ALL": "الكل",
-    "VIEW": "عرض"
+    "VIEW": "عرض",
+    "UNDER_DEVELOPMENT": "المكون قيد التطوير..."
   },
   "BENEFICIAIRE": {
     "TITLE": "المستفيدون",
@@ -1039,5 +1040,20 @@
     "AMUSANT_AMUSANTE_ARROGANT": "مسلية / متعجرفة مسلية",
     "CALME_COMPETITIF_COMPETITIVE_CREATIF": "منافس هادئ/ منافس مبدع",
     "CURIEUX_CURIEUSE_DEBROUILLARD": "فضولي / فضولي واسع الحيلة"
+  },
+  "SUBVENTION": {
+    "FORM": {
+      "TITLE": "استمارة الدعم المالي"
+    }
+  },
+  "FORMATION": {
+    "FORM": {
+      "TITLE": "استمارة التكوين"
+    }
+  },
+  "PARTENAIRE": {
+    "FORM": {
+      "TITLE": "استمارة الشريك"
+    }
   }
 }

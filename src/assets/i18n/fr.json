@@ -70,7 +70,8 @@
     "BACK": "Retour",
     "PRINT": "Imprimer",
     "ALL": "Tous",
-    "VIEW": "Voir"
+    "VIEW": "Voir",
+    "UNDER_DEVELOPMENT": "Composant en cours de développement..."
   },
   "BENEFICIAIRE": {
     "TITLE": "Bénéficiaires",
@@ -1039,5 +1040,20 @@
     "AMUSANT_AMUSANTE_ARROGANT": "Amusant / amusante arrogant",
     "CALME_COMPETITIF_COMPETITIVE_CREATIF": "Calme compétitif / compétitive créatif",
     "CURIEUX_CURIEUSE_DEBROUILLARD": "Curieux / curieuse débrouillard"
+  },
+  "SUBVENTION": {
+    "FORM": {
+      "TITLE": "Formulaire Subvention"
+    }
+  },
+  "FORMATION": {
+    "FORM": {
+      "TITLE": "Formulaire Formation"
+    }
+  },
+  "PARTENAIRE": {
+    "FORM": {
+      "TITLE": "Formulaire Partenaire"
+    }
   }
 }
