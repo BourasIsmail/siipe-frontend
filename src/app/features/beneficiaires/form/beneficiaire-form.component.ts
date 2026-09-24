@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/auth/auth.service';
 import { EtablissementCentre, Programme, Prestation } from '../../../core/models/etablissement.model';
@@ -18,7 +19,7 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
   imports: [
     CommonModule, ReactiveFormsModule, RouterModule,
     MatCardModule, MatButtonModule, MatIconModule,
-    MatSnackBarModule, MatProgressSpinnerModule
+    MatSnackBarModule, MatProgressSpinnerModule, TranslateModule
   ],
   template: `
     <div class="page-header">
@@ -137,10 +138,16 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
               <label>Situation Scolaire</label>
               <select formControlName="situationScolaire">
                 <option value="">-- Sélectionner --</option>
-                <option value="Scolarisé">Scolarisé</option>
-                <option value="Déscolarisé">Déscolarisé</option>
-                <option value="Jamais scolarisé">Jamais scolarisé</option>
-                <option value="Diplômé">Diplômé</option>
+                <option value="Scolarisé">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_SCOLAIRE.SCOLARISE' | translate }}</option>
+                <option value="Déscolarisé">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_SCOLAIRE.DESCOLARISE' | translate }}</option>
+                <option value="Analphabète">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_SCOLAIRE.ANALPHABETE' | translate }}</option>
+                <option value="Alphabétisation">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_SCOLAIRE.ALPHABETISATION' | translate }}</option>
+                <option value="Ecole coranique">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_SCOLAIRE.ECOLE_CORANIQUE' | translate }}</option>
+                <option value="Formation professionnelle">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_SCOLAIRE.FORMATION_PROFESSIONNELLE' | translate }}</option>
+                <option value="Non scolarisé">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_SCOLAIRE.NON_SCOLARISE' | translate }}</option>
+                <option value="Education non formelle">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_SCOLAIRE.EDUCATION_NON_FORMELLE' | translate }}</option>
+                <option value="En formation Professionnelle">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_SCOLAIRE.EN_FORMATION_PROFESSIONNELLE' | translate }}</option>
+                <option value="Décrochage scolaire">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_SCOLAIRE.DECROCHAGE_SCOLAIRE' | translate }}</option>
               </select>
             </div>
             <div class="field">
@@ -161,9 +168,8 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
               <label>État de santé psychique</label>
               <select formControlName="etatSantePsychique">
                 <option value="">-- Sélectionner --</option>
-                <option value="Sans troubles psychiques">Sans troubles psychiques</option>
-                <option value="Avec troubles psychique">Avec troubles psychique</option>
-                <option value="Suivi psychologique">Suivi psychologique</option>
+                <option value="Avec troubles psychique">{{ 'BENEFICIAIRE.OPTIONS.ETAT_SANTE_PSYCHIQUE.AVEC_TROUBLES' | translate }}</option>
+                <option value="Sans troubles psychique">{{ 'BENEFICIAIRE.OPTIONS.ETAT_SANTE_PSYCHIQUE.SANS_TROUBLES' | translate }}</option>
               </select>
             </div>
           </div>
@@ -172,12 +178,14 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
               <label>Situation professionnelle</label>
               <select formControlName="situationProfessionnelle">
                 <option value="">-- Sélectionner --</option>
-                <option value="Élève">Élève</option>
-                <option value="Étudiant">Étudiant</option>
-                <option value="Sans emploi">Sans emploi</option>
-                <option value="Employé">Employé</option>
-                <option value="Travailleur informel">Travailleur informel</option>
-                <option value="Retraité">Retraité</option>
+                <option value="Élève">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_PROFESSIONNELLE.ELEVE' | translate }}</option>
+                <option value="Etudiant(e)">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_PROFESSIONNELLE.ETUDIANT' | translate }}</option>
+                <option value="Jeune femme au foyer">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_PROFESSIONNELLE.FEMME_AU_FOYER' | translate }}</option>
+                <option value="Journalier(e)">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_PROFESSIONNELLE.JOURNALIER' | translate }}</option>
+                <option value="Sans">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_PROFESSIONNELLE.SANS' | translate }}</option>
+                <option value="Salarié(e) dans le secteur privé">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_PROFESSIONNELLE.SALARIE_PRIVE' | translate }}</option>
+                <option value="Salarié(e) dans le secteur public">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_PROFESSIONNELLE.SALARIE_PUBLIC' | translate }}</option>
+                <option value="Retraité(e)">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_PROFESSIONNELLE.RETRAITE' | translate }}</option>
               </select>
             </div>
             <div class="field">
@@ -188,11 +196,12 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
               <label>Couverture sociale</label>
               <select formControlName="couvertureSociale">
                 <option value="">-- Sélectionner --</option>
-                <option value="Ramed">Ramed</option>
-                <option value="CNSS">CNSS</option>
-                <option value="CNOPS">CNOPS</option>
-                <option value="Mutuelle">Mutuelle</option>
-                <option value="Aucune">Aucune</option>
+                <option value="Ramed">{{ 'BENEFICIAIRE.OPTIONS.COUVERTURE_SOCIALE.RAMED' | translate }}</option>
+                <option value="Sans couverture">{{ 'BENEFICIAIRE.OPTIONS.COUVERTURE_SOCIALE.SANS_COUVERTURE' | translate }}</option>
+                <option value="AMO CNSS">{{ 'BENEFICIAIRE.OPTIONS.COUVERTURE_SOCIALE.AMO_CNSS' | translate }}</option>
+                <option value="AMO CNOPS">{{ 'BENEFICIAIRE.OPTIONS.COUVERTURE_SOCIALE.AMO_CNOPS' | translate }}</option>
+                <option value="Assurance privée">{{ 'BENEFICIAIRE.OPTIONS.COUVERTURE_SOCIALE.ASSURANCE_PRIVEE' | translate }}</option>
+                <option value="Mutuelle">{{ 'BENEFICIAIRE.OPTIONS.COUVERTURE_SOCIALE.MUTUELLE' | translate }}</option>
               </select>
             </div>
           </div>
@@ -201,22 +210,22 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
               <label>Revenu mensuel</label>
               <select formControlName="revenuMensuel">
                 <option value="">-- Sélectionner --</option>
-                <option value="Moins de 500">Moins de 500</option>
-                <option value="500 - 1000">500 - 1000</option>
-                <option value="1000 - 2000">1000 - 2000</option>
-                <option value="2000 - 3000">2000 - 3000</option>
-                <option value="Plus de 3000">Plus de 3000</option>
+                <option value="Moins de 500">{{ 'BENEFICIAIRE.OPTIONS.REVENU_MENSUEL.MOINS_500' | translate }}</option>
+                <option value="500 < revenu < 1000">{{ 'BENEFICIAIRE.OPTIONS.REVENU_MENSUEL.DE_500_A_1000' | translate }}</option>
+                <option value="1000 < revenu < 1500">{{ 'BENEFICIAIRE.OPTIONS.REVENU_MENSUEL.DE_1000_A_1500' | translate }}</option>
+                <option value="1500 < revenu < 2000">{{ 'BENEFICIAIRE.OPTIONS.REVENU_MENSUEL.DE_1500_A_2000' | translate }}</option>
+                <option value="Plus de 2000">{{ 'BENEFICIAIRE.OPTIONS.REVENU_MENSUEL.PLUS_2000' | translate }}</option>
               </select>
             </div>
             <div class="field">
               <label>État de comportement/Moral</label>
               <select formControlName="etatComportement">
                 <option value="">-- Sélectionner --</option>
-                <option value="Stable">Stable</option>
-                <option value="Agitation motrice">Agitation motrice</option>
-                <option value="Agressivité">Agressivité</option>
-                <option value="Dépression">Dépression</option>
-                <option value="Anxiété">Anxiété</option>
+                <option value="Agitation motrice">{{ 'BENEFICIAIRE.OPTIONS.ETAT_COMPORTEMENT.AGITATION_MOTRICE' | translate }}</option>
+                <option value="L'impulsivité">{{ 'BENEFICIAIRE.OPTIONS.ETAT_COMPORTEMENT.IMPULSIVITE' | translate }}</option>
+                <option value="L'agressivité">{{ 'BENEFICIAIRE.OPTIONS.ETAT_COMPORTEMENT.AGRESSIVITE' | translate }}</option>
+                <option value="La désobéissance">{{ 'BENEFICIAIRE.OPTIONS.ETAT_COMPORTEMENT.DESOBEISSANCE' | translate }}</option>
+                <option value="L'instabilité émotionnelle">{{ 'BENEFICIAIRE.OPTIONS.ETAT_COMPORTEMENT.INSTABILITE_EMOTIONNELLE' | translate }}</option>
               </select>
             </div>
             <div class="field">
@@ -273,7 +282,7 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
               <label>Situation de difficulté</label>
               <select formControlName="situationDifficulte">
                 <option value="">-- Sélectionner --</option>
-                <option *ngFor="let s of situations" [value]="s">{{ formatEnum(s) }}</option>
+                <option *ngFor="let s of situations" [value]="s">{{ ('BENEFICIAIRE.OPTIONS.SITUATION_DIFFICULTE.' + s | translate) }}</option>
               </select>
             </div>
             <div class="field">
@@ -441,11 +450,6 @@ export class BeneficiaireFormComponent implements OnInit {
     this.api.getPrestationsByProgramme(+programmeId).subscribe({
       next: p => { this.prestations = [...p]; this.cdr.detectChanges(); }
     });
-  }
-
-  formatEnum(val: string): string {
-    if (!val) return '-';
-    return val.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
   }
 
   onSubmit() {
