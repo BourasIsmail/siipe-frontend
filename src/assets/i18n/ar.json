@@ -153,6 +153,31 @@
         "PERSONNE_AGEE": "شخص مسن",
         "AUTRE": "آخر"
       }
+    },
+    "SEARCH": {
+      "TITLE": "بحث عن المستفيدين",
+      "INSCRIRE": "تسجيل",
+      "FILTERS_TITLE": "معايير البحث",
+      "NOM_PLACEHOLDER": "الاسم العائلي...",
+      "PRENOM_PLACEHOLDER": "الاسم الشخصي...",
+      "CIN_PLACEHOLDER": "رقم البطاقة الوطنية...",
+      "ALL_FEMININE": "الكل",
+      "DATE_NAISSANCE_FROM": "تاريخ الازدياد (من)",
+      "DATE_NAISSANCE_TO": "تاريخ الازدياد (إلى)",
+      "DATE_ENTREE_FROM": "تاريخ الدخول (من)",
+      "DATE_ENTREE_TO": "تاريخ الدخول (إلى)",
+      "RESULTS": "نتيجة (نتائج)",
+      "PER_PAGE": "في كل صفحة",
+      "NOM_PRENOM": "الاسم العائلي / الاسم الشخصي",
+      "EMPTY": "لم يتم العثور على أي مستفيد",
+      "VIEW_FILE": "عرض الملف",
+      "FICHE_PDF": "بطاقة PDF",
+      "EMPTY_STATE_TITLE": "استخدم المرشحات أعلاه للبحث عن المستفيدين",
+      "EMPTY_STATE_DESC": "يمكنك التصفية حسب الاسم أو رقم البطاقة الوطنية أو الوضعية أو الإقليم أو المؤسسة أو التواريخ",
+      "SHOW_ALL": "عرض الكل",
+      "SEARCH_ERROR": "خطأ في البحث",
+      "CONFIRM_DELETE": "هل تريد حذف {{nom}} {{prenom}} ؟",
+      "DELETED": "تم حذف المستفيد"
     }
   },
   "PERSONNEL": {
@@ -1044,11 +1069,80 @@
   "SUBVENTION": {
     "FORM": {
       "TITLE": "استمارة الدعم المالي"
+    },
+    "LIST": {
+      "TITLE": "الإعانات",
+      "STAT_TOTAL": "المجموع",
+      "STAT_MONTANT_TOTAL": "المبلغ الإجمالي",
+      "SEARCH_PLACEHOLDER": "بحث...",
+      "TITRE": "العنوان",
+      "TITRE_PLACEHOLDER": "عنوان الإعانة",
+      "MONTANT": "المبلغ",
+      "MONTANT_MAD": "المبلغ (درهم)",
+      "STATUT": "الحالة",
+      "STATUTS": {
+        "EN_COURS": "قيد الإنجاز",
+        "TERMINEE": "منتهية",
+        "SUSPENDUE": "معلقة",
+        "ANNULEE": "ملغاة"
+      },
+      "PARTENAIRE": "الشريك",
+      "ETABLISSEMENT": "المؤسسة",
+      "PROGRAMME": "البرنامج",
+      "DATE_DEBUT": "تاريخ البداية",
+      "DATE_FIN": "تاريخ النهاية",
+      "DESCRIPTION": "الوصف",
+      "DESCRIPTION_PLACEHOLDER": "الوصف...",
+      "FORM_TITLE": "إعانة",
+      "FIELD_REQUIRED": "حقل إلزامي",
+      "SELECT_PLACEHOLDER": "-- اختر --",
+      "CREATE": "إنشاء",
+      "RESULTS": "إعانة (إعانات)",
+      "EMPTY": "لم يتم العثور على أي إعانة",
+      "UPDATED": "تم التعديل",
+      "CREATED": "تم الإنشاء",
+      "DELETED": "تم الحذف",
+      "CONFIRM_DELETE": "هل تريد حذف \"{{titre}}\" ؟"
     }
   },
   "FORMATION": {
     "FORM": {
       "TITLE": "استمارة التكوين"
+    },
+    "LIST": {
+      "TITLE": "التكوين المستمر",
+      "TITRE": "العنوان",
+      "TITRE_PLACEHOLDER": "عنوان التكوين",
+      "SEARCH_PLACEHOLDER": "بحث...",
+      "ETABLISSEMENT": "المؤسسة",
+      "EDIT_FORMATION": "تعديل التكوين",
+      "NEW_FORMATION": "تكوين جديد",
+      "ORGANISME": "الهيئة المنظمة",
+      "ORGANISME_PLACEHOLDER": "الهيئة المكونة",
+      "LIEU": "المكان",
+      "LIEU_PLACEHOLDER": "مكان التكوين",
+      "DUREE_JOURS": "المدة (أيام)",
+      "DATE_DEBUT": "تاريخ البداية",
+      "DATE_FIN": "تاريخ النهاية",
+      "SELECT_PLACEHOLDER": "-- اختر --",
+      "PARTICIPANTS": "المشاركون",
+      "MULTISELECT_HINT": "اضغط مع Ctrl لاختيار عدة عناصر",
+      "DESCRIPTION": "الوصف",
+      "DESCRIPTION_PLACEHOLDER": "الوصف...",
+      "FIELD_REQUIRED": "حقل إلزامي",
+      "CREATE": "إنشاء",
+      "JOURS": "يوم (أيام)",
+      "PARTICIPANTS_COUNT": "مشارك (مشاركون)",
+      "VIEW_ATTESTATION": "عرض الشهادة",
+      "CHANGE_ATTESTATION": "تغيير الشهادة",
+      "ADD_ATTESTATION": "إضافة شهادة",
+      "EMPTY": "لم يتم العثور على أي تكوين",
+      "UPDATED": "تم تعديل التكوين",
+      "CREATED": "تم إنشاء التكوين",
+      "DELETED": "تم الحذف",
+      "ATTESTATION_UPLOADED": "تم رفع الشهادة",
+      "UPLOAD_ERROR": "خطأ في الرفع",
+      "CONFIRM_DELETE": "هل تريد حذف \"{{titre}}\" ؟"
     }
   },
   "PARTENAIRE": {

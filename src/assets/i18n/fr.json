@@ -153,6 +153,31 @@
         "PERSONNE_AGEE": "Personne âgée",
         "AUTRE": "Autre"
       }
+    },
+    "SEARCH": {
+      "TITLE": "Recherche Bénéficiaires",
+      "INSCRIRE": "Inscrire",
+      "FILTERS_TITLE": "Filtres de recherche",
+      "NOM_PLACEHOLDER": "Nom...",
+      "PRENOM_PLACEHOLDER": "Prénom...",
+      "CIN_PLACEHOLDER": "CIN...",
+      "ALL_FEMININE": "Toutes",
+      "DATE_NAISSANCE_FROM": "Date naissance (de)",
+      "DATE_NAISSANCE_TO": "Date naissance (à)",
+      "DATE_ENTREE_FROM": "Date entrée (de)",
+      "DATE_ENTREE_TO": "Date entrée (à)",
+      "RESULTS": "résultat(s)",
+      "PER_PAGE": "par page",
+      "NOM_PRENOM": "Nom / Prénom",
+      "EMPTY": "Aucun bénéficiaire trouvé",
+      "VIEW_FILE": "Voir dossier",
+      "FICHE_PDF": "Fiche PDF",
+      "EMPTY_STATE_TITLE": "Utilisez les filtres ci-dessus pour rechercher des bénéficiaires",
+      "EMPTY_STATE_DESC": "Vous pouvez filtrer par nom, CIN, situation, province, établissement et dates",
+      "SHOW_ALL": "Afficher tous",
+      "SEARCH_ERROR": "Erreur de recherche",
+      "CONFIRM_DELETE": "Supprimer {{nom}} {{prenom}} ?",
+      "DELETED": "Bénéficiaire supprimé"
     }
   },
   "PERSONNEL": {
@@ -1044,11 +1069,80 @@
   "SUBVENTION": {
     "FORM": {
       "TITLE": "Formulaire Subvention"
+    },
+    "LIST": {
+      "TITLE": "Subventions",
+      "STAT_TOTAL": "Total",
+      "STAT_MONTANT_TOTAL": "Montant total",
+      "SEARCH_PLACEHOLDER": "Rechercher...",
+      "TITRE": "Titre",
+      "TITRE_PLACEHOLDER": "Titre de la subvention",
+      "MONTANT": "Montant",
+      "MONTANT_MAD": "Montant (MAD)",
+      "STATUT": "Statut",
+      "STATUTS": {
+        "EN_COURS": "En cours",
+        "TERMINEE": "Terminée",
+        "SUSPENDUE": "Suspendue",
+        "ANNULEE": "Annulée"
+      },
+      "PARTENAIRE": "Partenaire",
+      "ETABLISSEMENT": "Établissement",
+      "PROGRAMME": "Programme",
+      "DATE_DEBUT": "Date début",
+      "DATE_FIN": "Date fin",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_PLACEHOLDER": "Description...",
+      "FORM_TITLE": "une subvention",
+      "FIELD_REQUIRED": "Champ requis",
+      "SELECT_PLACEHOLDER": "-- Sélectionner --",
+      "CREATE": "Créer",
+      "RESULTS": "subvention(s)",
+      "EMPTY": "Aucune subvention trouvée",
+      "UPDATED": "Modifiée",
+      "CREATED": "Créée",
+      "DELETED": "Supprimée",
+      "CONFIRM_DELETE": "Supprimer \"{{titre}}\" ?"
     }
   },
   "FORMATION": {
     "FORM": {
       "TITLE": "Formulaire Formation"
+    },
+    "LIST": {
+      "TITLE": "Formations continues",
+      "TITRE": "Titre",
+      "TITRE_PLACEHOLDER": "Titre de la formation",
+      "SEARCH_PLACEHOLDER": "Rechercher...",
+      "ETABLISSEMENT": "Établissement",
+      "EDIT_FORMATION": "Modifier formation",
+      "NEW_FORMATION": "Nouvelle formation",
+      "ORGANISME": "Organisme",
+      "ORGANISME_PLACEHOLDER": "Organisme formateur",
+      "LIEU": "Lieu",
+      "LIEU_PLACEHOLDER": "Lieu de formation",
+      "DUREE_JOURS": "Durée (jours)",
+      "DATE_DEBUT": "Date début",
+      "DATE_FIN": "Date fin",
+      "SELECT_PLACEHOLDER": "-- Sélectionner --",
+      "PARTICIPANTS": "Participants",
+      "MULTISELECT_HINT": "Ctrl+clic pour sélectionner plusieurs",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_PLACEHOLDER": "Description...",
+      "FIELD_REQUIRED": "Champ requis",
+      "CREATE": "Créer",
+      "JOURS": "jour(s)",
+      "PARTICIPANTS_COUNT": "participant(s)",
+      "VIEW_ATTESTATION": "Voir l'attestation",
+      "CHANGE_ATTESTATION": "Changer attestation",
+      "ADD_ATTESTATION": "Ajouter attestation",
+      "EMPTY": "Aucune formation trouvée",
+      "UPDATED": "Formation modifiée",
+      "CREATED": "Formation créée",
+      "DELETED": "Supprimée",
+      "ATTESTATION_UPLOADED": "Attestation uploadée",
+      "UPLOAD_ERROR": "Erreur upload",
+      "CONFIRM_DELETE": "Supprimer \"{{titre}}\" ?"
     }
   },
   "PARTENAIRE": {

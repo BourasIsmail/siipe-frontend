@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/auth/auth.service';
 import { Beneficiaire, SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
@@ -19,20 +20,20 @@ import { Province } from '../../../core/models/geo.model';
   imports: [
     CommonModule, RouterModule, FormsModule,
     MatCardModule, MatButtonModule, MatIconModule,
-    MatSnackBarModule, MatProgressSpinnerModule
+    MatSnackBarModule, MatProgressSpinnerModule, TranslateModule
   ],
   template: `
     <div class="page-header">
-      <h1>Recherche Bénéficiaires</h1>
+      <h1>{{ 'BENEFICIAIRE.SEARCH.TITLE' | translate }}</h1>
       <div class="flex gap-2">
         <button class="btn btn-excel" (click)="exportExcel()">
-          <mat-icon>table_view</mat-icon> Excel
+          <mat-icon>table_view</mat-icon> {{ 'COMMON.EXPORT_EXCEL' | translate }}
         </button>
         <button class="btn btn-pdf" (click)="exportPdf()">
-          <mat-icon>picture_as_pdf</mat-icon> PDF
+          <mat-icon>picture_as_pdf</mat-icon> {{ 'COMMON.EXPORT_PDF' | translate }}
         </button>
         <a class="btn btn-primary" routerLink="/beneficiaires/add" *ngIf="canCreate()">
-          <mat-icon>person_add</mat-icon> Inscrire
+          <mat-icon>person_add</mat-icon> {{ 'BENEFICIAIRE.SEARCH.INSCRIRE' | translate }}
         </a>
       </div>
     </div>
@@ -40,74 +41,74 @@ import { Province } from '../../../core/models/geo.model';
     <!-- Search filters -->
     <mat-card class="mb-2">
       <mat-card-header>
-        <mat-card-title>Filtres de recherche</mat-card-title>
+        <mat-card-title>{{ 'BENEFICIAIRE.SEARCH.FILTERS_TITLE' | translate }}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div class="filter-grid">
           <div class="field">
-            <label>Nom</label>
-            <input type="text" [(ngModel)]="filters.nom" placeholder="Nom...">
+            <label>{{ 'BENEFICIAIRE.NOM' | translate }}</label>
+            <input type="text" [(ngModel)]="filters.nom" [placeholder]="'BENEFICIAIRE.SEARCH.NOM_PLACEHOLDER' | translate">
           </div>
           <div class="field">
-            <label>Prénom</label>
-            <input type="text" [(ngModel)]="filters.prenom" placeholder="Prénom...">
+            <label>{{ 'BENEFICIAIRE.PRENOM' | translate }}</label>
+            <input type="text" [(ngModel)]="filters.prenom" [placeholder]="'BENEFICIAIRE.SEARCH.PRENOM_PLACEHOLDER' | translate">
           </div>
           <div class="field">
-            <label>CIN</label>
-            <input type="text" [(ngModel)]="filters.cin" placeholder="CIN...">
+            <label>{{ 'BENEFICIAIRE.CIN' | translate }}</label>
+            <input type="text" [(ngModel)]="filters.cin" [placeholder]="'BENEFICIAIRE.SEARCH.CIN_PLACEHOLDER' | translate">
           </div>
           <div class="field">
-            <label>Sexe</label>
+            <label>{{ 'BENEFICIAIRE.SEXE' | translate }}</label>
             <select [(ngModel)]="filters.sexe">
-              <option value="">Tous</option>
-              <option value="MASCULIN">Masculin</option>
-              <option value="FEMININ">Féminin</option>
+              <option value="">{{ 'COMMON.ALL' | translate }}</option>
+              <option value="MASCULIN">{{ 'BENEFICIAIRE.MASCULIN' | translate }}</option>
+              <option value="FEMININ">{{ 'BENEFICIAIRE.FEMININ' | translate }}</option>
             </select>
           </div>
           <div class="field">
-            <label>Situation de difficulté</label>
+            <label>{{ 'BENEFICIAIRE.SITUATION' | translate }}</label>
             <select [(ngModel)]="filters.situationDifficulte">
-              <option value="">Toutes</option>
+              <option value="">{{ 'BENEFICIAIRE.SEARCH.ALL_FEMININE' | translate }}</option>
               <option *ngFor="let s of situations" [value]="s">{{ formatEnum(s) }}</option>
             </select>
           </div>
           <div class="field">
-            <label>Province</label>
+            <label>{{ 'BENEFICIAIRE.PROVINCE' | translate }}</label>
             <select [(ngModel)]="filters.provinceId">
-              <option [ngValue]="null">Toutes</option>
+              <option [ngValue]="null">{{ 'BENEFICIAIRE.SEARCH.ALL_FEMININE' | translate }}</option>
               <option *ngFor="let p of provinces" [ngValue]="p.id">{{ p.nomFr }}</option>
             </select>
           </div>
           <div class="field">
-            <label>Établissement</label>
+            <label>{{ 'BENEFICIAIRE.ETABLISSEMENT' | translate }}</label>
             <select [(ngModel)]="filters.etablissementId">
-              <option [ngValue]="null">Tous</option>
+              <option [ngValue]="null">{{ 'COMMON.ALL' | translate }}</option>
               <option *ngFor="let e of etablissements" [ngValue]="e.id">{{ e.nomFr }}</option>
             </select>
           </div>
           <div class="field">
-            <label>Date naissance (de)</label>
+            <label>{{ 'BENEFICIAIRE.SEARCH.DATE_NAISSANCE_FROM' | translate }}</label>
             <input type="date" [(ngModel)]="filters.dateNaissanceFrom">
           </div>
           <div class="field">
-            <label>Date naissance (à)</label>
+            <label>{{ 'BENEFICIAIRE.SEARCH.DATE_NAISSANCE_TO' | translate }}</label>
             <input type="date" [(ngModel)]="filters.dateNaissanceTo">
           </div>
           <div class="field">
-            <label>Date entrée (de)</label>
+            <label>{{ 'BENEFICIAIRE.SEARCH.DATE_ENTREE_FROM' | translate }}</label>
             <input type="date" [(ngModel)]="filters.dateEntreeFrom">
           </div>
           <div class="field">
-            <label>Date entrée (à)</label>
+            <label>{{ 'BENEFICIAIRE.SEARCH.DATE_ENTREE_TO' | translate }}</label>
             <input type="date" [(ngModel)]="filters.dateEntreeTo">
           </div>
         </div>
         <div class="filter-actions">
           <button class="btn btn-outline" (click)="resetFilters()">
-            <mat-icon>clear</mat-icon> Réinitialiser
+            <mat-icon>clear</mat-icon> {{ 'COMMON.RESET' | translate }}
           </button>
           <button class="btn btn-primary" (click)="search()" [disabled]="loading">
-            <mat-icon>search</mat-icon> Rechercher
+            <mat-icon>search</mat-icon> {{ 'COMMON.SEARCH' | translate }}
           </button>
         </div>
       </mat-card-content>
@@ -122,14 +123,14 @@ import { Province } from '../../../core/models/geo.model';
     <mat-card *ngIf="!loading && searched">
       <mat-card-content>
         <div class="table-meta">
-          <span class="text-secondary">{{ filtered.length }} résultat(s)</span>
+          <span class="text-secondary">{{ filtered.length }} {{ 'BENEFICIAIRE.SEARCH.RESULTS' | translate }}</span>
           <div class="pagination-controls">
             <select [(ngModel)]="pageSize" (ngModelChange)="onPageSizeChange()" class="page-size-select">
               <option [value]="10">10</option>
               <option [value]="25">25</option>
               <option [value]="50">50</option>
             </select>
-            <span class="text-secondary">par page</span>
+            <span class="text-secondary">{{ 'BENEFICIAIRE.SEARCH.PER_PAGE' | translate }}</span>
           </div>
         </div>
 
@@ -137,15 +138,15 @@ import { Province } from '../../../core/models/geo.model';
           <table class="data-table">
             <thead>
             <tr>
-              <th>Nom / Prénom</th>
-              <th>CIN</th>
-              <th>Sexe</th>
-              <th>Date naissance</th>
-              <th>Situation</th>
-              <th>Établissement</th>
-              <th>Province</th>
-              <th>Date entrée</th>
-              <th>Actions</th>
+              <th>{{ 'BENEFICIAIRE.SEARCH.NOM_PRENOM' | translate }}</th>
+              <th>{{ 'BENEFICIAIRE.CIN' | translate }}</th>
+              <th>{{ 'BENEFICIAIRE.SEXE' | translate }}</th>
+              <th>{{ 'BENEFICIAIRE.DATE_NAISSANCE' | translate }}</th>
+              <th>{{ 'BENEFICIAIRE.SITUATION' | translate }}</th>
+              <th>{{ 'BENEFICIAIRE.ETABLISSEMENT' | translate }}</th>
+              <th>{{ 'BENEFICIAIRE.PROVINCE' | translate }}</th>
+              <th>{{ 'BENEFICIAIRE.DATE_ENTREE' | translate }}</th>
+              <th>{{ 'COMMON.ACTIONS' | translate }}</th>
             </tr>
             </thead>
             <tbody>
@@ -176,24 +177,24 @@ import { Province } from '../../../core/models/geo.model';
               <td>{{ b.provinceNom || '-' }}</td>
               <td>{{ b.dateEntree ? (b.dateEntree | date:'dd/MM/yyyy') : '-' }}</td>
               <td class="actions">
-                <a [routerLink]="['/beneficiaires', b.id]" class="action-btn" title="Voir dossier">
+                <a [routerLink]="['/beneficiaires', b.id]" class="action-btn" [title]="'BENEFICIAIRE.SEARCH.VIEW_FILE' | translate">
                   <mat-icon>folder_open</mat-icon>
                 </a>
                 <a [routerLink]="['/beneficiaires', b.id, 'edit']" class="action-btn edit"
-                   title="Modifier" *ngIf="canCreate()">
+                   [title]="'COMMON.EDIT' | translate" *ngIf="canCreate()">
                   <mat-icon>edit</mat-icon>
                 </a>
-                <button class="action-btn" title="Fiche PDF" (click)="exportFiche(b.id)">
+                <button class="action-btn" [title]="'BENEFICIAIRE.SEARCH.FICHE_PDF' | translate" (click)="exportFiche(b.id)">
                   <mat-icon>print</mat-icon>
                 </button>
                 <button class="action-btn delete" (click)="delete(b)"
-                        title="Supprimer" *ngIf="canDelete()">
+                        [title]="'COMMON.DELETE' | translate" *ngIf="canDelete()">
                   <mat-icon>delete</mat-icon>
                 </button>
               </td>
             </tr>
             <tr *ngIf="paginated.length === 0">
-              <td colspan="9" class="empty-row">Aucun bénéficiaire trouvé</td>
+              <td colspan="9" class="empty-row">{{ 'BENEFICIAIRE.SEARCH.EMPTY' | translate }}</td>
             </tr>
             </tbody>
           </table>
@@ -214,10 +215,10 @@ import { Province } from '../../../core/models/geo.model';
     <!-- Empty state before search -->
     <div *ngIf="!loading && !searched" class="empty-state-card">
       <mat-icon>search</mat-icon>
-      <h3>Utilisez les filtres ci-dessus pour rechercher des bénéficiaires</h3>
-      <p>Vous pouvez filtrer par nom, CIN, situation, province, établissement et dates</p>
+      <h3>{{ 'BENEFICIAIRE.SEARCH.EMPTY_STATE_TITLE' | translate }}</h3>
+      <p>{{ 'BENEFICIAIRE.SEARCH.EMPTY_STATE_DESC' | translate }}</p>
       <button class="btn btn-primary" (click)="search()">
-        <mat-icon>search</mat-icon> Afficher tous
+        <mat-icon>search</mat-icon> {{ 'BENEFICIAIRE.SEARCH.SHOW_ALL' | translate }}
       </button>
     </div>
   `,
@@ -339,7 +340,8 @@ export class BeneficiairesSearchComponent implements OnInit {
     private api: ApiService,
     private auth: AuthService,
     private snackBar: MatSnackBar,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -377,7 +379,7 @@ export class BeneficiairesSearchComponent implements OnInit {
       },
       error: () => {
         this.loading = false;
-        this.snackBar.open('Erreur de recherche', 'Fermer', { duration: 3000, panelClass: 'error-snackbar' });
+        this.snackBar.open(this.translate.instant('BENEFICIAIRE.SEARCH.SEARCH_ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000, panelClass: 'error-snackbar' });
       }
     });
   }
@@ -413,14 +415,14 @@ export class BeneficiairesSearchComponent implements OnInit {
   }
 
   delete(b: Beneficiaire) {
-    if (!confirm(`Supprimer ${b.nom} ${b.prenom} ?`)) return;
+    if (!confirm(this.translate.instant('BENEFICIAIRE.SEARCH.CONFIRM_DELETE', { nom: b.nom, prenom: b.prenom }))) return;
     this.api.deleteBeneficiaire(b.id).subscribe({
       next: () => {
         this.filtered = this.filtered.filter(x => x.id !== b.id);
         this.updatePage();
-        this.snackBar.open('Bénéficiaire supprimé', 'OK', { duration: 3000, panelClass: 'success-snackbar' });
+        this.snackBar.open(this.translate.instant('BENEFICIAIRE.SEARCH.DELETED'), 'OK', { duration: 3000, panelClass: 'success-snackbar' });
       },
-      error: () => this.snackBar.open('Erreur', 'Fermer', { duration: 3000, panelClass: 'error-snackbar' })
+      error: () => this.snackBar.open(this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000, panelClass: 'error-snackbar' })
     });
   }
 
@@ -450,7 +452,7 @@ export class BeneficiairesSearchComponent implements OnInit {
 
   formatEnum(val: string): string {
     if (!val) return '-';
-    return val.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+    return this.translate.instant('BENEFICIAIRE.OPTIONS.SITUATION_DIFFICULTE.' + val);
   }
 
   isAdmin() { return this.auth.isAdmin(); }

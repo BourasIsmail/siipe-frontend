@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/auth/auth.service';
 import { FormationContinue, Personnel } from '../../../core/models/personnel.model';
@@ -17,13 +18,13 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
   imports: [
     CommonModule, FormsModule, ReactiveFormsModule,
     MatCardModule, MatButtonModule, MatIconModule,
-    MatSnackBarModule, MatProgressSpinnerModule
+    MatSnackBarModule, MatProgressSpinnerModule, TranslateModule
   ],
   template: `
     <div class="page-header">
-      <h1>Formations continues</h1>
+      <h1>{{ 'FORMATION.LIST.TITLE' | translate }}</h1>
       <button class="btn btn-primary" (click)="openForm()" *ngIf="canEdit()">
-        <mat-icon>add</mat-icon> Ajouter
+        <mat-icon>add</mat-icon> {{ 'COMMON.ADD' | translate }}
       </button>
     </div>
 
@@ -32,19 +33,19 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
       <mat-card-content>
         <div class="filter-grid">
           <div class="field">
-            <label>Titre</label>
-            <input type="text" [(ngModel)]="filterTitre" (ngModelChange)="applyFilter()" placeholder="Rechercher...">
+            <label>{{ 'FORMATION.LIST.TITRE' | translate }}</label>
+            <input type="text" [(ngModel)]="filterTitre" (ngModelChange)="applyFilter()" [placeholder]="'FORMATION.LIST.SEARCH_PLACEHOLDER' | translate">
           </div>
           <div class="field">
-            <label>Établissement</label>
+            <label>{{ 'FORMATION.LIST.ETABLISSEMENT' | translate }}</label>
             <select [(ngModel)]="filterEtabId" (ngModelChange)="applyFilter()">
-              <option [ngValue]="null">Tous</option>
+              <option [ngValue]="null">{{ 'COMMON.ALL' | translate }}</option>
               <option *ngFor="let e of etablissements" [ngValue]="e.id">{{ e.nomFr }}</option>
             </select>
           </div>
           <div class="field" style="justify-content:flex-end;padding-top:20px">
             <button class="btn btn-outline" (click)="resetFilter()">
-              <mat-icon>clear</mat-icon> Réinitialiser
+              <mat-icon>clear</mat-icon> {{ 'COMMON.RESET' | translate }}
             </button>
           </div>
         </div>
@@ -54,60 +55,60 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
     <!-- Add/Edit Form -->
     <mat-card class="mb-2" *ngIf="showForm">
       <mat-card-header>
-        <mat-card-title>{{ editingId ? 'Modifier' : 'Nouvelle' }} formation</mat-card-title>
+        <mat-card-title>{{ (editingId ? 'FORMATION.LIST.EDIT_FORMATION' : 'FORMATION.LIST.NEW_FORMATION') | translate }}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="form-row">
             <div class="field">
-              <label>Titre *</label>
-              <input type="text" formControlName="titre" placeholder="Titre de la formation">
-              <span class="err" *ngIf="form.get('titre')?.invalid && form.get('titre')?.touched">Champ requis</span>
+              <label>{{ 'FORMATION.LIST.TITRE' | translate }} *</label>
+              <input type="text" formControlName="titre" [placeholder]="'FORMATION.LIST.TITRE_PLACEHOLDER' | translate">
+              <span class="err" *ngIf="form.get('titre')?.invalid && form.get('titre')?.touched">{{ 'FORMATION.LIST.FIELD_REQUIRED' | translate }}</span>
             </div>
             <div class="field">
-              <label>Organisme</label>
-              <input type="text" formControlName="organisme" placeholder="Organisme formateur">
+              <label>{{ 'FORMATION.LIST.ORGANISME' | translate }}</label>
+              <input type="text" formControlName="organisme" [placeholder]="'FORMATION.LIST.ORGANISME_PLACEHOLDER' | translate">
             </div>
             <div class="field">
-              <label>Lieu</label>
-              <input type="text" formControlName="lieu" placeholder="Lieu de formation">
+              <label>{{ 'FORMATION.LIST.LIEU' | translate }}</label>
+              <input type="text" formControlName="lieu" [placeholder]="'FORMATION.LIST.LIEU_PLACEHOLDER' | translate">
             </div>
             <div class="field">
-              <label>Durée (jours)</label>
+              <label>{{ 'FORMATION.LIST.DUREE_JOURS' | translate }}</label>
               <input type="number" formControlName="dureeJours" placeholder="0">
             </div>
             <div class="field">
-              <label>Date début</label>
+              <label>{{ 'FORMATION.LIST.DATE_DEBUT' | translate }}</label>
               <input type="date" formControlName="dateDebut">
             </div>
             <div class="field">
-              <label>Date fin</label>
+              <label>{{ 'FORMATION.LIST.DATE_FIN' | translate }}</label>
               <input type="date" formControlName="dateFin">
             </div>
             <div class="field">
-              <label>Établissement</label>
+              <label>{{ 'FORMATION.LIST.ETABLISSEMENT' | translate }}</label>
               <select formControlName="etablissementCentreId">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'FORMATION.LIST.SELECT_PLACEHOLDER' | translate }}</option>
                 <option *ngFor="let e of etablissements" [value]="e.id">{{ e.nomFr }}</option>
               </select>
             </div>
             <div class="field">
-              <label>Participants</label>
+              <label>{{ 'FORMATION.LIST.PARTICIPANTS' | translate }}</label>
               <select formControlName="participantIds" multiple style="height:120px">
                 <option *ngFor="let p of personnel" [value]="p.id">{{ p.nom }} {{ p.prenom }} — {{ p.matricule }}</option>
               </select>
-              <small class="text-secondary">Ctrl+clic pour sélectionner plusieurs</small>
+              <small class="text-secondary">{{ 'FORMATION.LIST.MULTISELECT_HINT' | translate }}</small>
             </div>
           </div>
           <div class="field mb-2">
-            <label>Description</label>
-            <textarea formControlName="description" rows="3" class="textarea" placeholder="Description..."></textarea>
+            <label>{{ 'FORMATION.LIST.DESCRIPTION' | translate }}</label>
+            <textarea formControlName="description" rows="3" class="textarea" [placeholder]="'FORMATION.LIST.DESCRIPTION_PLACEHOLDER' | translate"></textarea>
           </div>
           <div class="form-btns">
-            <button type="button" class="btn btn-outline" (click)="closeForm()">Annuler</button>
+            <button type="button" class="btn btn-outline" (click)="closeForm()">{{ 'COMMON.CANCEL' | translate }}</button>
             <button type="submit" class="btn btn-primary" [disabled]="form.invalid || saving">
               <mat-spinner diameter="16" *ngIf="saving" style="display:inline-block;margin-right:6px"></mat-spinner>
-              {{ saving ? '' : (editingId ? 'Enregistrer' : 'Créer') }}
+              {{ saving ? '' : (editingId ? ('COMMON.SAVE' | translate) : ('FORMATION.LIST.CREATE' | translate)) }}
             </button>
           </div>
         </form>
@@ -129,7 +130,7 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
               <div class="formation-meta">
                 <span *ngIf="f.organisme"><mat-icon>business</mat-icon>{{ f.organisme }}</span>
                 <span *ngIf="f.lieu"><mat-icon>location_on</mat-icon>{{ f.lieu }}</span>
-                <span *ngIf="f.dureeJours"><mat-icon>schedule</mat-icon>{{ f.dureeJours }} jour(s)</span>
+                <span *ngIf="f.dureeJours"><mat-icon>schedule</mat-icon>{{ f.dureeJours }} {{ 'FORMATION.LIST.JOURS' | translate }}</span>
               </div>
               <div class="formation-dates" *ngIf="f.dateDebut || f.dateFin">
                 <mat-icon>event</mat-icon>
@@ -142,10 +143,10 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
               </div>
             </div>
             <div class="formation-actions" *ngIf="canEdit()">
-              <button class="action-btn edit" (click)="openEditForm(f)" title="Modifier">
+              <button class="action-btn edit" (click)="openEditForm(f)" [title]="'COMMON.EDIT' | translate">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button class="action-btn delete" (click)="delete(f)" title="Supprimer">
+              <button class="action-btn delete" (click)="delete(f)" [title]="'COMMON.DELETE' | translate">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
@@ -156,7 +157,7 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
           <!-- Participants -->
           <div class="participants-section" *ngIf="f.participants && f.participants.length > 0">
             <div class="participants-label">
-              <mat-icon>group</mat-icon> {{ f.participants.length }} participant(s)
+              <mat-icon>group</mat-icon> {{ f.participants.length }} {{ 'FORMATION.LIST.PARTICIPANTS_COUNT' | translate }}
             </div>
             <div class="participants-chips">
               <span class="chip" *ngFor="let p of f.participants">
@@ -168,11 +169,11 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
           <!-- Upload attestation -->
           <div class="attestation-section">
             <a *ngIf="f.attestationUrl" [href]="getFileUrl(f.attestationUrl)" target="_blank" class="doc-link">
-              <mat-icon>description</mat-icon> Voir l'attestation
+              <mat-icon>description</mat-icon> {{ 'FORMATION.LIST.VIEW_ATTESTATION' | translate }}
             </a>
             <label class="upload-btn" *ngIf="canEdit()">
               <mat-icon>upload</mat-icon>
-              {{ f.attestationUrl ? 'Changer attestation' : 'Ajouter attestation' }}
+              {{ (f.attestationUrl ? 'FORMATION.LIST.CHANGE_ATTESTATION' : 'FORMATION.LIST.ADD_ATTESTATION') | translate }}
               <input type="file" hidden (change)="uploadAttestation($event, f.id)">
             </label>
           </div>
@@ -181,7 +182,7 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
 
       <div class="empty-state" *ngIf="filtered.length === 0">
         <mat-icon>school</mat-icon>
-        <p>Aucune formation trouvée</p>
+        <p>{{ 'FORMATION.LIST.EMPTY' | translate }}</p>
       </div>
     </div>
 
@@ -314,7 +315,8 @@ export class FormationsListComponent implements OnInit {
     private auth: AuthService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -372,18 +374,18 @@ export class FormationsListComponent implements OnInit {
         this.applyFilter();
         this.saving = false;
         this.closeForm();
-        this.snackBar.open(this.editingId ? 'Formation modifiée' : 'Formation créée', 'OK', { duration: 3000, panelClass: 'success-snackbar' });
+        this.snackBar.open(this.editingId ? this.translate.instant('FORMATION.LIST.UPDATED') : this.translate.instant('FORMATION.LIST.CREATED'), 'OK', { duration: 3000, panelClass: 'success-snackbar' });
         this.cdr.detectChanges();
       },
-      error: () => { this.saving = false; this.snackBar.open('Erreur', 'Fermer', { duration: 3000, panelClass: 'error-snackbar' }); }
+      error: () => { this.saving = false; this.snackBar.open(this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000, panelClass: 'error-snackbar' }); }
     });
   }
 
   delete(f: FormationContinue) {
-    if (!confirm(`Supprimer "${f.titre}" ?`)) return;
+    if (!confirm(this.translate.instant('FORMATION.LIST.CONFIRM_DELETE', { titre: f.titre }))) return;
     this.api.deleteFormation(f.id).subscribe({
-      next: () => { this.all = this.all.filter(x => x.id !== f.id); this.applyFilter(); this.snackBar.open('Supprimée', 'OK', { duration: 3000 }); this.cdr.detectChanges(); },
-      error: () => this.snackBar.open('Erreur', 'Fermer', { duration: 3000 })
+      next: () => { this.all = this.all.filter(x => x.id !== f.id); this.applyFilter(); this.snackBar.open(this.translate.instant('FORMATION.LIST.DELETED'), 'OK', { duration: 3000 }); this.cdr.detectChanges(); },
+      error: () => this.snackBar.open(this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000 })
     });
   }
 
@@ -391,8 +393,8 @@ export class FormationsListComponent implements OnInit {
     const file = event.target.files[0];
     if (!file) return;
     this.api.uploadFormationAttestation(id, file).subscribe({
-      next: f => { this.all = this.all.map(x => x.id === f.id ? f : x); this.applyFilter(); this.snackBar.open('Attestation uploadée', 'OK', { duration: 3000 }); this.cdr.detectChanges(); },
-      error: () => this.snackBar.open('Erreur upload', 'Fermer', { duration: 3000 })
+      next: f => { this.all = this.all.map(x => x.id === f.id ? f : x); this.applyFilter(); this.snackBar.open(this.translate.instant('FORMATION.LIST.ATTESTATION_UPLOADED'), 'OK', { duration: 3000 }); this.cdr.detectChanges(); },
+      error: () => this.snackBar.open(this.translate.instant('FORMATION.LIST.UPLOAD_ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000 })
     });
   }
 
