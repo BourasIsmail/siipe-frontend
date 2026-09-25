@@ -57,7 +57,7 @@ import { Programme, Prestation } from '../../core/models/etablissement.model';
           <div class="form-btns">
             <button type="button" class="btn btn-outline" (click)="closeProgrammeForm()">{{ 'COMMON.CANCEL' | translate }}</button>
             <button type="submit" class="btn btn-primary" [disabled]="programmeForm.invalid || savingProgramme">
-              <mat-spinner diameter="16" *ngIf="savingProgramme" style="display:inline-block;margin-right:6px"></mat-spinner>
+              <mat-spinner diameter="16" *ngIf="savingProgramme" style="display:inline-block;margin-inline-end:6px"></mat-spinner>
               {{ savingProgramme ? '' : ((editingProgrammeId ? 'COMMON.SAVE' : 'PROGRAMME.CREATE') | translate) }}
             </button>
           </div>
@@ -154,7 +154,7 @@ import { Programme, Prestation } from '../../core/models/etablissement.model';
   `,
   styles: [`
     .programmes-grid { display: flex; flex-direction: column; gap: 16px; }
-    .programme-card { border-left: 4px solid var(--color-primary) !important; }
+    .programme-card { border-inline-start: 4px solid var(--color-primary) !important; }
     .programme-header {
       display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;
     }

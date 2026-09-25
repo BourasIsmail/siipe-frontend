@@ -101,7 +101,7 @@ import { buildSatelliteLabelsStyle, ESRI_WORLD_IMAGERY_URL } from '../../../shar
     .stat mat-icon { color: var(--color-primary); font-size: 20px; width: 20px; height: 20px; }
     .stat strong { color: var(--color-primary); }
     .filter-group {
-      display: flex; align-items: center; gap: 8px; margin-left: auto;
+      display: flex; align-items: center; gap: 8px; margin-inline-start: auto;
       label { font-size: 13px; color: #666; white-space: nowrap; }
       select {
         padding: 6px 10px; border: 1px solid #ccc; border-radius: 6px;
@@ -148,7 +148,7 @@ import { buildSatelliteLabelsStyle, ESRI_WORLD_IMAGERY_URL } from '../../../shar
       display: flex; align-items: center; gap: 16px;
       padding: 8px 12px; background: #fff8e1; border-radius: 6px; font-size: 13px;
     }
-    .link { color: var(--color-primary); text-decoration: none; margin-left: auto; font-size: 12px; }
+    .link { color: var(--color-primary); text-decoration: none; margin-inline-start: auto; font-size: 12px; }
     .link:hover { text-decoration: underline; }
   `]
 })
@@ -244,15 +244,15 @@ export class EtablissementsMapComponent implements OnInit, AfterViewInit {
       div.innerHTML = `
         <div style="background:white;padding:12px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);font-size:12px;line-height:1.8">
           <strong style="display:block;margin-bottom:6px;color:#2e7d32">${this.translate.instant('ETABLISSEMENT.MAP.LEGEND')}</strong>
-          <div><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png" height="16" style="vertical-align:middle;margin-right:6px"> ${this.translate.instant('ETABLISSEMENT.TYPES.CENTRE_SOCIALE')}</div>
-          <div><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png" height="16" style="vertical-align:middle;margin-right:6px"> ${this.translate.instant('ETABLISSEMENT.TYPES.DELEGATION')}</div>
-          <div><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png" height="16" style="vertical-align:middle;margin-right:6px"> ${this.translate.instant('ETABLISSEMENT.TYPES.COORDINATION')}</div>
-          <div><img src="https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png" height="16" style="vertical-align:middle;margin-right:6px"> ${this.translate.instant('ETABLISSEMENT.TYPES.AUTRE')}</div>
+          <div><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png" height="16" style="vertical-align:middle;margin-inline-end:6px"> ${this.translate.instant('ETABLISSEMENT.TYPES.CENTRE_SOCIALE')}</div>
+          <div><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png" height="16" style="vertical-align:middle;margin-inline-end:6px"> ${this.translate.instant('ETABLISSEMENT.TYPES.DELEGATION')}</div>
+          <div><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png" height="16" style="vertical-align:middle;margin-inline-end:6px"> ${this.translate.instant('ETABLISSEMENT.TYPES.COORDINATION')}</div>
+          <div><img src="https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png" height="16" style="vertical-align:middle;margin-inline-end:6px"> ${this.translate.instant('ETABLISSEMENT.TYPES.AUTRE')}</div>
           <hr style="margin:8px 0;border:none;border-top:1px solid #eee">
-          <div><span style="display:inline-block;width:16px;height:2px;background:#fff;margin-right:6px;vertical-align:middle"></span> ${this.translate.instant('ETABLISSEMENT.MAP.LEGEND_BORDER')}</div>
-          <div><span style="display:inline-block;width:16px;height:2px;background:repeating-linear-gradient(90deg,#ffd54f 0 3px,transparent 3px 5px);margin-right:6px;vertical-align:middle"></span> ${this.translate.instant('ETABLISSEMENT.MAP.LEGEND_REGION')}</div>
-          <div><span style="display:inline-block;width:16px;height:2px;background:repeating-linear-gradient(90deg,#f5f5f5 0 1px,transparent 1px 3px);margin-right:6px;vertical-align:middle"></span> ${this.translate.instant('ETABLISSEMENT.MAP.LEGEND_PROVINCE')}</div>
-          <div><span style="display:inline-block;width:16px;height:3px;background:#ffb300;margin-right:6px;vertical-align:middle"></span> ${this.translate.instant('ETABLISSEMENT.MAP.LEGEND_ROAD')}</div>
+          <div><span style="display:inline-block;width:16px;height:2px;background:#fff;margin-inline-end:6px;vertical-align:middle"></span> ${this.translate.instant('ETABLISSEMENT.MAP.LEGEND_BORDER')}</div>
+          <div><span style="display:inline-block;width:16px;height:2px;background:repeating-linear-gradient(90deg,#ffd54f 0 3px,transparent 3px 5px);margin-inline-end:6px;vertical-align:middle"></span> ${this.translate.instant('ETABLISSEMENT.MAP.LEGEND_REGION')}</div>
+          <div><span style="display:inline-block;width:16px;height:2px;background:repeating-linear-gradient(90deg,#f5f5f5 0 1px,transparent 1px 3px);margin-inline-end:6px;vertical-align:middle"></span> ${this.translate.instant('ETABLISSEMENT.MAP.LEGEND_PROVINCE')}</div>
+          <div><span style="display:inline-block;width:16px;height:3px;background:#ffb300;margin-inline-end:6px;vertical-align:middle"></span> ${this.translate.instant('ETABLISSEMENT.MAP.LEGEND_ROAD')}</div>
         </div>
       `;
       return div;

@@ -33,7 +33,14 @@
     "SEND_RESET_LINK": "إرسال الرابط",
     "NEW_PASSWORD": "كلمة المرور الجديدة",
     "CONFIRM_PASSWORD": "تأكيد كلمة المرور",
-    "BACK_TO_LOGIN": "العودة إلى تسجيل الدخول"
+    "BACK_TO_LOGIN": "العودة إلى تسجيل الدخول",
+    "FOOTER_MOTTO": "التعاون الوطني — في خدمة العمل الاجتماعي منذ 1957",
+    "EMAIL_REQUIRED": "البريد الإلكتروني مطلوب",
+    "EMAIL_INVALID": "بريد إلكتروني غير صالح",
+    "PASSWORD_REQUIRED": "كلمة المرور مطلوبة",
+    "RESET_INFO": "أدخل بريدك الإلكتروني لتلقي رابط إعادة التعيين.",
+    "RESET_LINK_SENT": "إذا كان هذا البريد الإلكتروني موجودًا، فقد تم إرسال رابط.",
+    "PASSWORD_RESET_SUCCESS": "تمت إعادة تعيين كلمة المرور بنجاح!"
   },
   "DASHBOARD": {
     "TITLE": "لوحة القيادة",
@@ -305,6 +312,31 @@
       "UPLOADED_CERTIFICAT": "تم رفع الشهادة",
       "ERROR_UPLOAD": "خطأ في الرفع",
       "UPLOADED": "تم الرفع"
+    },
+    "FORM": {
+      "TITLE_EDIT": "تعديل مستفيد",
+      "TITLE_ADD": "تسجيل مستفيد",
+      "PRENOM_AR": "النسب (بالعربية)",
+      "NUMERO_DOSSIER": "رقم الملف",
+      "NUMERO_DOSSIER_PLACEHOLDER": "رقم الملف",
+      "NATIONALITE_PLACEHOLDER": "مغربية",
+      "TYPE_PIECE_IDENTITE": "نوع وثيقة الهوية",
+      "NUMERO_PIECE_IDENTITE": "رقم وثيقة الهوية",
+      "TEMOIGNAGE_FAMILLE_LABEL": "شهادة الأسرة",
+      "TEMOIGNAGE_PLACEHOLDER": "شهادة",
+      "ETAT_SANTE_PSYCHIQUE_LABEL": "الحالة النفسية",
+      "ETAT_COMPORTEMENT_LABEL": "الحالة السلوكية/المعنوية",
+      "NOM_PERE_LABEL": "الوضعية المهنية للوالد",
+      "NOM_PERE_PLACEHOLDER": "اسم الأب",
+      "NOM_MERE_LABEL": "اسم الأم",
+      "NOM_TUTEUR_LABEL": "اسم الولي",
+      "TELEPHONE_PARENT_LABEL": "هاتف الوالد/الولي",
+      "ADRESSE_PARENT_LABEL": "عنوان الوالد/الولي",
+      "MOTIF_SORTIE_LABEL": "سبب الخروج",
+      "MOTIF_PLACEHOLDER": "السبب",
+      "SUBMIT_INSCRIRE": "تسجيل",
+      "UPDATED": "تم تعديل المستفيد",
+      "CREATED": "تم تسجيل المستفيد"
     }
   },
   "PERSONNEL": {

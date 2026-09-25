@@ -152,7 +152,7 @@ import { Subvention, Partenaire, EtablissementCentre, Programme } from '../../..
           <div class="form-btns">
             <button type="button" class="btn btn-outline" (click)="closeForm()">{{ 'COMMON.CANCEL' | translate }}</button>
             <button type="submit" class="btn btn-primary" [disabled]="form.invalid || saving">
-              <mat-spinner diameter="16" *ngIf="saving" style="display:inline-block;margin-right:6px"></mat-spinner>
+              <mat-spinner diameter="16" *ngIf="saving" style="display:inline-block;margin-inline-end:6px"></mat-spinner>
               {{ saving ? '' : (editingId ? ('COMMON.SAVE' | translate) : ('SUBVENTION.LIST.CREATE' | translate)) }}
             </button>
           </div>
@@ -229,11 +229,11 @@ import { Subvention, Partenaire, EtablissementCentre, Programme } from '../../..
       background: white; border-radius: 8px; padding: 16px 24px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex;
       flex-direction: column; align-items: center; gap: 4px;
-      border-left: 4px solid #ccc; min-width: 140px;
+      border-inline-start: 4px solid #ccc; min-width: 140px;
     }
-    .stat-mini.green { border-left-color: var(--color-primary); }
-    .stat-mini.blue { border-left-color: #1565c0; }
-    .stat-mini.orange { border-left-color: #e65100; }
+    .stat-mini.green { border-inline-start-color: var(--color-primary); }
+    .stat-mini.blue { border-inline-start-color: #1565c0; }
+    .stat-mini.orange { border-inline-start-color: #e65100; }
     .stat-val { font-size: 22px; font-weight: 700; color: var(--color-primary); }
     .stat-lbl { font-size: 12px; color: #888; }
     .filter-grid {
@@ -271,7 +271,7 @@ import { Subvention, Partenaire, EtablissementCentre, Programme } from '../../..
     .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
     .data-table th {
       background: var(--color-primary); color: white;
-      padding: 12px 14px; text-align: left; font-size: 13px;
+      padding: 12px 14px; text-align: start; font-size: 13px;
       font-weight: 600; white-space: nowrap;
     }
     .data-table td { padding: 11px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }

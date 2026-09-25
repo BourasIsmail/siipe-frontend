@@ -33,7 +33,14 @@
     "SEND_RESET_LINK": "Envoyer le lien",
     "NEW_PASSWORD": "Nouveau mot de passe",
     "CONFIRM_PASSWORD": "Confirmer le mot de passe",
-    "BACK_TO_LOGIN": "Retour à la connexion"
+    "BACK_TO_LOGIN": "Retour à la connexion",
+    "FOOTER_MOTTO": "Entraide Nationale — Au service de l'action sociale depuis 1957",
+    "EMAIL_REQUIRED": "Email requis",
+    "EMAIL_INVALID": "Email invalide",
+    "PASSWORD_REQUIRED": "Mot de passe requis",
+    "RESET_INFO": "Entrez votre email pour recevoir un lien de réinitialisation.",
+    "RESET_LINK_SENT": "Si cet email existe, un lien a été envoyé.",
+    "PASSWORD_RESET_SUCCESS": "Mot de passe réinitialisé avec succès!"
   },
   "DASHBOARD": {
     "TITLE": "Tableau de bord",
@@ -305,6 +312,31 @@
       "UPLOADED_CERTIFICAT": "Certificat uploadé",
       "ERROR_UPLOAD": "Erreur upload",
       "UPLOADED": "Uploadé"
+    },
+    "FORM": {
+      "TITLE_EDIT": "Modifier un Bénéficiaire",
+      "TITLE_ADD": "Inscrire un Bénéficiaire",
+      "PRENOM_AR": "Prénom (Arabe)",
+      "NUMERO_DOSSIER": "Numéro de dossier",
+      "NUMERO_DOSSIER_PLACEHOLDER": "N° dossier",
+      "NATIONALITE_PLACEHOLDER": "Marocaine",
+      "TYPE_PIECE_IDENTITE": "Type de pièce d'identité",
+      "NUMERO_PIECE_IDENTITE": "Numéro pièce d'identité",
+      "TEMOIGNAGE_FAMILLE_LABEL": "Témoignage de la famille",
+      "TEMOIGNAGE_PLACEHOLDER": "Témoignage",
+      "ETAT_SANTE_PSYCHIQUE_LABEL": "État de santé psychique",
+      "ETAT_COMPORTEMENT_LABEL": "État de comportement/Moral",
+      "NOM_PERE_LABEL": "Situation professionnelle parent",
+      "NOM_PERE_PLACEHOLDER": "Nom du père",
+      "NOM_MERE_LABEL": "Nom de la mère",
+      "NOM_TUTEUR_LABEL": "Nom du tuteur",
+      "TELEPHONE_PARENT_LABEL": "Téléphone parent/tuteur",
+      "ADRESSE_PARENT_LABEL": "Adresse parent/tuteur",
+      "MOTIF_SORTIE_LABEL": "Motif de sortie",
+      "MOTIF_PLACEHOLDER": "Motif",
+      "SUBMIT_INSCRIRE": "Inscrire",
+      "UPDATED": "Bénéficiaire modifié",
+      "CREATED": "Bénéficiaire inscrit"
     }
   },
   "PERSONNEL": {

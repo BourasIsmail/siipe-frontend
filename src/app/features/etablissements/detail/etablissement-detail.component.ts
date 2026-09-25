@@ -301,7 +301,7 @@ import { Personnel } from '../../../core/models/personnel.model';
       display: flex; justify-content: space-between; align-items: center;
       padding: 6px 0; border-bottom: 1px solid #fafafa; font-size: 14px;
       span { color: #666; }
-      strong { color: #333; text-align: right; }
+      strong { color: #333; text-align: end; }
     }
     .bool-val { color: #c62828; }
     .bool-val.yes { color: #2e7d32; }
@@ -326,7 +326,7 @@ import { Personnel } from '../../../core/models/personnel.model';
     .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
     .data-table th {
       background: var(--color-primary); color: white;
-      padding: 10px 14px; text-align: left; font-size: 13px;
+      padding: 10px 14px; text-align: start; font-size: 13px;
     }
     .data-table td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; }
     .data-table tr:hover td { background: #f9f9f9; }
@@ -354,7 +354,7 @@ import { Personnel } from '../../../core/models/personnel.model';
     .doc-name { font-weight: 500; font-size: 14px; margin-bottom: 4px; }
     .doc-link { color: var(--color-primary); font-size: 13px; text-decoration: none; }
     .doc-link:hover { text-decoration: underline; }
-    .doc-upload { margin-left: auto; }
+    .doc-upload { margin-inline-start: auto; }
     .upload-btn {
       display: flex; align-items: center; cursor: pointer;
       color: #666; padding: 6px; border-radius: 4px;
@@ -366,7 +366,7 @@ import { Personnel } from '../../../core/models/personnel.model';
 
     .audit-info {
       margin-top: 16px; font-size: 12px; color: #bbb;
-      text-align: right; padding-bottom: 32px;
+      text-align: end; padding-bottom: 32px;
     }
   `]
 })

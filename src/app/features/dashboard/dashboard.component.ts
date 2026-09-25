@@ -40,7 +40,7 @@ import { AuthService } from '../../core/auth/auth.service';
             </div>
           </div>
 
-          <div class="stat-card" style="border-left-color:#1976d2">
+          <div class="stat-card" style="border-inline-start-color:#1976d2">
             <div class="stat-icon" style="background:#e3f2fd">
               <mat-icon style="color:#1976d2">badge</mat-icon>
             </div>
@@ -50,7 +50,7 @@ import { AuthService } from '../../core/auth/auth.service';
             </div>
           </div>
 
-          <div class="stat-card" style="border-left-color:#f57c00">
+          <div class="stat-card" style="border-inline-start-color:#f57c00">
             <div class="stat-icon" style="background:#fff3e0">
               <mat-icon style="color:#f57c00">business</mat-icon>
             </div>
@@ -60,7 +60,7 @@ import { AuthService } from '../../core/auth/auth.service';
             </div>
           </div>
 
-          <div class="stat-card" style="border-left-color:#7b1fa2">
+          <div class="stat-card" style="border-inline-start-color:#7b1fa2">
             <div class="stat-icon" style="background:#f3e5f5">
               <mat-icon style="color:#7b1fa2">handshake</mat-icon>
             </div>
@@ -70,7 +70,7 @@ import { AuthService } from '../../core/auth/auth.service';
             </div>
           </div>
 
-          <div class="stat-card" style="border-left-color:#c62828">
+          <div class="stat-card" style="border-inline-start-color:#c62828">
             <div class="stat-icon" style="background:#ffebee">
               <mat-icon style="color:#c62828">payments</mat-icon>
             </div>

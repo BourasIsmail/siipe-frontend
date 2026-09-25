@@ -107,7 +107,7 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
           <div class="form-btns">
             <button type="button" class="btn btn-outline" (click)="closeForm()">{{ 'COMMON.CANCEL' | translate }}</button>
             <button type="submit" class="btn btn-primary" [disabled]="form.invalid || saving">
-              <mat-spinner diameter="16" *ngIf="saving" style="display:inline-block;margin-right:6px"></mat-spinner>
+              <mat-spinner diameter="16" *ngIf="saving" style="display:inline-block;margin-inline-end:6px"></mat-spinner>
               {{ saving ? '' : (editingId ? ('COMMON.SAVE' | translate) : ('FORMATION.LIST.CREATE' | translate)) }}
             </button>
           </div>

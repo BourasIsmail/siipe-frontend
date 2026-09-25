@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../core/auth/auth.service';
 
 @Component({
@@ -31,7 +31,7 @@ import { AuthService } from '../../../core/auth/auth.service';
         <mat-card-content>
           <!-- Step 1: Request reset -->
           <form *ngIf="!token" [formGroup]="emailForm" (ngSubmit)="onRequestReset()">
-            <p class="info-text">Entrez votre email pour recevoir un lien de réinitialisation.</p>
+            <p class="info-text">{{ 'AUTH.RESET_INFO' | translate }}</p>
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>{{ 'AUTH.EMAIL' | translate }}</mat-label>
               <input matInput type="email" formControlName="email">
@@ -97,7 +97,8 @@ export class ResetPasswordComponent implements OnInit {
     private auth: AuthService,
     private route: ActivatedRoute,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private translate: TranslateService
   ) {
     this.emailForm = this.fb.group({ email: ['', [Validators.required, Validators.email]] });
     this.passwordForm = this.fb.group({ newPassword: ['', [Validators.required, Validators.minLength(8)]] });
@@ -111,7 +112,7 @@ export class ResetPasswordComponent implements OnInit {
     this.loading = true;
     this.auth.forgotPassword(this.emailForm.value.email).subscribe({
       next: () => {
-        this.snackBar.open('Si cet email existe, un lien a été envoyé.', 'OK', { duration: 5000 });
+        this.snackBar.open(this.translate.instant('AUTH.RESET_LINK_SENT'), 'OK', { duration: 5000 });
         this.loading = false;
       },
       error: () => { this.loading = false; }
@@ -122,12 +123,12 @@ export class ResetPasswordComponent implements OnInit {
     this.loading = true;
     this.auth.resetPassword(this.token!, this.passwordForm.value.newPassword).subscribe({
       next: () => {
-        this.snackBar.open('Mot de passe réinitialisé avec succès!', 'OK', { duration: 3000, panelClass: 'success-snackbar' });
+        this.snackBar.open(this.translate.instant('AUTH.PASSWORD_RESET_SUCCESS'), 'OK', { duration: 3000, panelClass: 'success-snackbar' });
         this.router.navigate(['/auth/login']);
       },
       error: (err) => {
         this.loading = false;
-        this.snackBar.open(err.error?.message || 'Erreur', 'Fermer', { duration: 4000, panelClass: 'error-snackbar' });
+        this.snackBar.open(err.error?.message || this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 4000, panelClass: 'error-snackbar' });
       }
     });
   }

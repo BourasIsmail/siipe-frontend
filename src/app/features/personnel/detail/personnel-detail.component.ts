@@ -246,7 +246,7 @@ import { Personnel } from '../../../core/models/personnel.model';
       display: flex; justify-content: space-between; align-items: center;
       padding: 6px 0; border-bottom: 1px solid #fafafa; font-size: 14px;
       span { color: #666; }
-      strong { color: #333; text-align: right; max-width: 60%; }
+      strong { color: #333; text-align: end; max-width: 60%; }
     }
     .photo-section { margin-top: 24px; }
     .photo-section h3 { color: var(--color-primary); font-size: 14px; margin-bottom: 12px; }
@@ -277,7 +277,7 @@ import { Personnel } from '../../../core/models/personnel.model';
       flex: 1; height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden;
     }
     .eval-bar { height: 100%; border-radius: 5px; transition: width 0.3s; }
-    .eval-score { width: 40px; text-align: right; font-size: 14px; font-weight: 600; color: #333; }
+    .eval-score { width: 40px; text-align: end; font-size: 14px; font-weight: 600; color: #333; }
     .observations h3 { color: var(--color-primary); font-size: 14px; margin-bottom: 12px; }
     .obs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
     .obs-item { background: #f9f9f9; border-radius: 8px; padding: 12px; }
@@ -285,7 +285,7 @@ import { Personnel } from '../../../core/models/personnel.model';
     .obs-text { font-size: 14px; color: #333; }
     .audit-info {
       margin-top: 16px; font-size: 12px; color: #bbb;
-      text-align: right; padding-bottom: 32px;
+      text-align: end; padding-bottom: 32px;
     }
   `]
 })
