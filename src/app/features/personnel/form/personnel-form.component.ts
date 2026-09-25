@@ -287,7 +287,7 @@ import { EtablissementCentre, Programme, Prestation } from '../../../core/models
       <div class="form-actions">
         <button mat-button type="button" routerLink="/personnel">{{ 'COMMON.CANCEL' | translate }}</button>
         <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || saving">
-          <mat-spinner diameter="18" *ngIf="saving" style="display:inline-block;margin-right:8px"></mat-spinner>
+          <mat-spinner diameter="18" *ngIf="saving" style="display:inline-block;margin-inline-end:8px"></mat-spinner>
           <span>{{ saving ? '' : ((isEdit ? 'COMMON.SAVE' : 'PERSONNEL.FORM.CREATE') | translate) }}</span>
         </button>
       </div>

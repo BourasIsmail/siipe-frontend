@@ -122,7 +122,7 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
           <div class="form-btns">
             <button type="button" class="btn btn-outline" (click)="closeForm()">{{ 'COMMON.CANCEL' | translate }}</button>
             <button type="submit" class="btn btn-primary" [disabled]="form.invalid || saving">
-              <mat-spinner diameter="16" *ngIf="saving" style="display:inline-block;margin-right:6px"></mat-spinner>
+              <mat-spinner diameter="16" *ngIf="saving" style="display:inline-block;margin-inline-end:6px"></mat-spinner>
               {{ saving ? '' : ((editingId ? 'COMMON.SAVE' : 'ADMIN.USERS.CREATE_AND_SEND') | translate) }}
             </button>
           </div>
@@ -241,7 +241,7 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
     .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
     .data-table th {
       background: var(--color-primary); color: white;
-      padding: 12px 14px; text-align: left; font-size: 13px; font-weight: 600;
+      padding: 12px 14px; text-align: start; font-size: 13px; font-weight: 600;
     }
     .data-table td { padding: 11px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
     .data-table tr:hover td { background: #f9f9f9; }

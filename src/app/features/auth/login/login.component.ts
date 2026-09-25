@@ -33,7 +33,7 @@ import { AuthService } from '../../../core/auth/auth.service';
           <p class="brand-sub">نظام المعلومات المندمج لحماية الطفولة</p>
         </div>
         <div class="login-footer-text">
-          <p>Entraide Nationale — Au service de l'action sociale depuis 1957</p>
+          <p>{{ 'AUTH.FOOTER_MOTTO' | translate }}</p>
         </div>
       </div>
 
@@ -49,8 +49,8 @@ import { AuthService } from '../../../core/auth/auth.service';
                 <mat-label>{{ 'AUTH.EMAIL' | translate }}</mat-label>
                 <input matInput type="email" formControlName="email" autocomplete="email">
                 <mat-icon matPrefix>email</mat-icon>
-                <mat-error *ngIf="form.get('email')?.hasError('required')">Email requis</mat-error>
-                <mat-error *ngIf="form.get('email')?.hasError('email')">Email invalide</mat-error>
+                <mat-error *ngIf="form.get('email')?.hasError('required')">{{ 'AUTH.EMAIL_REQUIRED' | translate }}</mat-error>
+                <mat-error *ngIf="form.get('email')?.hasError('email')">{{ 'AUTH.EMAIL_INVALID' | translate }}</mat-error>
               </mat-form-field>
 
               <mat-form-field appearance="outline" class="full-width mt-2">
@@ -61,7 +61,7 @@ import { AuthService } from '../../../core/auth/auth.service';
                 <button mat-icon-button matSuffix type="button" (click)="showPassword = !showPassword">
                   <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
                 </button>
-                <mat-error *ngIf="form.get('password')?.hasError('required')">Mot de passe requis</mat-error>
+                <mat-error *ngIf="form.get('password')?.hasError('required')">{{ 'AUTH.PASSWORD_REQUIRED' | translate }}</mat-error>
               </mat-form-field>
 
               <div class="forgot-link">
@@ -137,7 +137,7 @@ import { AuthService } from '../../../core/auth/auth.service';
     }
 
     .forgot-link {
-      text-align: right;
+      text-align: end;
       margin-top: 4px;
       a { color: var(--color-primary); font-size: 13px; text-decoration: none; &:hover { text-decoration: underline; } }
     }

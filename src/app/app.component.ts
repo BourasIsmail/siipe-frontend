@@ -11,6 +11,9 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent {
   constructor(private translate: TranslateService) {
     translate.setDefaultLang('fr');
-    translate.use('fr');
+    const savedLang = localStorage.getItem('siipe_lang') === 'ar' ? 'ar' : 'fr';
+    translate.use(savedLang);
+    document.documentElement.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = savedLang;
   }
 }

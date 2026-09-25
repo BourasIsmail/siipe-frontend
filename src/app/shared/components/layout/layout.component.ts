@@ -25,12 +25,12 @@ import { CommonModule } from '@angular/common';
     .app-content {
       padding: 24px;
       padding-top: calc(var(--header-height) + 24px);
-      margin-left: 0;
-      transition: margin-left 0.3s ease;
+      margin-inline-start: 0;
+      transition: margin-inline-start 0.3s ease;
       min-height: 100vh;
     }
     .app-content.sidebar-open {
-      margin-left: var(--sidebar-width);
+      margin-inline-start: var(--sidebar-width);
     }
   `]
 })

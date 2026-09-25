@@ -753,7 +753,7 @@ import { Programme, Prestation, EtablissementCentre } from '../../../core/models
     .info-section h3 { color: var(--color-primary); font-size: 14px; font-weight: 600; border-bottom: 1px solid #e8f5e9; padding-bottom: 8px; margin-bottom: 12px; }
     .info-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #fafafa; font-size: 14px; }
     .info-row span { color: #666; }
-    .info-row strong { color: #333; text-align: right; max-width: 60%; }
+    .info-row strong { color: #333; text-align: end; max-width: 60%; }
     .tab-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
     .add-form { background: #f9f9f9; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid #e0e0e0; }
     .add-form h4 { color: var(--color-primary); margin-bottom: 16px; font-size: 15px; }
@@ -767,14 +767,14 @@ import { Programme, Prestation, EtablissementCentre } from '../../../core/models
     .form-btns { display: flex; justify-content: flex-end; gap: 8px; }
     .obs-text { font-size: 13px; color: #666; padding: 8px; background: #f9f9f9; border-radius: 4px; }
     .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    .data-table th { background: var(--color-primary); color: white; padding: 10px 14px; text-align: left; font-size: 13px; }
+    .data-table th { background: var(--color-primary); color: white; padding: 10px 14px; text-align: start; font-size: 13px; }
     .data-table td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
     .data-table tr:hover td { background: #f9f9f9; }
     .action-btn { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: none; border-radius: 4px; cursor: pointer; background: transparent; color: var(--color-primary); text-decoration: none; }
     .action-btn:hover { background: #e8f5e9; }
     .action-btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
     .empty-tab { text-align: center; padding: 40px; color: #bbb; font-size: 14px; }
-    .audit-info { margin-top: 16px; font-size: 12px; color: #bbb; text-align: right; padding-bottom: 32px; }
+    .audit-info { margin-top: 16px; font-size: 12px; color: #bbb; text-align: end; padding-bottom: 32px; }
   `]
 })
 export class BeneficiaireDetailComponent implements OnInit {

@@ -92,11 +92,11 @@ import { AuthService } from '../../../core/auth/auth.service';
     .sidebar {
       position: fixed;
       top: var(--header-height);
-      left: 0;
+      inset-inline-start: 0;
       width: var(--sidebar-width);
       height: calc(100vh - var(--header-height));
       background: white;
-      border-right: 1px solid var(--color-border);
+      border-inline-end: 1px solid var(--color-border);
       overflow-y: auto;
       transform: translateX(-100%);
       transition: transform 0.3s ease;
@@ -104,6 +104,7 @@ import { AuthService } from '../../../core/auth/auth.service';
       display: flex;
       flex-direction: column;
     }
+    :host-context([dir="rtl"]) .sidebar { transform: translateX(100%); }
     .sidebar.open { transform: translateX(0); }
     .sidebar-nav { flex: 1; padding: 8px 0; }
     .nav-section { margin-bottom: 4px; }
@@ -141,7 +142,7 @@ import { AuthService } from '../../../core/auth/auth.service';
       background: #e8f5e9;
       color: var(--color-primary);
       font-weight: 600;
-      border-right: 3px solid var(--color-primary);
+      border-inline-end: 3px solid var(--color-primary);
     }
     .nav-item.active mat-icon { color: var(--color-primary); }
     .sidebar-footer {

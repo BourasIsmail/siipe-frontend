@@ -239,7 +239,7 @@ import { Province } from '../../../core/models/geo.model';
       background: var(--color-primary);
       color: white;
       padding: 12px 14px;
-      text-align: left;
+      text-align: start;
       font-weight: 600;
       font-size: 13px;
       white-space: nowrap;

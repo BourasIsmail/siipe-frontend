@@ -230,7 +230,7 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
     .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
     .data-table th {
       background: var(--color-primary); color: white;
-      padding: 12px 14px; text-align: left; font-size: 13px;
+      padding: 12px 14px; text-align: start; font-size: 13px;
       font-weight: 600; white-space: nowrap;
     }
     .data-table td {

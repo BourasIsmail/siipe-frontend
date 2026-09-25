@@ -35,7 +35,7 @@ interface EvalCritere {
           <mat-icon>arrow_back</mat-icon> {{ 'COMMON.BACK' | translate }}
         </button>
         <button class="btn btn-primary" (click)="save()" [disabled]="saving">
-          <mat-spinner diameter="16" *ngIf="saving" style="display:inline-block;margin-right:6px"></mat-spinner>
+          <mat-spinner diameter="16" *ngIf="saving" style="display:inline-block;margin-inline-end:6px"></mat-spinner>
           <mat-icon *ngIf="!saving">save</mat-icon>
           {{ saving ? ('PERSONNEL.EVALUATION.SAVING' | translate) : ('COMMON.SAVE' | translate) }}
         </button>
@@ -145,7 +145,7 @@ interface EvalCritere {
     .sub-header th { background: #43a047 !important; font-size: 11px; }
     .cote-header { text-align: center; }
 
-    .col-competence { width: 30%; text-align: left; }
+    .col-competence { width: 30%; text-align: start; }
     .col-note { width: 6%; text-align: center; }
     .col-total { width: 8%; text-align: center; }
     .col-obs { width: 22%; }

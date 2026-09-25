@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/auth/auth.service';
 import { EtablissementCentre, Programme, Prestation } from '../../../core/models/etablissement.model';
@@ -23,9 +23,9 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
   ],
   template: `
     <div class="page-header">
-      <h1>{{ isEdit ? 'Modifier' : 'Inscrire' }} un Bénéficiaire</h1>
+      <h1>{{ (isEdit ? 'BENEFICIAIRE.FORM.TITLE_EDIT' : 'BENEFICIAIRE.FORM.TITLE_ADD') | translate }}</h1>
       <button mat-button routerLink="/beneficiaires">
-        <mat-icon>arrow_back</mat-icon> Retour
+        <mat-icon>arrow_back</mat-icon> {{ 'COMMON.BACK' | translate }}
       </button>
     </div>
 
@@ -37,107 +37,107 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
 
       <!-- Section 1: Inscription -->
       <mat-card class="mb-2">
-        <mat-card-header><mat-card-title>Inscription</mat-card-title></mat-card-header>
+        <mat-card-header><mat-card-title>{{ 'MENU.INSCRIPTION' | translate }}</mat-card-title></mat-card-header>
         <mat-card-content>
           <div class="form-row">
             <div class="field">
-              <label>Visites à domicile</label>
+              <label>{{ 'BENEFICIAIRE.DETAIL.VISITES_A_DOMICILE' | translate }}</label>
               <select formControlName="visitesADomicile">
-                <option value="">-- Sélectionner --</option>
-                <option value="true">Oui</option>
-                <option value="false">Non</option>
+                <option value="">{{ 'BENEFICIAIRE.DETAIL.SELECT_PLACEHOLDER' | translate }}</option>
+                <option value="true">{{ 'COMMON.YES' | translate }}</option>
+                <option value="false">{{ 'COMMON.NO' | translate }}</option>
               </select>
             </div>
             <div class="field">
-              <label>Établissement *</label>
+              <label>{{ 'BENEFICIAIRE.ETABLISSEMENT' | translate }} *</label>
               <select formControlName="etablissementCentreId">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'BENEFICIAIRE.DETAIL.SELECT_PLACEHOLDER' | translate }}</option>
                 <option *ngFor="let e of etablissements" [value]="e.id">{{ e.nomFr }}</option>
               </select>
-              <span class="err" *ngIf="form.get('etablissementCentreId')?.invalid && form.get('etablissementCentreId')?.touched">Champ requis</span>
+              <span class="err" *ngIf="form.get('etablissementCentreId')?.invalid && form.get('etablissementCentreId')?.touched">{{ 'ETABLISSEMENT.FORM.REQUIRED' | translate }}</span>
             </div>
             <div class="field">
-              <label>Programme</label>
+              <label>{{ 'BENEFICIAIRE.DETAIL.PROGRAMME' | translate }}</label>
               <select formControlName="programmeId" (change)="onProgrammeChange($event)">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'BENEFICIAIRE.DETAIL.SELECT_PLACEHOLDER' | translate }}</option>
                 <option *ngFor="let p of programmes" [value]="p.id">{{ p.nomFr }}</option>
               </select>
             </div>
           </div>
           <div class="form-row">
             <div class="field">
-              <label>Nom *</label>
-              <input type="text" formControlName="nom" placeholder="Nom de famille">
-              <span class="err" *ngIf="form.get('nom')?.invalid && form.get('nom')?.touched">Champ requis</span>
+              <label>{{ 'BENEFICIAIRE.NOM' | translate }} *</label>
+              <input type="text" formControlName="nom" [placeholder]="'PERSONNEL.FORM.NOM_PLACEHOLDER' | translate">
+              <span class="err" *ngIf="form.get('nom')?.invalid && form.get('nom')?.touched">{{ 'ETABLISSEMENT.FORM.REQUIRED' | translate }}</span>
             </div>
             <div class="field">
-              <label>Prénom</label>
-              <input type="text" formControlName="prenom" placeholder="Prénom">
+              <label>{{ 'BENEFICIAIRE.PRENOM' | translate }}</label>
+              <input type="text" formControlName="prenom" [placeholder]="'BENEFICIAIRE.PRENOM' | translate">
             </div>
             <div class="field">
-              <label>Nom (Arabe) *</label>
+              <label>{{ 'BENEFICIAIRE.DETAIL.NOM_ARABE' | translate }} *</label>
               <input type="text" formControlName="nomAr" dir="rtl" placeholder="الاسم">
-              <span class="err" *ngIf="form.get('nomAr')?.invalid && form.get('nomAr')?.touched">Champ requis</span>
+              <span class="err" *ngIf="form.get('nomAr')?.invalid && form.get('nomAr')?.touched">{{ 'ETABLISSEMENT.FORM.REQUIRED' | translate }}</span>
             </div>
           </div>
           <div class="form-row">
             <div class="field">
-              <label>Prénom (Arabe)</label>
+              <label>{{ 'BENEFICIAIRE.FORM.PRENOM_AR' | translate }}</label>
               <input type="text" formControlName="prenomAr" dir="rtl" placeholder="النسب">
             </div>
             <div class="field">
-              <label>Sexe</label>
+              <label>{{ 'BENEFICIAIRE.SEXE' | translate }}</label>
               <select formControlName="sexe">
-                <option value="">-- Sélectionner --</option>
-                <option value="MASCULIN">Masculin</option>
-                <option value="FEMININ">Féminin</option>
+                <option value="">{{ 'BENEFICIAIRE.DETAIL.SELECT_PLACEHOLDER' | translate }}</option>
+                <option value="MASCULIN">{{ 'BENEFICIAIRE.MASCULIN' | translate }}</option>
+                <option value="FEMININ">{{ 'BENEFICIAIRE.FEMININ' | translate }}</option>
               </select>
             </div>
             <div class="field">
-              <label>Date d'accueil</label>
+              <label>{{ 'BENEFICIAIRE.DETAIL.DATE_ACCUEIL' | translate }}</label>
               <input type="date" formControlName="dateEntree">
             </div>
           </div>
           <div class="form-row">
             <div class="field">
-              <label>Numéro de dossier *</label>
-              <input type="text" formControlName="numeroDossier" placeholder="N° dossier">
-              <span class="err" *ngIf="form.get('numeroDossier')?.invalid && form.get('numeroDossier')?.touched">Champ requis</span>
+              <label>{{ 'BENEFICIAIRE.FORM.NUMERO_DOSSIER' | translate }} *</label>
+              <input type="text" formControlName="numeroDossier" [placeholder]="'BENEFICIAIRE.FORM.NUMERO_DOSSIER_PLACEHOLDER' | translate">
+              <span class="err" *ngIf="form.get('numeroDossier')?.invalid && form.get('numeroDossier')?.touched">{{ 'ETABLISSEMENT.FORM.REQUIRED' | translate }}</span>
             </div>
             <div class="field">
-              <label>Alias</label>
-              <input type="text" formControlName="alias" placeholder="Alias">
+              <label>{{ 'BENEFICIAIRE.DETAIL.ALIAS' | translate }}</label>
+              <input type="text" formControlName="alias" [placeholder]="'BENEFICIAIRE.DETAIL.ALIAS' | translate">
             </div>
             <div class="field">
-              <label>Nationalité</label>
-              <input type="text" formControlName="nationalite" placeholder="Marocaine">
+              <label>{{ 'BENEFICIAIRE.DETAIL.NATIONALITE' | translate }}</label>
+              <input type="text" formControlName="nationalite" [placeholder]="'BENEFICIAIRE.FORM.NATIONALITE_PLACEHOLDER' | translate">
             </div>
           </div>
           <div class="form-row">
             <div class="field">
-              <label>Date de naissance</label>
+              <label>{{ 'BENEFICIAIRE.DATE_NAISSANCE' | translate }}</label>
               <input type="date" formControlName="dateNaissance">
             </div>
             <div class="field">
-              <label>Type de pièce d'identité</label>
+              <label>{{ 'BENEFICIAIRE.FORM.TYPE_PIECE_IDENTITE' | translate }}</label>
               <select formControlName="typePieceIdentite">
-                <option value="">-- Sélectionner --</option>
-                <option value="Sans">Sans</option>
-                <option value="CIN">CIN</option>
-                <option value="Passeport">Passeport</option>
-                <option value="Acte de naissance">Acte de naissance</option>
+                <option value="">{{ 'BENEFICIAIRE.DETAIL.SELECT_PLACEHOLDER' | translate }}</option>
+                <option value="Sans">{{ 'DICT.SANS' | translate }}</option>
+                <option value="CIN">{{ 'DICT.CIN' | translate }}</option>
+                <option value="Passeport">{{ 'DICT.PASSEPORT' | translate }}</option>
+                <option value="Acte de naissance">{{ 'DICT.ACTE_DE_NAISSANCE' | translate }}</option>
               </select>
             </div>
             <div class="field">
-              <label>Numéro pièce d'identité</label>
-              <input type="text" formControlName="cin" placeholder="Numéro">
+              <label>{{ 'BENEFICIAIRE.FORM.NUMERO_PIECE_IDENTITE' | translate }}</label>
+              <input type="text" formControlName="cin" [placeholder]="'PERSONNEL.FORM.NUMERO_PLACEHOLDER' | translate">
             </div>
           </div>
           <div class="form-row">
             <div class="field">
-              <label>Situation Scolaire</label>
+              <label>{{ 'BENEFICIAIRE.DETAIL.SITUATION_SCOLAIRE_LABEL' | translate }}</label>
               <select formControlName="situationScolaire">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'BENEFICIAIRE.DETAIL.SELECT_PLACEHOLDER' | translate }}</option>
                 <option value="Scolarisé">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_SCOLAIRE.SCOLARISE' | translate }}</option>
                 <option value="Déscolarisé">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_SCOLAIRE.DESCOLARISE' | translate }}</option>
                 <option value="Analphabète">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_SCOLAIRE.ANALPHABETE' | translate }}</option>
@@ -151,23 +151,23 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
               </select>
             </div>
             <div class="field">
-              <label>Situation familiale</label>
-              <input type="text" formControlName="situationFamiliale" placeholder="Situation familiale">
+              <label>{{ 'BENEFICIAIRE.DETAIL.SITUATION_FAMILIALE' | translate }}</label>
+              <input type="text" formControlName="situationFamiliale" [placeholder]="'BENEFICIAIRE.DETAIL.SITUATION_FAMILIALE' | translate">
             </div>
             <div class="field">
-              <label>Témoignage de la famille</label>
-              <input type="text" formControlName="temoignageFamille" placeholder="Témoignage">
+              <label>{{ 'BENEFICIAIRE.FORM.TEMOIGNAGE_FAMILLE_LABEL' | translate }}</label>
+              <input type="text" formControlName="temoignageFamille" [placeholder]="'BENEFICIAIRE.FORM.TEMOIGNAGE_PLACEHOLDER' | translate">
             </div>
           </div>
           <div class="form-row">
             <div class="field" style="grid-column: span 2">
-              <label>Description physique</label>
+              <label>{{ 'BENEFICIAIRE.DETAIL.DESCRIPTION_PHYSIQUE' | translate }}</label>
               <textarea formControlName="descriptionPhysique" rows="3" style="padding:10px 12px;border:1px solid #ccc;border-radius:6px;font-size:14px;font-family:inherit;resize:vertical;width:100%"></textarea>
             </div>
             <div class="field">
-              <label>État de santé psychique</label>
+              <label>{{ 'BENEFICIAIRE.FORM.ETAT_SANTE_PSYCHIQUE_LABEL' | translate }}</label>
               <select formControlName="etatSantePsychique">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'BENEFICIAIRE.DETAIL.SELECT_PLACEHOLDER' | translate }}</option>
                 <option value="Avec troubles psychique">{{ 'BENEFICIAIRE.OPTIONS.ETAT_SANTE_PSYCHIQUE.AVEC_TROUBLES' | translate }}</option>
                 <option value="Sans troubles psychique">{{ 'BENEFICIAIRE.OPTIONS.ETAT_SANTE_PSYCHIQUE.SANS_TROUBLES' | translate }}</option>
               </select>
@@ -175,9 +175,9 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
           </div>
           <div class="form-row">
             <div class="field">
-              <label>Situation professionnelle</label>
+              <label>{{ 'BENEFICIAIRE.DETAIL.SITUATION_PROFESSIONNELLE_LABEL' | translate }}</label>
               <select formControlName="situationProfessionnelle">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'BENEFICIAIRE.DETAIL.SELECT_PLACEHOLDER' | translate }}</option>
                 <option value="Élève">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_PROFESSIONNELLE.ELEVE' | translate }}</option>
                 <option value="Etudiant(e)">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_PROFESSIONNELLE.ETUDIANT' | translate }}</option>
                 <option value="Jeune femme au foyer">{{ 'BENEFICIAIRE.OPTIONS.SITUATION_PROFESSIONNELLE.FEMME_AU_FOYER' | translate }}</option>
@@ -189,13 +189,13 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
               </select>
             </div>
             <div class="field">
-              <label>Source de revenu</label>
-              <input type="text" formControlName="sourceRevenu" placeholder="Source de revenu">
+              <label>{{ 'BENEFICIAIRE.DETAIL.SOURCE_REVENU' | translate }}</label>
+              <input type="text" formControlName="sourceRevenu" [placeholder]="'BENEFICIAIRE.DETAIL.SOURCE_REVENU' | translate">
             </div>
             <div class="field">
-              <label>Couverture sociale</label>
+              <label>{{ 'BENEFICIAIRE.DETAIL.COUVERTURE_SOCIALE_LABEL' | translate }}</label>
               <select formControlName="couvertureSociale">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'BENEFICIAIRE.DETAIL.SELECT_PLACEHOLDER' | translate }}</option>
                 <option value="Ramed">{{ 'BENEFICIAIRE.OPTIONS.COUVERTURE_SOCIALE.RAMED' | translate }}</option>
                 <option value="Sans couverture">{{ 'BENEFICIAIRE.OPTIONS.COUVERTURE_SOCIALE.SANS_COUVERTURE' | translate }}</option>
                 <option value="AMO CNSS">{{ 'BENEFICIAIRE.OPTIONS.COUVERTURE_SOCIALE.AMO_CNSS' | translate }}</option>
@@ -207,9 +207,9 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
           </div>
           <div class="form-row">
             <div class="field">
-              <label>Revenu mensuel</label>
+              <label>{{ 'BENEFICIAIRE.DETAIL.REVENU_MENSUEL_LABEL' | translate }}</label>
               <select formControlName="revenuMensuel">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'BENEFICIAIRE.DETAIL.SELECT_PLACEHOLDER' | translate }}</option>
                 <option value="Moins de 500">{{ 'BENEFICIAIRE.OPTIONS.REVENU_MENSUEL.MOINS_500' | translate }}</option>
                 <option value="500 < revenu < 1000">{{ 'BENEFICIAIRE.OPTIONS.REVENU_MENSUEL.DE_500_A_1000' | translate }}</option>
                 <option value="1000 < revenu < 1500">{{ 'BENEFICIAIRE.OPTIONS.REVENU_MENSUEL.DE_1000_A_1500' | translate }}</option>
@@ -218,9 +218,9 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
               </select>
             </div>
             <div class="field">
-              <label>État de comportement/Moral</label>
+              <label>{{ 'BENEFICIAIRE.FORM.ETAT_COMPORTEMENT_LABEL' | translate }}</label>
               <select formControlName="etatComportement">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'BENEFICIAIRE.DETAIL.SELECT_PLACEHOLDER' | translate }}</option>
                 <option value="Agitation motrice">{{ 'BENEFICIAIRE.OPTIONS.ETAT_COMPORTEMENT.AGITATION_MOTRICE' | translate }}</option>
                 <option value="L'impulsivité">{{ 'BENEFICIAIRE.OPTIONS.ETAT_COMPORTEMENT.IMPULSIVITE' | translate }}</option>
                 <option value="L'agressivité">{{ 'BENEFICIAIRE.OPTIONS.ETAT_COMPORTEMENT.AGRESSIVITE' | translate }}</option>
@@ -229,13 +229,13 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
               </select>
             </div>
             <div class="field">
-              <label>Adresse</label>
-              <input type="text" formControlName="adresse" placeholder="Adresse">
+              <label>{{ 'BENEFICIAIRE.DETAIL.ADRESSE' | translate }}</label>
+              <input type="text" formControlName="adresse" [placeholder]="'BENEFICIAIRE.DETAIL.ADRESSE' | translate">
             </div>
           </div>
           <div class="form-row">
             <div class="field" style="grid-column: span 3">
-              <label>Description</label>
+              <label>{{ 'BENEFICIAIRE.DETAIL.DESCRIPTION' | translate }}</label>
               <textarea formControlName="description" rows="3" style="padding:10px 12px;border:1px solid #ccc;border-radius:6px;font-size:14px;font-family:inherit;resize:vertical;width:100%"></textarea>
             </div>
           </div>
@@ -244,30 +244,30 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
 
       <!-- Section 2: Famille -->
       <mat-card class="mb-2">
-        <mat-card-header><mat-card-title>Famille</mat-card-title></mat-card-header>
+        <mat-card-header><mat-card-title>{{ 'BENEFICIAIRE.DETAIL.TAB_FAMILLE' | translate }}</mat-card-title></mat-card-header>
         <mat-card-content>
           <div class="form-row">
             <div class="field">
-              <label>Situation professionnelle parent</label>
-              <input type="text" formControlName="nomPere" placeholder="Nom du père">
+              <label>{{ 'BENEFICIAIRE.FORM.NOM_PERE_LABEL' | translate }}</label>
+              <input type="text" formControlName="nomPere" [placeholder]="'BENEFICIAIRE.FORM.NOM_PERE_PLACEHOLDER' | translate">
             </div>
             <div class="field">
-              <label>Nom de la mère</label>
-              <input type="text" formControlName="nomMere" placeholder="Nom de la mère">
+              <label>{{ 'BENEFICIAIRE.FORM.NOM_MERE_LABEL' | translate }}</label>
+              <input type="text" formControlName="nomMere" [placeholder]="'BENEFICIAIRE.FORM.NOM_MERE_LABEL' | translate">
             </div>
             <div class="field">
-              <label>Nom du tuteur</label>
-              <input type="text" formControlName="nomTuteur" placeholder="Nom du tuteur">
+              <label>{{ 'BENEFICIAIRE.FORM.NOM_TUTEUR_LABEL' | translate }}</label>
+              <input type="text" formControlName="nomTuteur" [placeholder]="'BENEFICIAIRE.FORM.NOM_TUTEUR_LABEL' | translate">
             </div>
           </div>
           <div class="form-row">
             <div class="field">
-              <label>Téléphone parent/tuteur</label>
-              <input type="text" formControlName="telephoneParent" placeholder="Téléphone">
+              <label>{{ 'BENEFICIAIRE.FORM.TELEPHONE_PARENT_LABEL' | translate }}</label>
+              <input type="text" formControlName="telephoneParent" [placeholder]="'BENEFICIAIRE.DETAIL.TELEPHONE' | translate">
             </div>
             <div class="field">
-              <label>Adresse parent/tuteur</label>
-              <input type="text" formControlName="adresseParent" placeholder="Adresse">
+              <label>{{ 'BENEFICIAIRE.FORM.ADRESSE_PARENT_LABEL' | translate }}</label>
+              <input type="text" formControlName="adresseParent" [placeholder]="'BENEFICIAIRE.DETAIL.ADRESSE' | translate">
             </div>
           </div>
         </mat-card-content>
@@ -275,30 +275,30 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
 
       <!-- Section 3: Situation de difficulté -->
       <mat-card class="mb-2">
-        <mat-card-header><mat-card-title>Situation de difficulté</mat-card-title></mat-card-header>
+        <mat-card-header><mat-card-title>{{ 'BENEFICIAIRE.SITUATION' | translate }}</mat-card-title></mat-card-header>
         <mat-card-content>
           <div class="form-row">
             <div class="field">
-              <label>Situation de difficulté</label>
+              <label>{{ 'BENEFICIAIRE.SITUATION' | translate }}</label>
               <select formControlName="situationDifficulte">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'BENEFICIAIRE.DETAIL.SELECT_PLACEHOLDER' | translate }}</option>
                 <option *ngFor="let s of situations" [value]="s">{{ ('BENEFICIAIRE.OPTIONS.SITUATION_DIFFICULTE.' + s | translate) }}</option>
               </select>
             </div>
             <div class="field">
-              <label>Date de sortie</label>
+              <label>{{ 'BENEFICIAIRE.DETAIL.DATE_SORTIE' | translate }}</label>
               <input type="date" formControlName="dateSortie">
             </div>
             <div class="field">
-              <label>Motif de sortie</label>
-              <input type="text" formControlName="motifSortie" placeholder="Motif">
+              <label>{{ 'BENEFICIAIRE.FORM.MOTIF_SORTIE_LABEL' | translate }}</label>
+              <input type="text" formControlName="motifSortie" [placeholder]="'BENEFICIAIRE.FORM.MOTIF_PLACEHOLDER' | translate">
             </div>
           </div>
           <div class="form-row">
             <div class="field">
-              <label>Prestation</label>
+              <label>{{ 'BENEFICIAIRE.DETAIL.PRESTATION' | translate }}</label>
               <select formControlName="prestationId">
-                <option value="">-- Sélectionner --</option>
+                <option value="">{{ 'BENEFICIAIRE.DETAIL.SELECT_PLACEHOLDER' | translate }}</option>
                 <option *ngFor="let p of prestations" [value]="p.id">{{ p.nomFr }}</option>
               </select>
             </div>
@@ -308,10 +308,10 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
 
       <!-- Actions -->
       <div class="form-actions">
-        <button mat-button type="button" routerLink="/beneficiaires">Annuler</button>
+        <button mat-button type="button" routerLink="/beneficiaires">{{ 'COMMON.CANCEL' | translate }}</button>
         <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || saving">
-          <mat-spinner diameter="18" *ngIf="saving" style="display:inline-block;margin-right:8px"></mat-spinner>
-          <span>{{ saving ? '' : (isEdit ? 'Enregistrer' : 'Inscrire') }}</span>
+          <mat-spinner diameter="18" *ngIf="saving" style="display:inline-block;margin-inline-end:8px"></mat-spinner>
+          <span>{{ saving ? '' : ((isEdit ? 'COMMON.SAVE' : 'BENEFICIAIRE.FORM.SUBMIT_INSCRIRE') | translate) }}</span>
         </button>
       </div>
 
@@ -358,7 +358,8 @@ export class BeneficiaireFormComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -463,14 +464,14 @@ export class BeneficiaireFormComponent implements OnInit {
     request.subscribe({
       next: (b) => {
         this.snackBar.open(
-          this.isEdit ? 'Bénéficiaire modifié' : 'Bénéficiaire inscrit',
+          this.translate.instant(this.isEdit ? 'BENEFICIAIRE.FORM.UPDATED' : 'BENEFICIAIRE.FORM.CREATED'),
           'OK', { duration: 3000, panelClass: 'success-snackbar' }
         );
         this.router.navigate(['/beneficiaires', b.id]);
       },
       error: () => {
         this.saving = false;
-        this.snackBar.open('Erreur', 'Fermer', { duration: 3000, panelClass: 'error-snackbar' });
+        this.snackBar.open(this.translate.instant('COMMON.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000, panelClass: 'error-snackbar' });
       }
     });
   }

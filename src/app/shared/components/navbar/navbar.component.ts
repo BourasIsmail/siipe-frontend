@@ -69,7 +69,7 @@ import { Router } from '@angular/router';
       gap: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
-    .navbar-brand { display: flex; align-items: center; margin-left: 8px; }
+    .navbar-brand { display: flex; align-items: center; margin-inline-start: 8px; }
     .brand-text { font-size: 20px; font-weight: 700; color: white; letter-spacing: 1px; }
     .spacer { flex: 1; }
     .icon-btn {
@@ -95,7 +95,7 @@ import { Router } from '@angular/router';
       display: none;
       position: absolute;
       top: calc(100% + 8px);
-      right: 0;
+      inset-inline-end: 0;
       background: white;
       border-radius: 8px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.15);
@@ -124,7 +124,7 @@ import { Router } from '@angular/router';
       border: none;
       cursor: pointer;
       padding: 10px 16px;
-      text-align: left;
+      text-align: start;
       font-size: 14px;
       color: #333;
       display: flex;
@@ -172,6 +172,8 @@ export class NavbarComponent {
   setLang(lang: string) {
     this.translate.use(lang);
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = lang;
+    localStorage.setItem('siipe_lang', lang);
     this.langOpen = false;
   }
 
