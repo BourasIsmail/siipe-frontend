@@ -15,10 +15,6 @@ import { Router } from '@angular/router';
         <mat-icon>menu</mat-icon>
       </button>
 
-      <div class="navbar-brand">
-        <span class="brand-text">SIIPE</span>
-      </div>
-
       <span class="spacer"></span>
 
       <!-- Language dropdown -->
@@ -69,8 +65,6 @@ import { Router } from '@angular/router';
       gap: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
-    .navbar-brand { display: flex; align-items: center; margin-inline-start: 8px; }
-    .brand-text { font-size: 20px; font-weight: 700; color: white; letter-spacing: 1px; }
     .spacer { flex: 1; }
     .icon-btn {
       background: none; border: none; cursor: pointer;
