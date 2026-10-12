@@ -28,9 +28,6 @@ import { AuthService } from '../../../core/auth/auth.service';
           <div class="brand-logo">
             <mat-icon>shield</mat-icon>
           </div>
-          <h1>SIIPE</h1>
-          <p>Système d'Information Intégré pour la Protection de l'Enfance</p>
-          <p class="brand-sub">نظام المعلومات المندمج لحماية الطفولة</p>
         </div>
         <div class="login-footer-text">
           <p>{{ 'AUTH.FOOTER_MOTTO' | translate }}</p>
@@ -107,9 +104,6 @@ import { AuthService } from '../../../core/auth/auth.service';
         margin: 0 auto 24px;
         mat-icon { font-size: 40px; width: 40px; height: 40px; }
       }
-      h1 { font-size: 48px; font-weight: 700; margin-bottom: 16px; letter-spacing: 4px; }
-      p { font-size: 16px; opacity: 0.9; max-width: 320px; text-align: center; line-height: 1.5; }
-      .brand-sub { font-size: 14px; opacity: 0.7; margin-top: 8px; direction: rtl; }
     }
 
     .login-footer-text {
