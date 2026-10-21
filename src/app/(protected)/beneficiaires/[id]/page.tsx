@@ -12,6 +12,7 @@ import type {
   Beneficiaire, SituationMedicale, SituationSociale, SituationJudiciaire,
   DossierScolaire, Accompagnement, BesoinExprime, PrestationBeneficiaire
 } from '@/lib/models/beneficiaire.model';
+import { SITUATION_COLOR_CLASS } from '@/lib/models/beneficiaire.model';
 import type { Programme, Prestation, EtablissementCentre } from '@/lib/models/etablissement.model';
 
 const AVATAR_COLORS = ['#2e7d32', '#1565c0', '#6a1b9a', '#e65100', '#00838f'];
@@ -334,7 +335,7 @@ export default function BeneficiaireDetailPage() {
             {beneficiaire.nomAr && <div className="nomAr">{beneficiaire.nomAr} {beneficiaire.prenomAr}</div>}
             <div className="meta-row">
               {beneficiaire.situationDifficulte && (
-                <span className="badge-situation">{formatEnum(beneficiaire.situationDifficulte)}</span>
+                <span className={`badge-situation ${beneficiaire.situationDifficulte ? SITUATION_COLOR_CLASS[beneficiaire.situationDifficulte] || '' : ''}`}>{formatEnum(beneficiaire.situationDifficulte)}</span>
               )}
               {beneficiaire.numeroDossier && (
                 <span className="text-secondary">{t('BENEFICIAIRE.DETAIL.NUMERO_PREFIX')} {beneficiaire.numeroDossier}</span>

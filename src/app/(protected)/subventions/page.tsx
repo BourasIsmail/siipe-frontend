@@ -219,42 +219,19 @@ export default function SubventionsPage() {
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="siipe-card mb-2">
-        <div className="filter-grid">
-          <div className="field">
-            <label>{t('SUBVENTION.LIST.TITRE')}</label>
-            <input
-              type="text"
-              value={filterTitre}
-              onChange={e => { setFilterTitre(e.target.value); setPageIndex(0); }}
-              placeholder={t('SUBVENTION.LIST.SEARCH_PLACEHOLDER')}
-            />
-          </div>
-          <div className="field">
-            <label>{t('SUBVENTION.LIST.STATUT')}</label>
-            <select value={filterStatut} onChange={e => { setFilterStatut(e.target.value); setPageIndex(0); }}>
-              <option value="">{t('COMMON.ALL')}</option>
-              {STATUTS.map(s => (
-                <option key={s} value={s}>{t('SUBVENTION.LIST.STATUTS.' + s)}</option>
-              ))}
-            </select>
-          </div>
-          <div className="field">
-            <label>{t('SUBVENTION.LIST.PARTENAIRE')}</label>
-            <select value={filterPartenaireId} onChange={e => { setFilterPartenaireId(e.target.value); setPageIndex(0); }}>
-              <option value="">{t('COMMON.ALL')}</option>
-              {partenaires.map(p => (
-                <option key={p.id} value={p.id}>{p.nomFr}</option>
-              ))}
-            </select>
-          </div>
-          <div className="field filter-reset">
-            <button className="btn btn-outline" onClick={resetFilter}>
-              <Icon name="clear" /> {t('COMMON.RESET')}
-            </button>
-          </div>
+      <div className="toolbar">
+        <div className="quick-search">
+          <Icon name="search" />
+          <input type="text" value={filterTitre} onChange={e => { setFilterTitre(e.target.value); setPageIndex(0); }} placeholder={t('SUBVENTION.LIST.SEARCH_PLACEHOLDER')} />
         </div>
+        <select className="filter-chip" value={filterStatut} onChange={e => { setFilterStatut(e.target.value); setPageIndex(0); }}>
+          <option value="">{t('SUBVENTION.LIST.STATUT')} : {t('COMMON.ALL')}</option>
+          {STATUTS.map(s => (<option key={s} value={s}>{t('SUBVENTION.LIST.STATUTS.' + s)}</option>))}
+        </select>
+        <select className="filter-chip" value={filterPartenaireId} onChange={e => { setFilterPartenaireId(e.target.value); setPageIndex(0); }}>
+          <option value="">{t('SUBVENTION.LIST.PARTENAIRE')} : {t('COMMON.ALL')}</option>
+          {partenaires.map(p => (<option key={p.id} value={p.id}>{p.nomFr}</option>))}
+        </select>
       </div>
 
       {/* Loading */}
@@ -440,13 +417,22 @@ export default function SubventionsPage() {
         .stat-mini.orange { border-inline-start-color: var(--color-danger); }
         .stat-val { font-size: 22px; font-weight: 700; color: var(--color-primary); }
         .stat-lbl { font-size: var(--font-xs); color: var(--color-text-tertiary); }
-        .filter-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-          gap: var(--space-4);
-          align-items: end;
+        .toolbar {
+          display: flex; gap: 10px; align-items: center; margin-bottom: 16px; flex-wrap: wrap;
         }
-        .filter-reset { justify-content: flex-end; }
+        .quick-search {
+          flex: 1; max-width: 320px; display: flex; align-items: center; gap: 8px;
+          background: var(--color-white); border: 1px solid var(--color-border);
+          border-radius: var(--radius-pill); padding: 8px 14px; color: var(--color-text-tertiary);
+        }
+        .quick-search :global(.material-icons) { font-size: 16px; flex-shrink: 0; }
+        .quick-search input {
+          border: none; outline: none; background: none; color: var(--color-text);
+          font-size: var(--font-sm); width: 100%; font-family: inherit;
+        }
+        select.filter-chip {
+          -webkit-appearance: none; appearance: none;
+        }
         .form-title { font-size: var(--font-md); font-weight: 700; margin-bottom: var(--space-4); }
         .form-btns { display: flex; justify-content: flex-end; gap: var(--space-2); }
         .err { color: var(--color-danger); font-size: var(--font-xs); }

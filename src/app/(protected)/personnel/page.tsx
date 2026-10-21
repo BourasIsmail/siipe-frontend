@@ -165,63 +165,23 @@ export default function PersonnelListPage() {
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="siipe-card mb-2">
-        <div className="filter-grid">
-          <div className="field">
-            <label>{t('PERSONNEL.LIST.NOM_PRENOM')}</label>
-            <input
-              type="text"
-              value={filters.nom}
-              onChange={e => updateFilter('nom', e.target.value)}
-              placeholder={t('PERSONNEL.LIST.SEARCH_PLACEHOLDER')}
-            />
-          </div>
-          <div className="field">
-            <label>{t('PERSONNEL.MATRICULE')}</label>
-            <input
-              type="text"
-              value={filters.matricule}
-              onChange={e => updateFilter('matricule', e.target.value)}
-              placeholder={t('PERSONNEL.LIST.MATRICULE_PLACEHOLDER')}
-            />
-          </div>
-          <div className="field">
-            <label>{t('PERSONNEL.ETABLISSEMENT')}</label>
-            <select
-              value={filters.etablissementId ?? ''}
-              onChange={e => updateFilter('etablissementId', e.target.value ? Number(e.target.value) : null)}
-            >
-              <option value="">{t('COMMON.ALL')}</option>
-              {etablissements.map(e => (
-                <option key={e.id} value={e.id}>{e.nomFr}</option>
-              ))}
-            </select>
-          </div>
-          <div className="field">
-            <label>{t('PERSONNEL.GRADE')}</label>
-            <select value={filters.grade} onChange={e => updateFilter('grade', e.target.value)}>
-              <option value="">{t('COMMON.ALL')}</option>
-              {LIST_GRADES.map(g => (
-                <option key={g} value={g}>{t(`PERSONNEL.LIST.GRADES.${g}`)}</option>
-              ))}
-            </select>
-          </div>
-          <div className="field">
-            <label>{t('PERSONNEL.FONCTION')}</label>
-            <select value={filters.fonction} onChange={e => updateFilter('fonction', e.target.value)}>
-              <option value="">{t('COMMON.ALL')}</option>
-              {LIST_FONCTIONS.map(f => (
-                <option key={f} value={f}>{t(`PERSONNEL.LIST.FONCTIONS.${f}`)}</option>
-              ))}
-            </select>
-          </div>
-          <div className="field reset-field">
-            <button className="btn btn-outline" onClick={resetFilters}>
-              <Icon name="clear" /> {t('COMMON.RESET')}
-            </button>
-          </div>
+      <div className="toolbar">
+        <div className="quick-search">
+          <Icon name="search" />
+          <input type="text" value={filters.nom} onChange={e => updateFilter('nom', e.target.value)} placeholder={t('PERSONNEL.LIST.SEARCH_PLACEHOLDER')} />
         </div>
+        <select className="filter-chip" value={filters.etablissementId ?? ''} onChange={e => updateFilter('etablissementId', e.target.value ? Number(e.target.value) : null)}>
+          <option value="">{t('PERSONNEL.ETABLISSEMENT')} : {t('COMMON.ALL')}</option>
+          {etablissements.map(e => (<option key={e.id} value={e.id}>{e.nomFr}</option>))}
+        </select>
+        <select className="filter-chip" value={filters.grade} onChange={e => updateFilter('grade', e.target.value)}>
+          <option value="">{t('PERSONNEL.GRADE')} : {t('COMMON.ALL')}</option>
+          {LIST_GRADES.map(g => (<option key={g} value={g}>{t(`PERSONNEL.LIST.GRADES.${g}`)}</option>))}
+        </select>
+        <select className="filter-chip" value={filters.fonction} onChange={e => updateFilter('fonction', e.target.value)}>
+          <option value="">{t('PERSONNEL.FONCTION')} : {t('COMMON.ALL')}</option>
+          {LIST_FONCTIONS.map(f => (<option key={f} value={f}>{t(`PERSONNEL.LIST.FONCTIONS.${f}`)}</option>))}
+        </select>
       </div>
 
       {loading && (
@@ -332,13 +292,22 @@ export default function PersonnelListPage() {
       )}
 
       <style jsx>{`
-        .filter-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-          gap: 16px;
-          align-items: end;
+        .toolbar {
+          display: flex; gap: 10px; align-items: center; margin-bottom: 16px; flex-wrap: wrap;
         }
-        .reset-field { justify-content: flex-end; padding-top: 20px; }
+        .quick-search {
+          flex: 1; max-width: 320px; display: flex; align-items: center; gap: 8px;
+          background: var(--color-white); border: 1px solid var(--color-border);
+          border-radius: var(--radius-pill); padding: 8px 14px; color: var(--color-text-tertiary);
+        }
+        .quick-search :global(.material-icons) { font-size: 16px; flex-shrink: 0; }
+        .quick-search input {
+          border: none; outline: none; background: none; color: var(--color-text);
+          font-size: var(--font-sm); width: 100%; font-family: inherit;
+        }
+        select.filter-chip {
+          -webkit-appearance: none; appearance: none;
+        }
         .table-meta {
           display: flex;
           justify-content: space-between;

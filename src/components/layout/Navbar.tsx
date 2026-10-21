@@ -1,27 +1,41 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
 import { useI18n } from '@/lib/i18n';
 import { Icon } from '@/components/Icon';
+
+const CRUMB_ROUTES: { prefix: string; labelKey: string }[] = [
+  { prefix: '/dashboard', labelKey: 'NAV.DASHBOARD' },
+  { prefix: '/etablissements/map', labelKey: 'MENU.CARTOGRAPHIE' },
+  { prefix: '/etablissements', labelKey: 'MENU.ETABLISSEMENTS' },
+  { prefix: '/beneficiaires', labelKey: 'MENU.RECHERCHE' },
+  { prefix: '/partenaires', labelKey: 'MENU.PARTENAIRES' },
+  { prefix: '/subventions', labelKey: 'MENU.SUBVENTIONS' },
+  { prefix: '/personnel', labelKey: 'MENU.PERSONNEL' },
+  { prefix: '/formations', labelKey: 'MENU.FORMATION_CONTINUE' },
+  { prefix: '/admin/users', labelKey: 'MENU.UTILISATEURS' },
+  { prefix: '/programmes', labelKey: 'MENU.PROGRAMMES' },
+];
 
 export function Navbar({ onToggleSidebar }: { onToggleSidebar: () => void }) {
   const { user, logout } = useAuth();
   const { t, lang, setLang } = useI18n();
   const router = useRouter();
+  const pathname = usePathname();
 
-  const [langOpen, setLangOpen] = useState(false);
   const [userOpen, setUserOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    const closeAll = () => { setLangOpen(false); setUserOpen(false); };
+    const closeAll = () => setUserOpen(false);
     document.addEventListener('click', closeAll);
     return () => document.removeEventListener('click', closeAll);
   }, []);
 
   const initials = user ? `${user.nom?.charAt(0) || ''}${user.prenom?.charAt(0) || ''}`.toUpperCase() : '';
+  const crumbKey = CRUMB_ROUTES.find(r => pathname.startsWith(r.prefix))?.labelKey;
 
   function onSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -30,15 +44,9 @@ export function Navbar({ onToggleSidebar }: { onToggleSidebar: () => void }) {
     router.push(`/beneficiaires?q=${encodeURIComponent(q)}`);
   }
 
-  function toggleLang(e: React.MouseEvent) {
-    e.stopPropagation();
-    setLangOpen(o => !o);
-    setUserOpen(false);
-  }
   function toggleUser(e: React.MouseEvent) {
     e.stopPropagation();
     setUserOpen(o => !o);
-    setLangOpen(false);
   }
 
   return (
@@ -46,6 +54,11 @@ export function Navbar({ onToggleSidebar }: { onToggleSidebar: () => void }) {
       <button className="icon-btn" onClick={onToggleSidebar}>
         <Icon name="menu" />
       </button>
+
+      <div className="crumb">
+        <span>{t('APP_TITLE').split(' ')[0] || 'SIIPE'}</span>
+        {crumbKey && <><span>/</span><strong>{t(crumbKey)}</strong></>}
+      </div>
 
       <form className="search" onSubmit={onSearch}>
         <Icon name="search" />
@@ -60,29 +73,20 @@ export function Navbar({ onToggleSidebar }: { onToggleSidebar: () => void }) {
 
       <span className="spacer" />
 
-      <div className="dropdown">
-        <button className="nav-btn" onClick={toggleLang}>
-          <Icon name="language" />
-          <span>{lang.toUpperCase()}</span>
-          <Icon name="arrow_drop_down" />
-        </button>
-        <div className={`dropdown-menu ${langOpen ? 'show' : ''}`}>
-          <button className="dropdown-item" onClick={() => { setLang('fr'); setLangOpen(false); }}>🇫🇷 Français</button>
-          <button className="dropdown-item" onClick={() => { setLang('ar'); setLangOpen(false); }}>🇲🇦 العربية</button>
-        </div>
+      <div className="lang-switch">
+        <button className={lang === 'fr' ? 'active' : ''} onClick={() => setLang('fr')}>FR</button>
+        <button className={lang === 'ar' ? 'active' : ''} onClick={() => setLang('ar')}>ع</button>
       </div>
 
       <div className="dropdown">
-        <button className="nav-btn user-btn" onClick={toggleUser}>
+        <button className="avatar-btn" onClick={toggleUser}>
           <span className="avatar">{initials}</span>
-          <span className="user-name">{user?.nom} {user?.prenom}</span>
-          <Icon name="arrow_drop_down" />
         </button>
         <div className={`dropdown-menu ${userOpen ? 'show' : ''}`}>
           <div className="dropdown-header">
             <span className="avatar avatar-lg">{initials}</span>
             <div>
-              <strong>{t('ADMIN.USERS.ROLES.' + (user?.role || ''))}</strong>
+              <strong>{user?.nom} {user?.prenom}</strong>
               <small>{user?.email}</small>
             </div>
           </div>
@@ -96,8 +100,9 @@ export function Navbar({ onToggleSidebar }: { onToggleSidebar: () => void }) {
 
       <style jsx>{`
         .navbar {
-          background: linear-gradient(120deg, var(--color-primary-dark), var(--color-primary));
-          color: white;
+          background: var(--color-white);
+          color: var(--color-text);
+          border-bottom: 1px solid var(--color-border);
           position: fixed;
           top: 0; left: 0; right: 0;
           z-index: 1100;
@@ -105,58 +110,69 @@ export function Navbar({ onToggleSidebar }: { onToggleSidebar: () => void }) {
           display: flex;
           align-items: center;
           padding: 0 var(--space-5);
-          gap: var(--space-2);
-          box-shadow: var(--shadow-md);
+          gap: var(--space-4);
         }
         .spacer { flex: 1; }
         .icon-btn {
           background: none; border: none; cursor: pointer;
-          color: white; display: flex; align-items: center;
+          color: var(--color-text); display: flex; align-items: center;
           padding: 8px; border-radius: 50%;
           transition: background 0.15s ease;
         }
-        .icon-btn:hover { background: rgba(255,255,255,0.15); }
+        .icon-btn:hover { background: var(--color-surface-2); }
         @media (min-width: 861px) {
           .icon-btn { display: none; }
         }
+        .crumb {
+          display: flex; align-items: center; gap: 6px;
+          font-size: 12.5px; color: var(--color-text-tertiary); white-space: nowrap;
+        }
+        .crumb strong { color: var(--color-text); font-weight: 600; }
+        @media (max-width: 720px) {
+          .crumb { display: none; }
+        }
         .search {
           display: flex; align-items: center; gap: 8px;
-          background: rgba(255,255,255,0.14);
-          border: 1px solid rgba(255,255,255,0.18);
+          background: var(--color-surface-2);
+          border: 1px solid var(--color-border);
           border-radius: var(--radius-pill);
           padding: 7px 14px;
           max-width: 340px;
           width: 100%;
         }
-        .search :global(.material-icons) { font-size: 16px; color: rgba(255,255,255,0.75); flex-shrink: 0; }
+        .search :global(.material-icons) { font-size: 16px; color: var(--color-text-tertiary); flex-shrink: 0; }
         .search input {
-          border: none; background: none; outline: none; color: white;
+          border: none; background: none; outline: none; color: var(--color-text);
           font-size: var(--font-sm); font-family: inherit; width: 100%;
         }
-        .search input::placeholder { color: rgba(255,255,255,0.6); }
+        .search input::placeholder { color: var(--color-text-tertiary); }
         @media (max-width: 720px) {
           .search { display: none; }
         }
-        .nav-btn {
-          background: none; border: none; cursor: pointer;
-          color: white; display: flex; align-items: center;
-          gap: 6px; padding: 6px 10px 6px 6px; border-radius: var(--radius-xl);
-          font-size: var(--font-base); font-family: inherit;
-          transition: background 0.15s ease;
+        .lang-switch {
+          display: flex; background: var(--color-surface-2); border: 1px solid var(--color-border);
+          border-radius: var(--radius-pill); padding: 3px; gap: 2px; flex-shrink: 0;
         }
-        .nav-btn:hover { background: rgba(255,255,255,0.15); }
-        .user-btn { padding-inline-start: 4px; }
-        .user-name { font-weight: 500; }
+        .lang-switch button {
+          border: none; background: none; padding: 5px 11px; border-radius: var(--radius-pill);
+          font-size: 12px; font-weight: 600; color: var(--color-text-tertiary); cursor: pointer;
+          font-family: inherit;
+        }
+        .lang-switch button.active { background: var(--color-primary); color: white; }
 
+        .avatar-btn {
+          background: none; border: none; cursor: pointer; padding: 0;
+          display: flex; align-items: center; border-radius: 50%;
+        }
         .avatar {
-          width: 30px; height: 30px; border-radius: 50%;
-          background: rgba(255,255,255,0.22);
-          color: white;
+          width: 32px; height: 32px; border-radius: 50%;
+          background: var(--color-primary-surface);
+          color: var(--color-primary-dark);
           display: flex; align-items: center; justify-content: center;
           font-size: 12px; font-weight: 700; letter-spacing: 0.3px;
           flex-shrink: 0;
         }
-        .avatar-lg { width: 40px; height: 40px; font-size: 15px; background: var(--color-primary-surface); color: var(--color-primary-dark); }
+        .avatar-lg { width: 40px; height: 40px; font-size: 15px; }
 
         .dropdown { position: relative; }
 
