@@ -71,8 +71,9 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
               <span class="err" *ngIf="form.get('nom')?.invalid && form.get('nom')?.touched">{{ 'ETABLISSEMENT.FORM.REQUIRED' | translate }}</span>
             </div>
             <div class="field">
-              <label>{{ 'BENEFICIAIRE.PRENOM' | translate }}</label>
+              <label>{{ 'BENEFICIAIRE.PRENOM' | translate }} *</label>
               <input type="text" formControlName="prenom" [placeholder]="'BENEFICIAIRE.PRENOM' | translate">
+              <span class="err" *ngIf="form.get('prenom')?.invalid && form.get('prenom')?.touched">{{ 'ETABLISSEMENT.FORM.REQUIRED' | translate }}</span>
             </div>
             <div class="field">
               <label>{{ 'BENEFICIAIRE.DETAIL.NOM_ARABE' | translate }} *</label>
@@ -403,7 +404,7 @@ export class BeneficiaireFormComponent implements OnInit {
   buildForm() {
     this.form = this.fb.group({
       nom: ['', Validators.required],
-      prenom: [''],
+      prenom: ['', Validators.required],
       nomAr: ['', Validators.required],
       prenomAr: [''],
       alias: [''],

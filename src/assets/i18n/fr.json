@@ -585,6 +585,9 @@
         "CONTRAT": "Contrat"
       },
       "GRADES": {
+        "AGENT_CET_ENTRAIDE_NLE": "Agent CET Entraide Nationale",
+        "REDACTEUR": "Rédacteur",
+        "SECRETAIRE_PRINCIPAL": "Secrétaire principal",
         "ADMINISTRATEUR_1ER_GRADE": "Administrateur 1er grade",
         "ADMINISTRATEUR_2EME_GRADE": "Administrateur 2ème grade",
         "ADMINISTRATEUR_3EME_GRADE": "Administrateur 3ème grade",
@@ -600,11 +603,19 @@
         "ADJOINT_ADMINISTRATIF_GRADE_PRINCIPAL": "Adjoint admin grade principal",
         "ADJOINT_TECHNIQUE_1ER_GRADE": "Adjoint technique 1er grade",
         "ADJOINT_TECHNIQUE_GRADE_PRINCIPAL": "Adjoint technique grade principal",
+        "ADJOINT_TECHNIQUE_HORS_CATEGORIE": "Adjoint technique hors catégorie",
+        "ADJOINT_TECHNIQUE_2EME_CATEGORIE": "Adjoint technique 2ème catégorie",
+        "ADJOINT_TECHNIQUE_4EME_CATEGORIE": "Adjoint technique 4ème catégorie",
         "AGENTS_A_CONTRAT": "Agents à contrat",
         "AGENT_EXECUTION": "Agent d'exécution",
         "AGENT_EXECUTION_PRINCIPAL": "Agent d'exécution principal",
         "AGENT_DE_SERVICE": "Agent de service",
+        "MEDECIN_GRADE_EXCEPTIONNEL": "Médecin grade exceptionnel",
+        "INGENIEUR_EN_CHEF_GRADE_PRINCIPAL": "Ingénieur en chef grade principal",
         "INGENIEUR_EN_CHEF_PREMIER_GRADE": "Ingénieur en chef 1er grade",
+        "INGENIEUR_ETAT_GRADE_PRINCIPAL": "Ingénieur d'État grade principal",
+        "INGENIEUR_ETAT_PREMIER_GRADE": "Ingénieur d'État 1er grade",
+        "ARCHITECTE_EN_CHEF_GRADE_PRINCIPAL": "Architecte en chef grade principal",
         "ARCHITECTE_PREMIER_GRADE": "Architecte 1er grade"
       },
       "FONCTIONS": {
@@ -661,6 +672,8 @@
         "DUT": "DUT",
         "BEP": "BEP",
         "DEUG": "DEUG",
+        "DEUST": "DEUST",
+        "DEUP": "DEUP",
         "LICENCE": "Licence",
         "MASTER": "Master",
         "DOCTORAT": "Doctorat",
