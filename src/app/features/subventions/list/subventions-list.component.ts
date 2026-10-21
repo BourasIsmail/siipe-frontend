@@ -39,7 +39,7 @@ import { Subvention, Partenaire, EtablissementCentre, Programme } from '../../..
         <span class="stat-lbl">{{ 'SUBVENTION.LIST.STATUTS.EN_COURS' | translate }}</span>
       </div>
       <div class="stat-mini blue">
-        <span class="stat-val">{{ totalMontant | number:'1.0-0' }} MAD</span>
+        <span class="stat-val num-ltr">{{ totalMontant | number:'1.0-0' }} MAD</span>
         <span class="stat-lbl">{{ 'SUBVENTION.LIST.STAT_MONTANT_TOTAL' | translate }}</span>
       </div>
       <div class="stat-mini orange">
@@ -184,7 +184,7 @@ import { Subvention, Partenaire, EtablissementCentre, Programme } from '../../..
             <tbody>
               <tr *ngFor="let s of paginated">
                 <td><strong>{{ s.titre }}</strong></td>
-                <td><strong class="montant">{{ s.montant | number:'1.0-0' }} MAD</strong></td>
+                <td><strong class="montant num-ltr">{{ s.montant | number:'1.0-0' }} MAD</strong></td>
                 <td>
                   <span class="badge" [ngClass]="getStatutClass(s.statut)">
                     {{ formatStatut(s.statut) }}

@@ -162,6 +162,9 @@ h1, h2, h3, h4, h5, h6 {
 .flex { display: flex; }
 .flex-center { display: flex; align-items: center; justify-content: center; }
 .flex-between { display: flex; align-items: center; justify-content: space-between; }
+// Keeps a space-grouped number (e.g. "4 250 000") from being visually
+// reordered by the browser's bidi algorithm inside RTL text.
+.num-ltr { direction: ltr; unicode-bidi: isolate; display: inline-block; }
 .gap-1 { gap: 8px; }
 .gap-2 { gap: 16px; }
 
@@ -437,7 +440,12 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 800;
     font-variant-numeric: tabular-nums;
     color: var(--color-text);
+    // Keep space-grouped numbers (e.g. "4 250 000") from being visually
+    // reordered by the browser's bidi algorithm when the page is RTL.
+    direction: ltr;
+    unicode-bidi: isolate;
   }
+  [dir="rtl"] & .stat-value { text-align: end; }
 
   .stat-label {
     font-size: 13px;

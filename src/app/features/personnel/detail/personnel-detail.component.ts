@@ -126,7 +126,7 @@ import { Personnel } from '../../../core/models/personnel.model';
               <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.NUM_COUVERTURE_SOCIALE' | translate }}</span><strong>{{ personnel.numCouvertureSociale || '-' }}</strong></div>
               <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.SITUATION' | translate }}</span><strong>{{ personnel.situationAdministratif || '-' }}</strong></div>
               <div class="info-row"><span>{{ 'PERSONNEL.DATE_RECRUTEMENT' | translate }}</span><strong>{{ personnel.dateRecrutement ? (personnel.dateRecrutement | date:'dd/MM/yyyy') : '-' }}</strong></div>
-              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.SALAIRE' | translate }}</span><strong>{{ personnel.salaire ? (personnel.salaire | number) + ' MAD' : '-' }}</strong></div>
+              <div class="info-row"><span>{{ 'PERSONNEL.DETAIL.SALAIRE' | translate }}</span><strong class="num-ltr">{{ personnel.salaire ? (personnel.salaire | number) + ' MAD' : '-' }}</strong></div>
             </div>
 
             <div class="info-section">
