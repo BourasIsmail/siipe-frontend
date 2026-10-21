@@ -52,7 +52,7 @@ import { Programme, Prestation } from '../../core/models/etablissement.model';
           </div>
           <div class="field mb-2">
             <label>{{ 'PROGRAMME.DESCRIPTION' | translate }}</label>
-            <textarea formControlName="description" rows="2" class="textarea" [placeholder]="'PROGRAMME.DESCRIPTION_PLACEHOLDER' | translate"></textarea>
+            <textarea formControlName="description" rows="2" [placeholder]="'PROGRAMME.DESCRIPTION_PLACEHOLDER' | translate"></textarea>
           </div>
           <div class="form-btns">
             <button type="button" class="btn btn-outline" (click)="closeProgrammeForm()">{{ 'COMMON.CANCEL' | translate }}</button>
@@ -88,7 +88,7 @@ import { Programme, Prestation } from '../../core/models/etablissement.model';
           <!-- Prestations section -->
           <div class="prestations-section">
             <div class="prestations-header">
-              <span class="badge badge-blue">{{ getPrestations(p.id).length }} {{ 'PROGRAMME.PRESTATIONS_COUNT_SUFFIX' | translate }}</span>
+              <span class="chip">{{ getPrestations(p.id).length }} {{ 'PROGRAMME.PRESTATIONS_COUNT_SUFFIX' | translate }}</span>
               <button class="btn-add-prest" (click)="openPrestationForm(p.id)">
                 <mat-icon>add</mat-icon> {{ 'PROGRAMME.ADD_PRESTATION' | translate }}
               </button>
@@ -114,8 +114,8 @@ import { Programme, Prestation } from '../../core/models/etablissement.model';
                   </div>
                 </div>
                 <div class="form-btns-sm">
-                  <button type="button" class="btn-sm btn-outline-sm" (click)="closePrestationForm()">{{ 'COMMON.CANCEL' | translate }}</button>
-                  <button type="submit" class="btn-sm btn-primary-sm" [disabled]="prestationForm.invalid || savingPrestation">
+                  <button type="button" class="btn btn-ghost" (click)="closePrestationForm()">{{ 'COMMON.CANCEL' | translate }}</button>
+                  <button type="submit" class="btn btn-primary" [disabled]="prestationForm.invalid || savingPrestation">
                     {{ (savingPrestation ? 'PROGRAMME.SAVING' : 'PROGRAMME.CREATE_PRESTATION') | translate }}
                   </button>
                 </div>
@@ -153,109 +153,75 @@ import { Programme, Prestation } from '../../core/models/etablissement.model';
     </div>
   `,
   styles: [`
-    .programmes-grid { display: flex; flex-direction: column; gap: 16px; }
+    .programmes-grid { display: flex; flex-direction: column; gap: var(--space-4); }
     .programme-card { border-inline-start: 4px solid var(--color-primary) !important; }
     .programme-header {
       display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;
     }
-    .programme-header h3 { font-size: 16px; color: var(--color-primary); margin-bottom: 4px; }
-    .nomAr { font-size: 14px; color: #888; direction: rtl; margin-bottom: 4px; }
-    .description { font-size: 13px; margin-top: 4px; }
+    .programme-header h3 { font-size: var(--font-md); color: var(--color-primary); margin-bottom: 4px; }
+    .nomAr { font-size: var(--font-base); color: var(--color-text-tertiary); direction: rtl; margin-bottom: 4px; }
+    .description { font-size: var(--font-sm); margin-top: 4px; }
     .programme-actions { display: flex; gap: 4px; flex-shrink: 0; }
     .action-btn {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 32px; height: 32px; border: none; border-radius: 6px;
-      cursor: pointer; background: transparent; color: #666;
+      width: 32px; height: 32px; border: none; border-radius: var(--radius-sm);
+      cursor: pointer; background: transparent; color: var(--color-text-secondary);
     }
-    .action-btn.edit:hover { color: var(--color-primary); background: #e8f5e9; }
-    .action-btn.delete:hover { color: #c62828; background: #ffebee; }
+    .action-btn.edit:hover { color: var(--color-primary); background: var(--color-primary-surface); }
+    .action-btn.delete:hover { color: var(--color-danger); background: var(--color-danger-surface); }
     .action-btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
     .prestations-section {
-      background: #f9f9f9; border-radius: 8px; padding: 14px;
+      background: var(--color-surface-2); border-radius: var(--radius-md); padding: 14px;
     }
     .prestations-header {
       display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
     }
-    .badge { padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
-    .badge-blue { background: #e3f2fd; color: #1565c0; }
     .btn-add-prest {
       display: inline-flex; align-items: center; gap: 4px;
       background: none; border: 1px dashed var(--color-primary); color: var(--color-primary);
-      padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: inherit;
+      padding: 5px 12px; border-radius: var(--radius-sm); cursor: pointer; font-size: var(--font-sm); font-family: inherit;
     }
-    .btn-add-prest:hover { background: #e8f5e9; }
+    .btn-add-prest:hover { background: var(--color-primary-surface); }
     .btn-add-prest mat-icon { font-size: 16px; width: 16px; height: 16px; }
     .prestation-form {
-      background: white; border-radius: 8px; padding: 16px; margin-bottom: 12px;
-      border: 1px solid #e8f5e9;
+      background: var(--color-white); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px;
+      border: 1px solid var(--color-primary-surface);
     }
     .form-row-sm {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
       gap: 12px; margin-bottom: 12px;
     }
-    .field { display: flex; flex-direction: column; gap: 5px; }
-    .field label { font-size: 12px; font-weight: 600; color: #555; text-transform: uppercase; letter-spacing: 0.3px; }
-    .field input {
-      padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px;
-      font-size: 14px; font-family: inherit; height: 38px; background: white;
-    }
-    .field input:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 2px rgba(46,125,50,0.1); }
-    .textarea {
-      padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px;
-      font-size: 14px; font-family: inherit; width: 100%; resize: vertical;
-    }
-    .textarea:focus { outline: none; border-color: var(--color-primary); }
     .mb-2 { margin-bottom: 12px; }
-    .form-btns-sm { display: flex; justify-content: flex-end; gap: 8px; }
-    .btn-sm {
-      padding: 7px 14px; border-radius: 6px; font-size: 13px;
-      cursor: pointer; font-family: inherit; border: none; font-weight: 500;
-    }
-    .btn-primary-sm { background: var(--color-primary); color: white; }
-    .btn-primary-sm:disabled { opacity: 0.6; cursor: default; }
-    .btn-outline-sm { background: white; color: #666; border: 1px solid #ccc; }
+    .form-btns-sm { display: flex; justify-content: flex-end; gap: var(--space-2); }
     .prestations-list { display: flex; flex-direction: column; gap: 8px; }
     .prestation-item {
       display: flex; align-items: center; justify-content: space-between;
-      background: white; border-radius: 8px; padding: 10px 14px;
-      border: 1px solid #e0e0e0;
+      background: var(--color-white); border-radius: var(--radius-md); padding: 10px 14px;
+      border: 1px solid var(--color-border);
     }
     .prestation-info { display: flex; align-items: center; gap: 10px; flex: 1; }
     .prest-icon { font-size: 18px; width: 18px; height: 18px; color: var(--color-primary); flex-shrink: 0; }
-    .prestation-nom { font-size: 14px; font-weight: 500; color: #333; }
-    .prestation-nom-ar { font-size: 13px; color: #888; }
+    .prestation-nom { font-size: var(--font-base); font-weight: 500; color: var(--color-text); }
+    .prestation-nom-ar { font-size: var(--font-sm); color: var(--color-text-tertiary); }
     .action-btn-sm {
       display: inline-flex; align-items: center; justify-content: center;
       width: 26px; height: 26px; border: none; border-radius: 4px;
-      cursor: pointer; background: transparent; color: #aaa; flex-shrink: 0;
+      cursor: pointer; background: transparent; color: var(--color-text-tertiary); flex-shrink: 0;
     }
-    .action-btn-sm.delete:hover { color: #c62828; background: #ffebee; }
+    .action-btn-sm.delete:hover { color: var(--color-danger); background: var(--color-danger-surface); }
     .action-btn-sm mat-icon { font-size: 16px; width: 16px; height: 16px; }
     .empty-prestations {
       display: flex; align-items: center; gap: 6px;
-      font-size: 13px; color: #bbb; padding: 8px; justify-content: center;
+      font-size: var(--font-sm); color: var(--color-text-tertiary); padding: 8px; justify-content: center;
       mat-icon { font-size: 16px; width: 16px; height: 16px; }
     }
-    .form-row {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-      gap: 16px; margin-bottom: 16px;
-    }
-    .form-btns { display: flex; justify-content: flex-end; gap: 8px; }
-    .err { color: #d32f2f; font-size: 12px; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 9px 16px; border: none; border-radius: 6px;
-      font-size: 14px; font-family: inherit; cursor: pointer; font-weight: 500;
-    }
-    .btn-primary { background: var(--color-primary); color: white; }
-    .btn-outline { background: white; color: #666; border: 1px solid #ccc; }
-    .btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
+    .err { color: var(--color-danger); font-size: var(--font-xs); }
     .empty-state {
-      text-align: center; padding: 60px; color: #ccc; background: white;
-      border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      text-align: center; padding: 60px; color: var(--color-text-tertiary); background: var(--color-white);
+      border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
     }
     .empty-state mat-icon { font-size: 56px; width: 56px; height: 56px; display: block; margin: 0 auto 12px; }
-    .empty-state p { font-size: 15px; }
+    .empty-state p { font-size: var(--font-md); }
   `]
 })
 export class ProgrammesComponent implements OnInit {

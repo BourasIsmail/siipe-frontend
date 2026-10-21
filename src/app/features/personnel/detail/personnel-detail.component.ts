@@ -29,7 +29,7 @@ import { Personnel } from '../../../core/models/personnel.model';
       <!-- Header -->
       <div class="detail-header">
         <div class="header-left">
-          <div class="avatar-large" [style.background]="avatarColor">
+          <div class="avatar avatar-large" [style.background]="avatarColor">
             {{ personnel.nom.charAt(0) }}{{ personnel.prenom.charAt(0) }}
           </div>
           <div>
@@ -40,9 +40,9 @@ import { Personnel } from '../../../core/models/personnel.model';
               <span class="text-secondary">{{ personnel.matricule }}</span>
             </div>
             <div class="meta-row mt-1">
-              <mat-icon style="font-size:16px;width:16px;height:16px;color:#888">business</mat-icon>
+              <mat-icon class="meta-icon">business</mat-icon>
               <span class="text-secondary">{{ personnel.etablissementCentreNom || '-' }}</span>
-              <mat-icon style="font-size:16px;width:16px;height:16px;color:#888" *ngIf="personnel.provinceNom">location_on</mat-icon>
+              <mat-icon class="meta-icon" *ngIf="personnel.provinceNom">location_on</mat-icon>
               <span class="text-secondary" *ngIf="personnel.provinceNom">{{ personnel.provinceNom }}</span>
             </div>
           </div>
@@ -198,64 +198,53 @@ import { Personnel } from '../../../core/models/personnel.model';
       align-items: flex-start; margin-bottom: 20px;
     }
     .header-left { display: flex; align-items: center; gap: 20px; }
-    .avatar-large {
-      width: 72px; height: 72px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      color: white; font-size: 24px; font-weight: 700; flex-shrink: 0;
-    }
+    .avatar-large { width: 72px; height: 72px; font-size: 24px; }
     h1 { font-size: 24px; color: var(--color-primary); margin-bottom: 8px; }
     .meta-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .meta-icon { font-size: 16px; width: 16px; height: 16px; color: var(--color-text-tertiary); }
     .mt-1 { margin-top: 6px; }
     .header-actions { display: flex; gap: 8px; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 9px 16px; border-radius: 6px; font-size: 14px;
-      font-family: inherit; cursor: pointer; text-decoration: none; border: none;
-    }
-    .btn-primary { background: var(--color-primary); color: white; }
-    .btn-outline { background: white; color: #555; border: 1px solid #ccc; }
-    .btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
     .badge {
-      padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 500;
+      padding: 3px 10px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 500;
     }
-    .badge-blue { background: #e3f2fd; color: #1565c0; }
-    .badge-green { background: #e8f5e9; color: #2e7d32; }
+    .badge-blue { background: var(--color-accent-surface); color: var(--color-accent); }
+    .badge-green { background: var(--color-primary-surface); color: var(--color-primary-dark); }
     .tabs {
       display: flex; gap: 4px; margin-bottom: 16px;
-      border-bottom: 2px solid #e0e0e0;
+      border-bottom: 2px solid var(--color-border);
     }
     .tab {
       display: flex; align-items: center; gap: 6px;
       padding: 10px 16px; border: none; background: none;
-      cursor: pointer; font-size: 14px; color: #666;
+      cursor: pointer; font-size: 14px; color: var(--color-text-secondary);
       border-bottom: 3px solid transparent; margin-bottom: -2px;
-      font-family: inherit; border-radius: 4px 4px 0 0;
+      font-family: inherit; border-radius: var(--radius-sm) var(--radius-sm) 0 0;
     }
-    .tab:hover { background: #f5f5f5; color: var(--color-primary); }
+    .tab:hover { background: var(--color-surface-2); color: var(--color-primary); }
     .tab.active { color: var(--color-primary); border-bottom-color: var(--color-primary); font-weight: 600; }
     .tab mat-icon { font-size: 18px; width: 18px; height: 18px; }
-    .tab-card { border-radius: 0 8px 8px 8px !important; }
+    .tab-card { border-radius: 0 var(--radius-lg) var(--radius-lg) var(--radius-lg) !important; }
     .info-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px;
     }
     .info-section h3 {
       color: var(--color-primary); font-size: 14px; font-weight: 600;
-      border-bottom: 1px solid #e8f5e9; padding-bottom: 8px; margin-bottom: 12px;
+      border-bottom: 1px solid var(--color-primary-surface); padding-bottom: 8px; margin-bottom: 12px;
     }
     .info-row {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 6px 0; border-bottom: 1px solid #fafafa; font-size: 14px;
-      span { color: #666; }
-      strong { color: #333; text-align: end; max-width: 60%; }
+      padding: 6px 0; border-bottom: 1px solid var(--color-surface-2); font-size: 14px;
+      span { color: var(--color-text-secondary); }
+      strong { color: var(--color-text); text-align: end; max-width: 60%; }
     }
     .photo-section { margin-top: 24px; }
     .photo-section h3 { color: var(--color-primary); font-size: 14px; margin-bottom: 12px; }
     .photo-upload { display: flex; align-items: center; gap: 16px; }
-    .photo-preview { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; }
+    .photo-preview { width: 80px; height: 80px; border-radius: var(--radius-md); object-fit: cover; }
     .upload-btn {
       display: flex; align-items: center; gap: 8px; cursor: pointer;
-      padding: 10px 16px; border: 1px dashed #ccc; border-radius: 8px;
-      color: #666; font-size: 14px;
+      padding: 10px 16px; border: 1px dashed var(--color-border); border-radius: var(--radius-md);
+      color: var(--color-text-secondary); font-size: 14px;
       mat-icon { font-size: 20px; width: 20px; height: 20px; }
     }
     .upload-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
@@ -272,19 +261,19 @@ import { Personnel } from '../../../core/models/personnel.model';
     }
     .eval-grid { display: flex; flex-direction: column; gap: 12px; }
     .eval-item { display: flex; align-items: center; gap: 12px; }
-    .eval-label { width: 220px; font-size: 14px; color: #555; flex-shrink: 0; }
+    .eval-label { width: 220px; font-size: 14px; color: var(--color-text-secondary); flex-shrink: 0; }
     .eval-bar-wrap {
-      flex: 1; height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden;
+      flex: 1; height: 10px; background: var(--color-surface-2); border-radius: 5px; overflow: hidden;
     }
     .eval-bar { height: 100%; border-radius: 5px; transition: width 0.3s; }
-    .eval-score { width: 40px; text-align: end; font-size: 14px; font-weight: 600; color: #333; }
+    .eval-score { width: 40px; text-align: end; font-size: 14px; font-weight: 600; color: var(--color-text); }
     .observations h3 { color: var(--color-primary); font-size: 14px; margin-bottom: 12px; }
     .obs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
-    .obs-item { background: #f9f9f9; border-radius: 8px; padding: 12px; }
-    .obs-label { font-size: 12px; color: #888; margin-bottom: 4px; }
-    .obs-text { font-size: 14px; color: #333; }
+    .obs-item { background: var(--color-surface-2); border-radius: var(--radius-md); padding: 12px; }
+    .obs-label { font-size: 12px; color: var(--color-text-tertiary); margin-bottom: 4px; }
+    .obs-text { font-size: 14px; color: var(--color-text); }
     .audit-info {
-      margin-top: 16px; font-size: 12px; color: #bbb;
+      margin-top: 16px; font-size: 12px; color: var(--color-text-tertiary);
       text-align: end; padding-bottom: 32px;
     }
   `]

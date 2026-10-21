@@ -96,7 +96,7 @@ import { Personnel } from '../../../core/models/personnel.model';
             <div class="info-section" *ngIf="etab.programmes?.length">
               <h3>{{ 'MENU.PROGRAMMES' | translate }}</h3>
               <div class="tags">
-                <span class="tag" *ngFor="let p of etab.programmes">{{ p.nomFr }}</span>
+                <span class="chip" *ngFor="let p of etab.programmes">{{ p.nomFr }}</span>
               </div>
             </div>
           </div>
@@ -181,32 +181,34 @@ import { Personnel } from '../../../core/models/personnel.model';
                 <mat-icon>person_add</mat-icon> {{ 'COMMON.ADD' | translate }}
               </a>
             </div>
-            <table class="data-table" *ngIf="personnel.length > 0">
-              <thead>
-                <tr>
-                  <th>{{ 'PERSONNEL.NOM' | translate }}</th>
-                  <th>{{ 'PERSONNEL.MATRICULE' | translate }}</th>
-                  <th>{{ 'PERSONNEL.GRADE' | translate }}</th>
-                  <th>{{ 'PERSONNEL.FONCTION' | translate }}</th>
-                  <th>{{ 'COMMON.ACTIONS' | translate }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let p of personnel">
-                  <td>
-                    <a [routerLink]="['/personnel', p.id]" class="link">{{ p.nom }} {{ p.prenom }}</a>
-                  </td>
-                  <td>{{ p.matricule }}</td>
-                  <td>{{ formatEnum(p.grade) }}</td>
-                  <td>{{ formatEnum(p.fonction) }}</td>
-                  <td>
-                    <a [routerLink]="['/personnel', p.id]" class="action-btn">
-                      <mat-icon>visibility</mat-icon>
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-card" *ngIf="personnel.length > 0">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>{{ 'PERSONNEL.NOM' | translate }}</th>
+                    <th>{{ 'PERSONNEL.MATRICULE' | translate }}</th>
+                    <th>{{ 'PERSONNEL.GRADE' | translate }}</th>
+                    <th>{{ 'PERSONNEL.FONCTION' | translate }}</th>
+                    <th>{{ 'COMMON.ACTIONS' | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let p of personnel">
+                    <td>
+                      <a [routerLink]="['/personnel', p.id]" class="link">{{ p.nom }} {{ p.prenom }}</a>
+                    </td>
+                    <td>{{ p.matricule }}</td>
+                    <td>{{ formatEnum(p.grade) }}</td>
+                    <td>{{ formatEnum(p.fonction) }}</td>
+                    <td>
+                      <a [routerLink]="['/personnel', p.id]" class="action-btn">
+                        <mat-icon>visibility</mat-icon>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             <div *ngIf="personnel.length === 0" class="empty-state">
               <mat-icon>people_outline</mat-icon>
               <p>{{ 'ETABLISSEMENT.DETAIL.NO_PERSONNEL' | translate }}</p>
@@ -256,37 +258,28 @@ import { Personnel } from '../../../core/models/personnel.model';
       margin-bottom: 20px;
       h1 { font-size: 24px; color: var(--color-primary); margin-bottom: 4px; }
     }
-    .nomAr { font-size: 16px; color: #666; direction: rtl; margin-bottom: 8px; }
+    .nomAr { font-size: 16px; color: var(--color-text-secondary); direction: rtl; margin-bottom: 8px; }
     .meta-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
     .header-actions { display: flex; gap: 8px; }
 
-    .btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 9px 16px; border: none; border-radius: 6px;
-      font-size: 14px; font-family: inherit; cursor: pointer;
-      font-weight: 500; text-decoration: none;
-    }
-    .btn-sm { padding: 6px 12px; font-size: 13px; }
-    .btn-primary { background: var(--color-primary); color: white; }
-    .btn-outline { background: white; color: #555; border: 1px solid #ccc; }
-    .btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
+    .btn-sm { padding: 6px 12px; font-size: var(--font-sm); }
 
     .tabs {
       display: flex; gap: 4px; margin-bottom: 16px;
-      border-bottom: 2px solid #e0e0e0; padding-bottom: 0;
+      border-bottom: 2px solid var(--color-border); padding-bottom: 0;
     }
     .tab {
       display: flex; align-items: center; gap: 6px;
       padding: 10px 16px; border: none; background: none;
-      cursor: pointer; font-size: 14px; color: #666;
+      cursor: pointer; font-size: var(--font-base); color: var(--color-text-secondary);
       border-bottom: 3px solid transparent; margin-bottom: -2px;
-      font-family: inherit; border-radius: 4px 4px 0 0;
+      font-family: inherit; border-radius: var(--radius-sm) var(--radius-sm) 0 0;
     }
-    .tab:hover { background: #f5f5f5; color: var(--color-primary); }
+    .tab:hover { background: var(--color-surface-2); color: var(--color-primary); }
     .tab.active { color: var(--color-primary); border-bottom-color: var(--color-primary); font-weight: 600; }
     .tab mat-icon { font-size: 18px; width: 18px; height: 18px; }
 
-    .tab-card { border-radius: 0 8px 8px 8px !important; }
+    .tab-card { border-radius: 0 var(--radius-lg) var(--radius-lg) var(--radius-lg) !important; }
 
     .info-grid {
       display: grid;
@@ -295,60 +288,49 @@ import { Personnel } from '../../../core/models/personnel.model';
     }
     .info-section h3 {
       color: var(--color-primary); font-size: 14px; font-weight: 600;
-      border-bottom: 1px solid #e8f5e9; padding-bottom: 8px; margin-bottom: 12px;
+      border-bottom: 1px solid var(--color-primary-surface); padding-bottom: 8px; margin-bottom: 12px;
     }
     .info-row {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 6px 0; border-bottom: 1px solid #fafafa; font-size: 14px;
-      span { color: #666; }
-      strong { color: #333; text-align: end; }
+      padding: 6px 0; border-bottom: 1px solid var(--color-border); font-size: 14px;
+      span { color: var(--color-text-secondary); }
+      strong { color: var(--color-text); text-align: end; }
     }
-    .bool-val { color: #c62828; }
-    .bool-val.yes { color: #2e7d32; }
+    .bool-val { color: var(--color-danger); }
+    .bool-val.yes { color: var(--color-primary-dark); }
 
     .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .tag {
-      background: #e8f5e9; color: var(--color-primary);
-      padding: 4px 12px; border-radius: 16px; font-size: 13px;
-    }
 
     .badge {
-      padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 500;
+      padding: 3px 10px; border-radius: var(--radius-pill); font-size: var(--font-xs); font-weight: 500;
     }
-    .badge-blue { background: #e3f2fd; color: #1565c0; }
-    .badge-green { background: #e8f5e9; color: #2e7d32; }
+    .badge-blue { background: var(--color-primary-surface); color: var(--color-primary-dark); }
+    .badge-green { background: var(--color-primary-surface); color: var(--color-primary-dark); }
 
     .tab-header {
       display: flex; justify-content: space-between;
       align-items: center; margin-bottom: 16px;
     }
 
-    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    .data-table th {
-      background: var(--color-primary); color: white;
-      padding: 10px 14px; text-align: start; font-size: 13px;
-    }
-    .data-table td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; }
-    .data-table tr:hover td { background: #f9f9f9; }
     .link { color: var(--color-primary); text-decoration: none; font-weight: 500; }
     .link:hover { text-decoration: underline; }
     .action-btn {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 30px; height: 30px; border: none; border-radius: 4px;
-      background: transparent; cursor: pointer; color: #666; text-decoration: none;
+      width: 30px; height: 30px; border: none; border-radius: var(--radius-sm);
+      background: transparent; cursor: pointer; color: var(--color-text-secondary); text-decoration: none;
     }
-    .action-btn:hover { background: #f0f0f0; }
+    .action-btn:hover { background: var(--color-surface-2); }
     .action-btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
 
     .empty-state {
-      text-align: center; padding: 40px; color: #bbb;
+      text-align: center; padding: 40px; color: var(--color-text-tertiary);
       mat-icon { font-size: 48px; width: 48px; height: 48px; display: block; margin: 0 auto 8px; }
     }
 
     .docs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
     .doc-item {
       display: flex; align-items: center; gap: 12px;
-      padding: 16px; border: 1px solid #e0e0e0; border-radius: 8px;
+      padding: 16px; border: 1px solid var(--color-border); border-radius: var(--radius-md);
     }
     .doc-icon { color: var(--color-primary); mat-icon { font-size: 32px; width: 32px; height: 32px; } }
     .doc-name { font-weight: 500; font-size: 14px; margin-bottom: 4px; }
@@ -357,15 +339,15 @@ import { Personnel } from '../../../core/models/personnel.model';
     .doc-upload { margin-inline-start: auto; }
     .upload-btn {
       display: flex; align-items: center; cursor: pointer;
-      color: #666; padding: 6px; border-radius: 4px;
+      color: var(--color-text-secondary); padding: 6px; border-radius: var(--radius-sm);
     }
-    .upload-btn:hover { background: #f5f5f5; color: var(--color-primary); }
+    .upload-btn:hover { background: var(--color-surface-2); color: var(--color-primary); }
 
     .map-preview { margin-top: 24px; }
     .map-preview h3 { color: var(--color-primary); font-size: 14px; margin-bottom: 12px; }
 
     .audit-info {
-      margin-top: 16px; font-size: 12px; color: #bbb;
+      margin-top: 16px; font-size: 12px; color: var(--color-text-tertiary);
       text-align: end; padding-bottom: 32px;
     }
   `]

@@ -100,7 +100,7 @@ import { Province } from '../../../core/models/geo.model';
           </div>
         </div>
 
-        <div class="table-wrap">
+        <div class="table-card">
           <table class="data-table">
             <thead>
               <tr>
@@ -161,111 +161,43 @@ import { Province } from '../../../core/models/geo.model';
     .filter-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
+      gap: var(--space-4);
       align-items: end;
     }
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .field label {
-      font-size: 13px;
-      font-weight: 500;
-      color: #555;
-    }
-    .field input,
-    .field select {
-      padding: 9px 12px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-      font-family: inherit;
-      background: white;
-      color: #333;
-      height: 40px;
-    }
-    .field input:focus,
-    .field select:focus {
-      outline: none;
-      border-color: var(--color-primary);
-      box-shadow: 0 0 0 2px rgba(46,125,50,0.12);
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 9px 16px;
-      border: none;
-      border-radius: 6px;
-      font-size: 14px;
-      font-family: inherit;
-      cursor: pointer;
-      font-weight: 500;
-      text-decoration: none;
-    }
-    .btn-primary { background: var(--color-primary); color: white; }
-    .btn-primary:hover { background: var(--color-primary-dark); }
-    .btn-excel { background: #1e7e34; color: white; }
-    .btn-pdf { background: #c62828; color: white; }
-    .btn-outline { background: white; color: #666; border: 1px solid #ccc; }
-    .btn-outline:hover { background: #f5f5f5; }
-    .btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
 
     .table-meta {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: var(--space-3);
     }
     .pagination-controls {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--space-2);
     }
     .page-size-select {
       padding: 4px 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 13px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-sm);
     }
-    .table-wrap { overflow-x: auto; }
-    .data-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-    .data-table th {
-      background: var(--color-primary);
-      color: white;
-      padding: 12px 14px;
-      text-align: start;
-      font-weight: 600;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-    .data-table td {
-      padding: 11px 14px;
-      border-bottom: 1px solid #f0f0f0;
-      vertical-align: middle;
-    }
-    .data-table tr:hover td { background: #f9f9f9; }
     .link {
       color: var(--color-primary);
       text-decoration: none;
       font-weight: 500;
     }
     .link:hover { text-decoration: underline; }
-    .sub-text { font-size: 12px; color: #999; direction: rtl; }
+    .sub-text { font-size: var(--font-xs); color: var(--color-text-tertiary); direction: rtl; }
     .badge {
       padding: 3px 10px;
-      border-radius: 12px;
-      font-size: 12px;
+      border-radius: var(--radius-pill);
+      font-size: var(--font-xs);
       font-weight: 500;
     }
-    .badge-blue { background: #e3f2fd; color: #1565c0; }
-    .badge-green { background: #e8f5e9; color: #2e7d32; }
-    .badge-orange { background: #fff3e0; color: #e65100; }
+    .badge-blue { background: var(--color-primary-surface); color: var(--color-primary-dark); }
+    .badge-green { background: var(--color-primary-surface); color: var(--color-primary-dark); }
+    .badge-orange { background: var(--color-accent-surface); color: var(--color-accent); }
     .actions { display: flex; gap: 4px; }
     .action-btn {
       display: inline-flex;
@@ -273,32 +205,32 @@ import { Province } from '../../../core/models/geo.model';
       justify-content: center;
       width: 32px; height: 32px;
       border: none;
-      border-radius: 6px;
+      border-radius: var(--radius-sm);
       cursor: pointer;
       background: transparent;
-      color: #666;
+      color: var(--color-text-secondary);
       text-decoration: none;
     }
-    .action-btn:hover { background: #f0f0f0; }
-    .action-btn.edit:hover { color: var(--color-primary); background: #e8f5e9; }
-    .action-btn.delete:hover { color: #c62828; background: #ffebee; }
+    .action-btn:hover { background: var(--color-surface-2); }
+    .action-btn.edit:hover { color: var(--color-primary); background: var(--color-primary-surface); }
+    .action-btn.delete:hover { color: var(--color-danger); background: var(--color-danger-surface); }
     .action-btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
-    .empty-row { text-align: center; padding: 40px; color: #999; }
+    .empty-row { text-align: center; padding: 40px; color: var(--color-text-tertiary); }
     .pagination {
       display: flex;
       justify-content: center;
       gap: 4px;
-      margin-top: 16px;
+      margin-top: var(--space-4);
     }
     .page-btn {
       padding: 6px 12px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      background: white;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
       cursor: pointer;
-      font-size: 13px;
+      font-size: var(--font-sm);
     }
-    .page-btn:hover:not(:disabled) { background: #f0f0f0; }
+    .page-btn:hover:not(:disabled) { background: var(--color-surface-2); }
     .page-btn.active { background: var(--color-primary); color: white; border-color: var(--color-primary); }
     .page-btn:disabled { opacity: 0.4; cursor: default; }
   `]

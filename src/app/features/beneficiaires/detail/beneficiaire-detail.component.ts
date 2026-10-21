@@ -35,14 +35,14 @@ import { Programme, Prestation, EtablissementCentre } from '../../../core/models
       <!-- Header -->
       <div class="detail-header">
         <div class="header-left">
-          <div class="avatar-large" [style.background]="avatarColor">
+          <div class="avatar avatar-large" [style.background]="avatarColor">
             {{ beneficiaire.nom.charAt(0) }}{{ (beneficiaire.prenom || '').charAt(0) }}
           </div>
           <div>
             <h1>{{ beneficiaire.nom }} {{ beneficiaire.prenom }}</h1>
             <div class="nomAr" *ngIf="beneficiaire.nomAr">{{ beneficiaire.nomAr }} {{ beneficiaire.prenomAr }}</div>
             <div class="meta-row">
-              <span class="badge badge-orange" *ngIf="beneficiaire.situationDifficulte">
+              <span class="badge-situation" *ngIf="beneficiaire.situationDifficulte">
                 {{ formatEnum(beneficiaire.situationDifficulte) }}
               </span>
               <span class="text-secondary" *ngIf="beneficiaire.numeroDossier">{{ 'BENEFICIAIRE.DETAIL.NUMERO_PREFIX' | translate }} {{ beneficiaire.numeroDossier }}</span>
@@ -230,6 +230,8 @@ import { Programme, Prestation, EtablissementCentre } from '../../../core/models
             </button>
           </div>
           <div *ngIf="loadingTab" class="flex-center" style="height:100px"><mat-spinner diameter="30"></mat-spinner></div>
+          <div class="table-card">
+          <div class="table-wrap">
           <table class="data-table" *ngIf="!loadingTab && besoins.length > 0">
             <thead><tr><th>{{ 'BENEFICIAIRE.DETAIL.LIBELLE' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.PROGRAMME' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.PRESTATION' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.DESCRIPTION' | translate }}</th></tr></thead>
             <tbody>
@@ -241,6 +243,8 @@ import { Programme, Prestation, EtablissementCentre } from '../../../core/models
             </tr>
             </tbody>
           </table>
+          </div>
+          </div>
           <div *ngIf="!loadingTab && besoins.length === 0" class="empty-tab">{{ 'BENEFICIAIRE.DETAIL.EMPTY_BESOIN' | translate }}</div>
         </mat-card-content>
       </mat-card>
@@ -318,6 +322,8 @@ import { Programme, Prestation, EtablissementCentre } from '../../../core/models
             </button>
           </div>
           <div *ngIf="loadingTab" class="flex-center" style="height:100px"><mat-spinner diameter="30"></mat-spinner></div>
+          <div class="table-card">
+          <div class="table-wrap">
           <table class="data-table" *ngIf="!loadingTab && prestationsBeneficiaire.length > 0">
             <thead>
             <tr><th>{{ 'BENEFICIAIRE.ETABLISSEMENT' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.PROGRAMME' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.PRESTATION' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.ORIENTATION' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.DATE_DEBUT' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.STATUT' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.PIECE_JOINTE' | translate }}</th></tr>
@@ -342,6 +348,8 @@ import { Programme, Prestation, EtablissementCentre } from '../../../core/models
             </tr>
             </tbody>
           </table>
+          </div>
+          </div>
           <div *ngIf="!loadingTab && prestationsBeneficiaire.length === 0" class="empty-tab">{{ 'BENEFICIAIRE.DETAIL.EMPTY_PRESTATION' | translate }}</div>
         </mat-card-content>
       </mat-card>
@@ -408,6 +416,8 @@ import { Programme, Prestation, EtablissementCentre } from '../../../core/models
             </button>
           </div>
           <div *ngIf="loadingTab" class="flex-center" style="height:100px"><mat-spinner diameter="30"></mat-spinner></div>
+          <div class="table-card">
+          <div class="table-wrap">
           <table class="data-table" *ngIf="!loadingTab && situationsSociales.length > 0">
             <thead><tr><th>{{ 'BENEFICIAIRE.DETAIL.SITUATION_LABEL' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.TYPE_VIOLENCE_COL' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.LIEU' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.DATE_LABEL' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.OBSERVATION' | translate }}</th></tr></thead>
             <tbody>
@@ -420,6 +430,8 @@ import { Programme, Prestation, EtablissementCentre } from '../../../core/models
             </tr>
             </tbody>
           </table>
+          </div>
+          </div>
           <div *ngIf="!loadingTab && situationsSociales.length === 0" class="empty-tab">{{ 'BENEFICIAIRE.DETAIL.EMPTY_SOCIALE' | translate }}</div>
         </mat-card-content>
       </mat-card>
@@ -484,6 +496,8 @@ import { Programme, Prestation, EtablissementCentre } from '../../../core/models
             </button>
           </div>
           <div *ngIf="loadingTab" class="flex-center" style="height:100px"><mat-spinner diameter="30"></mat-spinner></div>
+          <div class="table-card">
+          <div class="table-wrap">
           <table class="data-table" *ngIf="!loadingTab && situationsMedicales.length > 0">
             <thead>
             <tr><th>{{ 'BENEFICIAIRE.TAB_MEDICAL' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.HISTORIQUE' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.MEDECIN' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.MEDICAMENT' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.CERTIFICAT' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.OBSERVATION' | translate }}</th></tr>
@@ -507,6 +521,8 @@ import { Programme, Prestation, EtablissementCentre } from '../../../core/models
             </tr>
             </tbody>
           </table>
+          </div>
+          </div>
           <div *ngIf="!loadingTab && situationsMedicales.length === 0" class="empty-tab">{{ 'BENEFICIAIRE.DETAIL.EMPTY_MEDICALE' | translate }}</div>
         </mat-card-content>
       </mat-card>
@@ -571,6 +587,8 @@ import { Programme, Prestation, EtablissementCentre } from '../../../core/models
             </button>
           </div>
           <div *ngIf="loadingTab" class="flex-center" style="height:100px"><mat-spinner diameter="30"></mat-spinner></div>
+          <div class="table-card">
+          <div class="table-wrap">
           <table class="data-table" *ngIf="!loadingTab && situationsJudiciaires.length > 0">
             <thead><tr><th>{{ 'BENEFICIAIRE.DETAIL.LIEUX' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.DATE_LABEL' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.DUREE' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.DESCRIPTION' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.PIECE_JOINTE' | translate }}</th></tr></thead>
             <tbody>
@@ -591,6 +609,8 @@ import { Programme, Prestation, EtablissementCentre } from '../../../core/models
             </tr>
             </tbody>
           </table>
+          </div>
+          </div>
           <div *ngIf="!loadingTab && situationsJudiciaires.length === 0" class="empty-tab">{{ 'BENEFICIAIRE.DETAIL.EMPTY_JUDICIAIRE' | translate }}</div>
         </mat-card-content>
       </mat-card>
@@ -637,6 +657,8 @@ import { Programme, Prestation, EtablissementCentre } from '../../../core/models
             </button>
           </div>
           <div *ngIf="loadingTab" class="flex-center" style="height:100px"><mat-spinner diameter="30"></mat-spinner></div>
+          <div class="table-card">
+          <div class="table-wrap">
           <table class="data-table" *ngIf="!loadingTab && dossiers.length > 0">
             <thead><tr><th>{{ 'BENEFICIAIRE.DETAIL.DATE_LABEL' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.TYPE_LABEL' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.DECISIONS' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.PIECE_JOINTE' | translate }}</th></tr></thead>
             <tbody>
@@ -656,6 +678,8 @@ import { Programme, Prestation, EtablissementCentre } from '../../../core/models
             </tr>
             </tbody>
           </table>
+          </div>
+          </div>
           <div *ngIf="!loadingTab && dossiers.length === 0" class="empty-tab">{{ 'BENEFICIAIRE.DETAIL.EMPTY_DOSSIER' | translate }}</div>
         </mat-card-content>
       </mat-card>
@@ -706,6 +730,8 @@ import { Programme, Prestation, EtablissementCentre } from '../../../core/models
             </button>
           </div>
           <div *ngIf="loadingTab" class="flex-center" style="height:100px"><mat-spinner diameter="30"></mat-spinner></div>
+          <div class="table-card">
+          <div class="table-wrap">
           <table class="data-table" *ngIf="!loadingTab && accompagnements.length > 0">
             <thead><tr><th>{{ 'BENEFICIAIRE.TAB_ACCOMPAGNEMENT' | translate }}</th><th>{{ 'BENEFICIAIRE.NOM' | translate }}</th><th>{{ 'BENEFICIAIRE.PRENOM' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.TELEPHONE' | translate }}</th><th>{{ 'BENEFICIAIRE.DETAIL.EMAIL' | translate }}</th></tr></thead>
             <tbody>
@@ -718,6 +744,8 @@ import { Programme, Prestation, EtablissementCentre } from '../../../core/models
             </tr>
             </tbody>
           </table>
+          </div>
+          </div>
           <div *ngIf="!loadingTab && accompagnements.length === 0" class="empty-tab">{{ 'BENEFICIAIRE.DETAIL.EMPTY_CONTACT' | translate }}</div>
         </mat-card-content>
       </mat-card>
@@ -731,50 +759,33 @@ import { Programme, Prestation, EtablissementCentre } from '../../../core/models
   styles: [`
     .detail-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
     .header-left { display: flex; align-items: center; gap: 20px; }
-    .avatar-large { width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-weight: 700; flex-shrink: 0; }
+    .avatar-large { width: 72px; height: 72px; font-size: 24px; }
     h1 { font-size: 24px; color: var(--color-primary); margin-bottom: 4px; }
-    .nomAr { font-size: 15px; color: #888; direction: rtl; margin-bottom: 6px; }
+    .nomAr { font-size: 15px; color: var(--color-text-tertiary); direction: rtl; margin-bottom: 6px; }
     .meta-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
     .mt-1 { margin-top: 6px; }
     .header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 6px; font-size: 14px; font-family: inherit; cursor: pointer; text-decoration: none; border: none; }
     .btn-sm { padding: 6px 12px; font-size: 13px; }
-    .btn-primary { background: var(--color-primary); color: white; }
-    .btn-outline { background: white; color: #555; border: 1px solid #ccc; }
-    .btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
-    .badge { padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
-    .badge-orange { background: #fff3e0; color: #e65100; }
-    .tabs { display: flex; gap: 2px; margin-bottom: 16px; border-bottom: 2px solid #e0e0e0; overflow-x: auto; }
-    .tab { padding: 10px 14px; border: none; background: none; cursor: pointer; font-size: 13px; color: #666; white-space: nowrap; border-bottom: 3px solid transparent; margin-bottom: -2px; font-family: inherit; border-radius: 4px 4px 0 0; }
-    .tab:hover { background: #f5f5f5; color: var(--color-primary); }
+    .tabs { display: flex; gap: 2px; margin-bottom: 16px; border-bottom: 2px solid var(--color-border); overflow-x: auto; }
+    .tab { padding: 10px 14px; border: none; background: none; cursor: pointer; font-size: 13px; color: var(--color-text-secondary); white-space: nowrap; border-bottom: 3px solid transparent; margin-bottom: -2px; font-family: inherit; border-radius: 4px 4px 0 0; }
+    .tab:hover { background: var(--color-surface-2); color: var(--color-primary); }
     .tab.active { color: var(--color-primary); border-bottom-color: var(--color-primary); font-weight: 600; }
-    .tab-card { border-radius: 0 8px 8px 8px !important; }
+    .tab-card { border-radius: 0 var(--radius-lg) var(--radius-lg) var(--radius-lg) !important; }
     .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
-    .info-section h3 { color: var(--color-primary); font-size: 14px; font-weight: 600; border-bottom: 1px solid #e8f5e9; padding-bottom: 8px; margin-bottom: 12px; }
-    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #fafafa; font-size: 14px; }
-    .info-row span { color: #666; }
-    .info-row strong { color: #333; text-align: end; max-width: 60%; }
+    .info-section h3 { color: var(--color-primary); font-size: 14px; font-weight: 600; border-bottom: 1px solid var(--color-primary-surface); padding-bottom: 8px; margin-bottom: 12px; }
+    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--color-border); font-size: 14px; }
+    .info-row span { color: var(--color-text-secondary); }
+    .info-row strong { color: var(--color-text); text-align: end; max-width: 60%; }
     .tab-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .add-form { background: #f9f9f9; border-radius: 8px; padding: 20px; margin-bottom: 20px; border: 1px solid #e0e0e0; }
+    .add-form { background: var(--color-surface-2); border-radius: var(--radius-md); padding: 20px; margin-bottom: 20px; border: 1px solid var(--color-border); }
     .add-form h4 { color: var(--color-primary); margin-bottom: 16px; font-size: 15px; }
-    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 12px; }
-    .field { display: flex; flex-direction: column; gap: 4px; }
-    .field label { font-size: 12px; font-weight: 500; color: #666; }
-    .field input, .field select { padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 13px; font-family: inherit; background: white; height: 38px; }
-    .field input:focus, .field select:focus { outline: none; border-color: var(--color-primary); }
-    .textarea { padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 13px; font-family: inherit; width: 100%; resize: vertical; }
-    .mb-2 { margin-bottom: 12px; }
     .form-btns { display: flex; justify-content: flex-end; gap: 8px; }
-    .obs-text { font-size: 13px; color: #666; padding: 8px; background: #f9f9f9; border-radius: 4px; }
-    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    .data-table th { background: var(--color-primary); color: white; padding: 10px 14px; text-align: start; font-size: 13px; }
-    .data-table td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
-    .data-table tr:hover td { background: #f9f9f9; }
-    .action-btn { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: none; border-radius: 4px; cursor: pointer; background: transparent; color: var(--color-primary); text-decoration: none; }
-    .action-btn:hover { background: #e8f5e9; }
+    .obs-text { font-size: 13px; color: var(--color-text-secondary); padding: 8px; background: var(--color-surface-2); border-radius: var(--radius-sm); }
+    .action-btn { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: none; border-radius: var(--radius-sm); cursor: pointer; background: transparent; color: var(--color-primary); text-decoration: none; }
+    .action-btn:hover { background: var(--color-primary-surface); }
     .action-btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
-    .empty-tab { text-align: center; padding: 40px; color: #bbb; font-size: 14px; }
-    .audit-info { margin-top: 16px; font-size: 12px; color: #bbb; text-align: end; padding-bottom: 32px; }
+    .empty-tab { text-align: center; padding: 40px; color: var(--color-text-tertiary); font-size: 14px; }
+    .audit-info { margin-top: 16px; font-size: 12px; color: var(--color-text-tertiary); text-align: end; padding-bottom: 32px; }
   `]
 })
 export class BeneficiaireDetailComponent implements OnInit {

@@ -259,7 +259,7 @@ import { Programme, Prestation } from '../../../core/models/etablissement.model'
           <div class="form-row">
             <div class="field" style="grid-column:span 3">
               <label>{{ 'ETABLISSEMENT.FORM.OBSERVATION_LABEL' | translate }}</label>
-              <textarea formControlName="observation" rows="3" style="padding:10px 12px;border:1px solid #ccc;border-radius:6px;font-size:14px;font-family:inherit;resize:vertical;width:100%"></textarea>
+              <textarea formControlName="observation" rows="3" style="width:100%;resize:vertical"></textarea>
             </div>
           </div>
           <div class="form-row">
@@ -427,7 +427,7 @@ import { Programme, Prestation } from '../../../core/models/etablissement.model'
   styles: [`
     .programmes-list {
       display: flex; flex-wrap: wrap; gap: 10px;
-      padding: 10px; border: 1px solid #ccc; border-radius: 6px;
+      padding: 10px; border: 1px solid var(--color-border); border-radius: var(--radius-md);
       min-height: 60px;
     }
     .form-row {
@@ -435,19 +435,8 @@ import { Programme, Prestation } from '../../../core/models/etablissement.model'
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px; margin-bottom: 16px;
     }
-    .field { display: flex; flex-direction: column; gap: 6px; }
-    .field label { font-size: 13px; font-weight: 500; color: #555; }
-    .field input, .field select {
-      padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px;
-      font-size: 14px; font-family: inherit; background: white;
-      color: #333; height: 42px;
-    }
-    .field input:focus, .field select:focus {
-      outline: none; border-color: var(--color-primary);
-      box-shadow: 0 0 0 2px rgba(46,125,50,0.12);
-    }
     .field select[multiple] { height: auto; }
-    .err { color: #d32f2f; font-size: 12px; }
+    .err { color: var(--color-danger); font-size: 12px; }
     .form-actions {
       display: flex; justify-content: flex-end;
       gap: 12px; margin-top: 16px; margin-bottom: 32px;
@@ -456,32 +445,24 @@ import { Programme, Prestation } from '../../../core/models/etablissement.model'
       display: grid; grid-template-columns: 1fr 1fr auto;
       gap: 16px; align-items: end; margin-bottom: 12px;
     }
-    .btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 10px 16px; border: 1px solid #ccc; border-radius: 6px;
-      font-size: 14px; font-family: inherit; cursor: pointer;
-      background: white; color: #555; height: 42px;
-    }
-    .btn:hover { background: #f5f5f5; }
-    .btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
     .map-hint {
       display: flex; align-items: center; gap: 6px;
-      font-size: 13px; color: #888; margin-bottom: 8px;
+      font-size: 13px; color: var(--color-text-tertiary); margin-bottom: 8px;
     }
     .map-hint mat-icon { font-size: 16px; width: 16px; height: 16px; }
     .map-container {
-      height: 380px; border-radius: 8px;
-      border: 1px solid #ccc; z-index: 1;
+      height: 380px; border-radius: var(--radius-md);
+      border: 1px solid var(--color-border); z-index: 1;
     }
     .file-link { color: var(--color-primary); font-size: 12px; text-decoration: none; }
     .file-link:hover { text-decoration: underline; }
     .programme-prestations {
-      margin-top: 16px; border: 1px solid #e0e0e0;
-      border-radius: 8px; overflow: hidden;
+      margin-top: 16px; border: 1px solid var(--color-border);
+      border-radius: var(--radius-md); overflow: hidden;
     }
     .prog-label {
       display: flex; align-items: center; gap: 8px;
-      background: #e8f5e9; color: var(--color-primary);
+      background: var(--color-primary-surface); color: var(--color-primary);
       padding: 8px 14px; font-weight: 600; font-size: 14px;
     }
     .prog-label mat-icon { font-size: 18px; width: 18px; height: 18px; }
@@ -490,7 +471,7 @@ import { Programme, Prestation } from '../../../core/models/etablissement.model'
     }
     .checkbox-label {
       display: flex; align-items: center; gap: 8px;
-      font-size: 14px; color: #333; cursor: pointer;
+      font-size: 14px; color: var(--color-text); cursor: pointer;
     }
   `]
 })
