@@ -308,23 +308,10 @@ import { EtablissementCentre, Programme, Prestation } from '../../../core/models
     </form>
   `,
   styles: [`
-    .form-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px; margin-bottom: 16px;
-    }
-    .field { display: flex; flex-direction: column; gap: 6px; }
-    .field label { font-size: 13px; font-weight: 500; color: #555; }
-    .field input, .field select {
-      padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px;
-      font-size: 14px; font-family: inherit; background: white;
-      color: #333; height: 42px;
-    }
     .field input:focus, .field select:focus {
-      outline: none; border-color: var(--color-primary);
-      box-shadow: 0 0 0 2px rgba(46,125,50,0.12);
+      box-shadow: 0 0 0 2px var(--color-primary-surface);
     }
-    .err { color: #d32f2f; font-size: 12px; }
+    .err { color: var(--color-danger); font-size: 12px; }
     .form-actions {
       display: flex; justify-content: flex-end;
       gap: 12px; margin-top: 16px; margin-bottom: 32px;

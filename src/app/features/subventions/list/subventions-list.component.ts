@@ -147,7 +147,7 @@ import { Subvention, Partenaire, EtablissementCentre, Programme } from '../../..
           </div>
           <div class="field mb-2">
             <label>{{ 'SUBVENTION.LIST.DESCRIPTION' | translate }}</label>
-            <textarea formControlName="description" rows="3" class="textarea" [placeholder]="'SUBVENTION.LIST.DESCRIPTION_PLACEHOLDER' | translate"></textarea>
+            <textarea formControlName="description" rows="3" [placeholder]="'SUBVENTION.LIST.DESCRIPTION_PLACEHOLDER' | translate"></textarea>
           </div>
           <div class="form-btns">
             <button type="button" class="btn btn-outline" (click)="closeForm()">{{ 'COMMON.CANCEL' | translate }}</button>
@@ -166,7 +166,7 @@ import { Subvention, Partenaire, EtablissementCentre, Programme } from '../../..
         <div class="table-meta">
           <span class="text-secondary">{{ filtered.length }} {{ 'SUBVENTION.LIST.RESULTS' | translate }}</span>
         </div>
-        <div class="table-wrap">
+        <div class="table-card">
           <table class="data-table">
             <thead>
               <tr>
@@ -223,82 +223,50 @@ import { Subvention, Partenaire, EtablissementCentre, Programme } from '../../..
   `,
   styles: [`
     .stats-row {
-      display: flex; gap: 16px; flex-wrap: wrap;
+      display: flex; gap: var(--space-4); flex-wrap: wrap;
     }
     .stat-mini {
-      background: white; border-radius: 8px; padding: 16px 24px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex;
+      background: var(--color-white); border-radius: var(--radius-md); padding: 16px 24px;
+      box-shadow: var(--shadow-sm); display: flex;
       flex-direction: column; align-items: center; gap: 4px;
-      border-inline-start: 4px solid #ccc; min-width: 140px;
+      border-inline-start: 4px solid var(--color-border); min-width: 140px;
     }
     .stat-mini.green { border-inline-start-color: var(--color-primary); }
-    .stat-mini.blue { border-inline-start-color: #1565c0; }
-    .stat-mini.orange { border-inline-start-color: #e65100; }
+    .stat-mini.blue { border-inline-start-color: var(--color-accent); }
+    .stat-mini.orange { border-inline-start-color: var(--color-danger); }
     .stat-val { font-size: 22px; font-weight: 700; color: var(--color-primary); }
-    .stat-lbl { font-size: 12px; color: #888; }
+    .stat-lbl { font-size: var(--font-xs); color: var(--color-text-tertiary); }
     .filter-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
-      gap: 16px; align-items: end;
-    }
-    .field { display: flex; flex-direction: column; gap: 6px; }
-    .field label { font-size: 13px; font-weight: 500; color: #555; }
-    .field input, .field select {
-      padding: 9px 12px; border: 1px solid #ccc; border-radius: 6px;
-      font-size: 14px; font-family: inherit; background: white; height: 40px;
-    }
-    .field input:focus, .field select:focus { outline: none; border-color: var(--color-primary); }
-    .textarea {
-      padding: 9px 12px; border: 1px solid #ccc; border-radius: 6px;
-      font-size: 14px; font-family: inherit; width: 100%; resize: vertical;
+      gap: var(--space-4); align-items: end;
     }
     .mb-2 { margin-bottom: 12px; }
-    .form-row {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-      gap: 16px; margin-bottom: 16px;
-    }
-    .form-btns { display: flex; justify-content: flex-end; gap: 8px; }
-    .err { color: #d32f2f; font-size: 12px; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 9px 16px; border: none; border-radius: 6px;
-      font-size: 14px; font-family: inherit; cursor: pointer; font-weight: 500;
-    }
-    .btn-primary { background: var(--color-primary); color: white; }
-    .btn-outline { background: white; color: #666; border: 1px solid #ccc; }
-    .btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
-    .table-meta { margin-bottom: 12px; }
-    .table-wrap { overflow-x: auto; }
-    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    .data-table th {
-      background: var(--color-primary); color: white;
-      padding: 12px 14px; text-align: start; font-size: 13px;
-      font-weight: 600; white-space: nowrap;
-    }
-    .data-table td { padding: 11px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
-    .data-table tr:hover td { background: #f9f9f9; }
+    .form-btns { display: flex; justify-content: flex-end; gap: var(--space-2); }
+    .err { color: var(--color-danger); font-size: var(--font-xs); }
+    .table-meta { margin-bottom: var(--space-3); }
     .montant { color: var(--color-primary); }
-    .badge { padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
-    .badge-green { background: #e8f5e9; color: #2e7d32; }
-    .badge-blue { background: #e3f2fd; color: #1565c0; }
-    .badge-orange { background: #fff3e0; color: #e65100; }
-    .badge-red { background: #ffebee; color: #c62828; }
-    .badge-gray { background: #f5f5f5; color: #555; }
+    .badge { padding: 3px 10px; border-radius: var(--radius-pill); font-size: var(--font-xs); font-weight: 500; }
+    .badge-green { background: var(--color-primary-surface); color: var(--color-primary-dark); }
+    .badge-blue { background: var(--color-accent-surface); color: var(--color-accent); }
+    .badge-orange { background: var(--color-accent-surface); color: var(--color-accent); }
+    .badge-red { background: var(--color-danger-surface); color: var(--color-danger); }
+    .badge-gray { background: var(--color-surface-2); color: var(--color-text-secondary); }
     .actions { display: flex; gap: 4px; }
     .action-btn {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 32px; height: 32px; border: none; border-radius: 6px;
-      cursor: pointer; background: transparent; color: #666;
+      width: 32px; height: 32px; border: none; border-radius: var(--radius-sm);
+      cursor: pointer; background: transparent; color: var(--color-text-secondary);
     }
-    .action-btn.edit:hover { color: var(--color-primary); background: #e8f5e9; }
-    .action-btn.delete:hover { color: #c62828; background: #ffebee; }
+    .action-btn.edit:hover { color: var(--color-primary); background: var(--color-primary-surface); }
+    .action-btn.delete:hover { color: var(--color-danger); background: var(--color-danger-surface); }
     .action-btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
-    .empty-row { text-align: center; padding: 40px; color: #999; }
-    .pagination { display: flex; justify-content: center; gap: 4px; margin-top: 16px; }
+    .empty-row { text-align: center; padding: 40px; color: var(--color-text-tertiary); }
+    .pagination { display: flex; justify-content: center; gap: 4px; margin-top: var(--space-4); }
     .page-btn {
-      padding: 6px 12px; border: 1px solid #ddd; border-radius: 4px;
-      background: white; cursor: pointer; font-size: 13px;
+      padding: 6px 12px; border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+      background: var(--color-white); cursor: pointer; font-size: var(--font-sm);
     }
-    .page-btn:hover:not(:disabled) { background: #f0f0f0; }
+    .page-btn:hover:not(:disabled) { background: var(--color-surface-2); }
     .page-btn.active { background: var(--color-primary); color: white; border-color: var(--color-primary); }
     .page-btn:disabled { opacity: 0.4; cursor: default; }
   `]

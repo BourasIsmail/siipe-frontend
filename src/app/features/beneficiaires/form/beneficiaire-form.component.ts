@@ -163,7 +163,7 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
           <div class="form-row">
             <div class="field" style="grid-column: span 2">
               <label>{{ 'BENEFICIAIRE.DETAIL.DESCRIPTION_PHYSIQUE' | translate }}</label>
-              <textarea formControlName="descriptionPhysique" rows="3" style="padding:10px 12px;border:1px solid #ccc;border-radius:6px;font-size:14px;font-family:inherit;resize:vertical;width:100%"></textarea>
+              <textarea formControlName="descriptionPhysique" rows="3"></textarea>
             </div>
             <div class="field">
               <label>{{ 'BENEFICIAIRE.FORM.ETAT_SANTE_PSYCHIQUE_LABEL' | translate }}</label>
@@ -237,7 +237,7 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
           <div class="form-row">
             <div class="field" style="grid-column: span 3">
               <label>{{ 'BENEFICIAIRE.DETAIL.DESCRIPTION' | translate }}</label>
-              <textarea formControlName="description" rows="3" style="padding:10px 12px;border:1px solid #ccc;border-radius:6px;font-size:14px;font-family:inherit;resize:vertical;width:100%"></textarea>
+              <textarea formControlName="description" rows="3"></textarea>
             </div>
           </div>
         </mat-card-content>
@@ -319,23 +319,7 @@ import { SITUATIONS_DIFFICULTE } from '../../../core/models/beneficiaire.model';
     </form>
   `,
   styles: [`
-    .form-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px; margin-bottom: 16px;
-    }
-    .field { display: flex; flex-direction: column; gap: 6px; }
-    .field label { font-size: 13px; font-weight: 500; color: #555; }
-    .field input, .field select {
-      padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px;
-      font-size: 14px; font-family: inherit; background: white;
-      color: #333; height: 42px;
-    }
-    .field input:focus, .field select:focus {
-      outline: none; border-color: var(--color-primary);
-      box-shadow: 0 0 0 2px rgba(46,125,50,0.12);
-    }
-    .err { color: #d32f2f; font-size: 12px; }
+    .err { color: var(--color-danger); font-size: 12px; }
     .form-actions {
       display: flex; justify-content: flex-end;
       gap: 12px; margin-top: 16px; margin-bottom: 32px;

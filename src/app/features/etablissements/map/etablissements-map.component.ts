@@ -90,28 +90,29 @@ import { buildSatelliteLabelsStyle, ESRI_WORLD_IMAGERY_URL } from '../../../shar
   styles: [`
     .stats-bar {
       display: flex; align-items: center; gap: 24px;
-      background: white; padding: 12px 20px; border-radius: 8px;
-      margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      background: var(--color-white); padding: 12px 20px; border-radius: var(--radius-md);
+      margin-bottom: 16px; box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border);
       flex-wrap: wrap;
     }
     .stat {
       display: flex; align-items: center; gap: 8px;
-      font-size: 14px; color: #555;
+      font-size: 14px; color: var(--color-text-secondary);
     }
     .stat mat-icon { color: var(--color-primary); font-size: 20px; width: 20px; height: 20px; }
     .stat strong { color: var(--color-primary); }
     .filter-group {
       display: flex; align-items: center; gap: 8px; margin-inline-start: auto;
-      label { font-size: 13px; color: #666; white-space: nowrap; }
+      label { font-size: 13px; color: var(--color-text-secondary); white-space: nowrap; }
       select {
-        padding: 6px 10px; border: 1px solid #ccc; border-radius: 6px;
-        font-size: 13px; font-family: inherit; background: white;
+        padding: 6px 10px; border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+        font-size: 13px; font-family: inherit; background: var(--color-white);
       }
     }
     .map-card {
       padding: 0 !important;
       overflow: hidden;
-      border-radius: 12px !important;
+      border-radius: var(--radius-lg) !important;
     }
     .map-loading {
       position: absolute; top: 0; left: 0; right: 0; bottom: 0;
@@ -123,21 +124,14 @@ import { buildSatelliteLabelsStyle, ESRI_WORLD_IMAGERY_URL } from '../../../shar
       min-height: 500px;
       width: 100%;
     }
-    .btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 9px 16px; border: 1px solid #ccc; border-radius: 6px;
-      font-size: 14px; font-family: inherit; cursor: pointer;
-      background: white; color: #555; text-decoration: none;
-    }
-    .btn:hover { background: #f5f5f5; }
-    .btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
     .no-coords-panel {
-      margin-top: 16px; background: white; border-radius: 8px;
-      padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      margin-top: 16px; background: var(--color-white); border-radius: var(--radius-md);
+      padding: 16px 20px; box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border);
     }
     .no-coords-panel h3 {
       display: flex; align-items: center; gap: 8px;
-      color: #f57c00; font-size: 14px; margin-bottom: 12px;
+      color: var(--color-accent); font-size: 14px; margin-bottom: 12px;
     }
     .no-coords-panel h3 mat-icon { font-size: 18px; width: 18px; height: 18px; }
     .no-coords-list {
@@ -146,7 +140,7 @@ import { buildSatelliteLabelsStyle, ESRI_WORLD_IMAGERY_URL } from '../../../shar
     }
     .no-coords-item {
       display: flex; align-items: center; gap: 16px;
-      padding: 8px 12px; background: #fff8e1; border-radius: 6px; font-size: 13px;
+      padding: 8px 12px; background: var(--color-accent-surface); border-radius: var(--radius-sm); font-size: 13px;
     }
     .link { color: var(--color-primary); text-decoration: none; margin-inline-start: auto; font-size: 12px; }
     .link:hover { text-decoration: underline; }

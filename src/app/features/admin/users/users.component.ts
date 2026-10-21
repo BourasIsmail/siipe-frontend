@@ -141,7 +141,7 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
         <div class="table-meta">
           <span class="text-secondary">{{ filtered.length }} {{ 'ADMIN.USERS.COUNT_SUFFIX' | translate }}</span>
         </div>
-        <div class="table-wrap">
+        <div class="table-card">
           <table class="data-table">
             <thead>
               <tr>
@@ -167,10 +167,10 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
                   </div>
                 </td>
                 <td>{{ u.email }}</td>
-                <td><span class="badge badge-blue">{{ getRoleLabel(u.role) }}</span></td>
+                <td><span class="chip">{{ getRoleLabel(u.role) }}</span></td>
                 <td>{{ u.etablissementCentreNom || u.provinceNom || u.regionNom || '-' }}</td>
                 <td>
-                  <span class="badge" [class.badge-green]="u.active" [class.badge-red]="!u.active">
+                  <span class="status-chip" [class.active]="u.active" [class.inactive]="!u.active">
                     {{ (u.active ? 'ADMIN.USERS.ACTIVE' : 'ADMIN.USERS.INACTIVE') | translate }}
                   </span>
                 </td>
@@ -207,71 +207,36 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
   styles: [`
     .filter-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
-      gap: 16px; align-items: end;
-    }
-    .field { display: flex; flex-direction: column; gap: 6px; }
-    .field label { font-size: 13px; font-weight: 500; color: #555; }
-    .field input, .field select {
-      padding: 9px 12px; border: 1px solid #ccc; border-radius: 6px;
-      font-size: 14px; font-family: inherit; background: white; height: 40px;
-    }
-    .field input:focus, .field select:focus { outline: none; border-color: var(--color-primary); }
-    .form-row {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-      gap: 16px; margin-bottom: 16px;
+      gap: var(--space-4); align-items: end;
     }
     .form-info {
       display: flex; align-items: center; gap: 8px;
-      background: #e3f2fd; color: #1565c0; padding: 10px 14px;
-      border-radius: 6px; font-size: 13px; margin-bottom: 16px;
+      background: var(--color-accent-surface); color: var(--color-accent); padding: 10px 14px;
+      border-radius: var(--radius-sm); font-size: var(--font-sm); margin-bottom: 16px;
       mat-icon { font-size: 18px; width: 18px; height: 18px; }
     }
-    .form-btns { display: flex; justify-content: flex-end; gap: 8px; }
-    .err { color: #d32f2f; font-size: 12px; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 9px 16px; border: none; border-radius: 6px;
-      font-size: 14px; font-family: inherit; cursor: pointer; font-weight: 500;
-    }
-    .btn-primary { background: var(--color-primary); color: white; }
-    .btn-outline { background: white; color: #666; border: 1px solid #ccc; }
-    .btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
-    .table-meta { margin-bottom: 12px; }
-    .table-wrap { overflow-x: auto; }
-    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    .data-table th {
-      background: var(--color-primary); color: white;
-      padding: 12px 14px; text-align: start; font-size: 13px; font-weight: 600;
-    }
-    .data-table td { padding: 11px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
-    .data-table tr:hover td { background: #f9f9f9; }
+    .form-btns { display: flex; justify-content: flex-end; gap: var(--space-2); }
+    .err { color: var(--color-danger); font-size: var(--font-xs); }
+    .table-meta { margin-bottom: var(--space-3); }
     .person-cell { display: flex; align-items: center; gap: 10px; }
-    .avatar {
-      width: 36px; height: 36px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      color: white; font-size: 13px; font-weight: 600; flex-shrink: 0;
-    }
-    .badge { padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
-    .badge-blue { background: #e3f2fd; color: #1565c0; }
-    .badge-green { background: #e8f5e9; color: #2e7d32; }
-    .badge-red { background: #ffebee; color: #c62828; }
+    .avatar { width: 36px; height: 36px; font-size: 13px; }
     .actions { display: flex; gap: 4px; }
     .action-btn {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 32px; height: 32px; border: none; border-radius: 6px;
-      cursor: pointer; background: transparent; color: #666;
+      width: 32px; height: 32px; border: none; border-radius: var(--radius-sm);
+      cursor: pointer; background: transparent; color: var(--color-text-secondary);
     }
-    .action-btn:hover { background: #f0f0f0; }
-    .action-btn.edit:hover { color: var(--color-primary); background: #e8f5e9; }
-    .action-btn.delete:hover { color: #c62828; background: #ffebee; }
+    .action-btn:hover { background: var(--color-surface-2); }
+    .action-btn.edit:hover { color: var(--color-primary); background: var(--color-primary-surface); }
+    .action-btn.delete:hover { color: var(--color-danger); background: var(--color-danger-surface); }
     .action-btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
-    .empty-row { text-align: center; padding: 40px; color: #999; }
-    .pagination { display: flex; justify-content: center; gap: 4px; margin-top: 16px; }
+    .empty-row { text-align: center; padding: 40px; color: var(--color-text-tertiary); }
+    .pagination { display: flex; justify-content: center; gap: 4px; margin-top: var(--space-4); }
     .page-btn {
-      padding: 6px 12px; border: 1px solid #ddd; border-radius: 4px;
-      background: white; cursor: pointer; font-size: 13px;
+      padding: 6px 12px; border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+      background: var(--color-white); cursor: pointer; font-size: var(--font-sm);
     }
-    .page-btn:hover:not(:disabled) { background: #f0f0f0; }
+    .page-btn:hover:not(:disabled) { background: var(--color-surface-2); }
     .page-btn.active { background: var(--color-primary); color: white; border-color: var(--color-primary); }
     .page-btn:disabled { opacity: 0.4; cursor: default; }
   `]

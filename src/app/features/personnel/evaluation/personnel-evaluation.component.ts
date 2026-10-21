@@ -46,7 +46,7 @@ interface EvalCritere {
           <div class="eval-title">{{ 'PERSONNEL.EVALUATION.SHEET_TITLE' | translate }}</div>
           <div class="eval-subtitle">{{ personnel.nom }} {{ personnel.prenom }} — {{ personnel.matricule }}</div>
 
-          <div class="table-wrap">
+          <div class="table-card eval-table-wrap">
             <table class="eval-table">
               <thead>
                 <tr>
@@ -112,15 +112,6 @@ interface EvalCritere {
     .page-header {
       display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
     }
-    .btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 9px 16px; border: none; border-radius: 6px;
-      font-size: 14px; font-family: inherit; cursor: pointer; font-weight: 500;
-    }
-    .btn-primary { background: var(--color-primary); color: white; }
-    .btn-outline { background: white; color: #555; border: 1px solid #ccc; }
-    .btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
-    .btn:disabled { opacity: 0.6; cursor: default; }
 
     .eval-title {
       text-align: center; font-size: 18px; font-weight: 700;
@@ -128,21 +119,22 @@ interface EvalCritere {
       letter-spacing: 0.5px;
     }
     .eval-subtitle {
-      text-align: center; font-size: 14px; color: #666; margin-bottom: 20px;
+      text-align: center; font-size: 14px; color: var(--color-text-secondary); margin-bottom: 20px;
     }
 
-    .table-wrap { overflow-x: auto; }
+    .eval-table-wrap { overflow-x: auto; }
     .eval-table {
       width: 100%; border-collapse: collapse; font-size: 13px;
     }
     .eval-table th, .eval-table td {
-      border: 1px solid #ccc; padding: 8px 10px; vertical-align: middle;
+      border: 1px solid var(--color-border); padding: 8px 10px; vertical-align: middle;
     }
     .eval-table thead th {
-      background: var(--color-primary); color: white;
-      text-align: center; font-weight: 600; font-size: 12px;
+      background: var(--color-surface-2); color: var(--color-text-tertiary);
+      text-align: center; font-weight: 700; font-size: 11px;
+      text-transform: uppercase; letter-spacing: 0.4px;
     }
-    .sub-header th { background: #43a047 !important; font-size: 11px; }
+    .sub-header th { background: var(--color-surface-2); font-size: 11px; }
     .cote-header { text-align: center; }
 
     .col-competence { width: 30%; text-align: start; }
@@ -150,8 +142,8 @@ interface EvalCritere {
     .col-total { width: 8%; text-align: center; }
     .col-obs { width: 22%; }
 
-    .competence-label { font-weight: 600; color: #333; margin-bottom: 4px; font-size: 13px; }
-    .competence-desc { font-size: 12px; color: #666; line-height: 1.4; }
+    .competence-label { font-weight: 600; color: var(--color-text); margin-bottom: 4px; font-size: 13px; }
+    .competence-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.4; }
 
     .radio-label {
       display: flex; justify-content: center; align-items: center; cursor: pointer;
@@ -159,7 +151,7 @@ interface EvalCritere {
     .radio-label input[type="radio"] { display: none; }
     .radio-custom {
       width: 20px; height: 20px; border-radius: 50%;
-      border: 2px solid #ccc; background: white;
+      border: 2px solid var(--color-border); background: var(--color-white);
       display: flex; align-items: center; justify-content: center;
       transition: all 0.2s; position: relative;
     }
@@ -171,16 +163,16 @@ interface EvalCritere {
     }
 
     .obs-textarea {
-      width: 100%; border: 1px solid #ddd; border-radius: 4px;
+      width: 100%; border: 1px solid var(--color-border); border-radius: var(--radius-sm);
       padding: 6px 8px; font-size: 12px; font-family: inherit;
-      resize: vertical; min-height: 60px;
+      resize: vertical; min-height: 60px; color: var(--color-text);
     }
     .obs-textarea:focus { outline: none; border-color: var(--color-primary); }
 
-    .total-row td { background: #f5f5f5; }
+    .total-row td { background: var(--color-surface-2); }
     .total-score { font-size: 20px; color: var(--color-primary); }
     .score-badge {
-      color: white; padding: 6px 12px; border-radius: 6px;
+      color: white; padding: 6px 12px; border-radius: var(--radius-sm);
       text-align: center; font-weight: 600; font-size: 13px;
     }
   `]

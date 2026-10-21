@@ -199,7 +199,133 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-// Table styles
+// Buttons — shared across the app instead of per-component one-offs
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  padding: 9px 16px;
+  font-size: var(--font-sm);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+}
+.btn-primary { background: var(--color-primary); color: white; }
+.btn-primary:hover { background: var(--color-primary-dark); }
+.btn-primary:disabled { opacity: 0.6; cursor: default; }
+.btn-ghost, .btn-outline {
+  background: var(--color-white);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+.btn-ghost:hover, .btn-outline:hover { background: var(--color-surface-2); }
+.btn-danger { background: var(--color-danger); color: white; }
+.btn-danger:hover { filter: brightness(0.92); }
+.btn-excel { background: var(--color-primary-dark); color: white; }
+.btn-excel:hover { filter: brightness(1.1); }
+.btn-pdf { background: var(--color-danger); color: white; }
+.btn-pdf:hover { filter: brightness(0.92); }
+
+// Chips / pills
+.chip, .filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+.filter-chip {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  font-size: var(--font-sm);
+  padding: 7px 12px;
+  cursor: pointer;
+  mat-icon { font-size: 14px; width: 14px; height: 14px; }
+}
+.filter-chip:hover { background: var(--color-surface-2); }
+.badge-situation, .chip { background: var(--color-accent-surface); color: var(--color-accent); }
+
+// Avatars
+.avatar, .mini-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+.mini-avatar {
+  width: 28px; height: 28px; font-size: 10.5px;
+  background: var(--color-surface-2); color: var(--color-text-secondary);
+}
+
+// Form fields — shared input styling
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: var(--font-sm); font-weight: 500; color: var(--color-text-secondary); }
+.field input, .field select, .field textarea {
+  padding: 9px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-base);
+  font-family: inherit;
+  background: var(--color-white);
+  color: var(--color-text);
+  height: 40px;
+}
+.field textarea { height: auto; min-height: 80px; }
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+// Plain HTML data tables (most list pages), wrapped in a card
+.table-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-base);
+}
+.data-table th {
+  text-align: start;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--color-text-tertiary);
+  font-weight: 700;
+  padding: 13px 16px;
+  background: var(--color-surface-2);
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+.data-table td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+  vertical-align: middle;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: var(--color-surface-2); }
+
+// Table styles (Angular Material mat-table, where actually used)
 .mat-mdc-table {
   width: 100%;
   border-radius: var(--radius-md);
@@ -208,11 +334,13 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--color-border);
 
   .mat-mdc-header-row {
-    background-color: var(--color-primary);
+    background-color: var(--color-surface-2);
     .mat-mdc-header-cell {
-      color: white;
-      font-weight: 600;
-      font-size: 13px;
+      color: var(--color-text-tertiary);
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
     }
   }
 
