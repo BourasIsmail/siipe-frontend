@@ -69,6 +69,10 @@ export function Sidebar({ mobileOpen, onMobileOpenChange }: { mobileOpen: boolea
 
   return (
     <aside className={`rail ${mobileOpen ? 'mobile-open' : ''} ${pinned ? 'pinned' : ''}`}>
+      <div className="rail-brand">
+        <img className="mark" src="/entraide-logo-mark.png" alt="Entraide Nationale" />
+        <span className="word">SIIPE</span>
+      </div>
       <nav className="rail-nav">
         <div className="rail-group">
           {mainItems.map(({ href, icon, label, exact }) => (
@@ -157,6 +161,20 @@ export function Sidebar({ mobileOpen, onMobileOpenChange }: { mobileOpen: boolea
         }
         .rail:hover, .rail.pinned { width: var(--sidebar-width); }
         .rail:hover { box-shadow: var(--shadow-lg); }
+
+        .rail-brand {
+          display: flex; align-items: center; gap: 10px;
+          padding: 0 var(--space-3) var(--space-4); width: 100%; white-space: nowrap;
+        }
+        .rail-brand .mark {
+          width: 32px; height: 32px; border-radius: var(--radius-sm);
+          background: white; object-fit: contain; padding: 4px; flex-shrink: 0;
+        }
+        .rail-brand .word {
+          font-family: 'Manrope', 'Inter', sans-serif; font-weight: 800; font-size: 14.5px;
+          color: white; letter-spacing: 0.2px; opacity: 0; transition: opacity 0.12s ease;
+        }
+        .rail:hover .rail-brand .word, .rail.pinned .rail-brand .word { opacity: 1; }
 
         .rail-nav { display: flex; flex-direction: column; padding: 0 var(--space-3); overflow-y: auto; overflow-x: hidden; }
         .rail-group { margin-bottom: var(--space-1); }

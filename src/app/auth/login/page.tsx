@@ -56,8 +56,9 @@ export default function LoginPage() {
       <div className="login-left">
         <div className="login-brand">
           <div className="brand-logo">
-            <Icon name="shield" />
+            <img src="/entraide-logo-mark.png" alt="Entraide Nationale" />
           </div>
+          <h1 className="brand-title">Entraide Nationale</h1>
         </div>
         <div className="login-footer-text">
           <p>{t('AUTH.FOOTER_MOTTO')}</p>
@@ -144,15 +145,23 @@ export default function LoginPage() {
 
         .login-brand { text-align: center; position: relative; z-index: 1; }
         .brand-logo {
-          width: 88px; height: 88px;
-          background: rgba(255,255,255,0.16);
+          width: 96px; height: 96px;
+          background: rgba(255,255,255,0.92);
           border: 1px solid rgba(255,255,255,0.25);
           border-radius: var(--radius-xl);
           display: flex; align-items: center; justify-content: center;
           margin: 0 auto;
           box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+          padding: 10px;
         }
-        .brand-logo :global(.material-icons) { font-size: 42px; }
+        .brand-logo img { width: 100%; height: 100%; object-fit: contain; }
+        .brand-title {
+          margin-top: 20px;
+          font-size: var(--font-xl);
+          font-weight: 800;
+          color: white;
+          letter-spacing: -0.01em;
+        }
 
         .login-footer-text { position: absolute; bottom: 24px; z-index: 1; }
         .login-footer-text p { font-size: var(--font-xs); opacity: 0.65; letter-spacing: 0.2px; }
