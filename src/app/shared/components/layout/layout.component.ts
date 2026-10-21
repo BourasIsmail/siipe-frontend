@@ -10,9 +10,10 @@ import { CommonModule } from '@angular/common';
   imports: [RouterOutlet, NavbarComponent, SidebarComponent, CommonModule],
   template: `
     <div class="app-layout">
-      <app-navbar (toggleSidebar)="sidebarOpen = !sidebarOpen" />
-      <app-sidebar [open]="sidebarOpen" />
-      <main class="app-content" [class.sidebar-open]="sidebarOpen">
+      <app-navbar (toggleSidebar)="mobileOpen = !mobileOpen" />
+      <app-sidebar [mobileOpen]="mobileOpen" (mobileOpenChange)="mobileOpen = $event" />
+      <div class="scrim" *ngIf="mobileOpen" (click)="mobileOpen = false"></div>
+      <main class="app-content">
         <router-outlet />
       </main>
     </div>
@@ -20,20 +21,27 @@ import { CommonModule } from '@angular/common';
   styles: [`
     .app-layout {
       min-height: 100vh;
-      background: #f5f5f5;
+      background: var(--color-bg);
     }
     .app-content {
       padding: 24px;
       padding-top: calc(var(--header-height) + 24px);
-      margin-inline-start: 0;
-      transition: margin-inline-start 0.3s ease;
+      margin-inline-start: var(--sidebar-width-collapsed);
       min-height: 100vh;
     }
-    .app-content.sidebar-open {
-      margin-inline-start: var(--sidebar-width);
+    .scrim {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 16, 12, 0.45);
+      z-index: 940;
+    }
+    @media (max-width: 860px) {
+      .app-content { margin-inline-start: 0; }
+      .scrim { display: block; }
     }
   `]
 })
 export class LayoutComponent {
-  sidebarOpen = true;
+  mobileOpen = false;
 }

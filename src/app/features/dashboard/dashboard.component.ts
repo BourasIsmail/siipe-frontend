@@ -162,10 +162,10 @@ import { AuthService } from '../../core/auth/auth.service';
     mat-icon { font-size: 22px; width: 22px; height: 22px; }
 
     .accent-green { border-inline-start-color: var(--color-primary); .stat-icon { background: var(--color-primary-surface); } .stat-value, mat-icon { color: var(--color-primary); } }
-    .accent-blue { border-inline-start-color: #2563eb; .stat-icon { background: #eff6ff; } .stat-value, mat-icon { color: #2563eb; } }
-    .accent-orange { border-inline-start-color: #d97706; .stat-icon { background: var(--color-accent-surface); } .stat-value, mat-icon { color: #d97706; } }
-    .accent-purple { border-inline-start-color: #7c3aed; .stat-icon { background: #f5f3ff; } .stat-value, mat-icon { color: #7c3aed; } }
-    .accent-red { border-inline-start-color: #dc2626; .stat-icon { background: #fef2f2; } .stat-value, mat-icon { color: #dc2626; } }
+    .accent-blue { border-inline-start-color: #2458c4; .stat-icon { background: #e7eefb; } .stat-value, mat-icon { color: #2458c4; } }
+    .accent-orange { border-inline-start-color: var(--color-accent); .stat-icon { background: var(--color-accent-surface); } .stat-value, mat-icon { color: var(--color-accent); } }
+    .accent-purple { border-inline-start-color: #7b3fc4; .stat-icon { background: #f3e9fb; } .stat-value, mat-icon { color: #7b3fc4; } }
+    .accent-red { border-inline-start-color: var(--color-danger); .stat-icon { background: var(--color-danger-surface); } .stat-value, mat-icon { color: var(--color-danger); } }
   `]
 })
 export class DashboardComponent implements OnInit {
@@ -204,13 +204,13 @@ export class DashboardComponent implements OnInit {
   }
 
   private buildCharts(data: any) {
-    const colors = ['#2e7d32','#388e3c','#43a047','#4caf50','#66bb6a','#81c784','#a5d6a7','#c8e6c9','#e8f5e9','#1b5e20','#f57c00','#1976d2'];
+    const colors = ['#1a7a4c','#b9872f','#2458c4','#7b3fc4','#8a2f55','#4aab80','#dbb04d','#5c9ad6','#a885d8','#b3443a'];
 
     // Monthly beneficiaires
     const months = Object.keys(data.beneficiairesByMonth || {});
     this.monthlyChartData = {
       labels: months,
-      datasets: [{ data: months.map(m => data.beneficiairesByMonth[m]), backgroundColor: '#4caf50', borderColor: '#2e7d32', borderWidth: 1 }]
+      datasets: [{ data: months.map(m => data.beneficiairesByMonth[m]), backgroundColor: '#1a7a4c', borderColor: '#0e5c38', borderWidth: 1 }]
     };
 
     // Situation
@@ -224,7 +224,7 @@ export class DashboardComponent implements OnInit {
     const grades = Object.keys(data.personnelByGrade || {}).slice(0, 8);
     this.gradeChartData = {
       labels: grades,
-      datasets: [{ data: grades.map(g => data.personnelByGrade[g]), backgroundColor: '#1976d2' }]
+      datasets: [{ data: grades.map(g => data.personnelByGrade[g]), backgroundColor: '#2458c4' }]
     };
 
     // Province

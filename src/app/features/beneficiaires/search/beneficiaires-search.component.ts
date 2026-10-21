@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,6 +36,14 @@ import { Province } from '../../../core/models/geo.model';
           <mat-icon>person_add</mat-icon> {{ 'BENEFICIAIRE.SEARCH.INSCRIRE' | translate }}
         </a>
       </div>
+    </div>
+
+    <div class="global-query-banner" *ngIf="globalQuery">
+      <mat-icon>search</mat-icon>
+      <span>{{ 'BENEFICIAIRE.SEARCH.GLOBAL_RESULTS_FOR' | translate }} « {{ globalQuery }} »</span>
+      <button class="clear-btn" (click)="clearGlobalQuery()">
+        <mat-icon>close</mat-icon>
+      </button>
     </div>
 
     <!-- Search filters -->
@@ -223,6 +231,20 @@ import { Province } from '../../../core/models/geo.model';
     </div>
   `,
   styles: [`
+    .global-query-banner {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--color-primary-surface); color: var(--color-primary-dark);
+      border: 1px solid var(--color-primary-light);
+      border-radius: var(--radius-md); padding: 10px 14px;
+      font-size: 13.5px; margin-bottom: 16px;
+      mat-icon { font-size: 18px; width: 18px; height: 18px; }
+    }
+    .global-query-banner .clear-btn {
+      margin-inline-start: auto; background: none; border: none; cursor: pointer;
+      color: var(--color-primary-dark); display: flex; align-items: center; padding: 4px;
+      border-radius: 50%;
+    }
+    .global-query-banner .clear-btn:hover { background: rgba(0,0,0,0.06); }
     .filter-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -319,6 +341,7 @@ export class BeneficiairesSearchComponent implements OnInit {
   searched = false;
   pageSize = 10;
   pageIndex = 0;
+  globalQuery: string | null = null;
 
   filters = {
     nom: '',
@@ -341,7 +364,8 @@ export class BeneficiairesSearchComponent implements OnInit {
     private auth: AuthService,
     private snackBar: MatSnackBar,
     private cdr: ChangeDetectorRef,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -351,6 +375,44 @@ export class BeneficiairesSearchComponent implements OnInit {
     this.api.getEtablissements().subscribe({
       next: e => { this.etablissements = [...e]; this.cdr.detectChanges(); }
     });
+
+    const q = this.route.snapshot.queryParamMap.get('q');
+    if (q) {
+      this.globalQuery = q;
+      this.searchGlobal(q);
+    }
+  }
+
+  // Global search from the navbar: the /search endpoint only filters nom/prenom/cin
+  // separately (AND'd together), so a single query box needs to match any of them —
+  // fetch the user's full scoped list and filter client-side.
+  searchGlobal(q: string) {
+    this.loading = true;
+    this.api.searchBeneficiaires({}).subscribe({
+      next: data => {
+        const needle = q.toLowerCase();
+        this.filtered = data.filter(b =>
+          (b.nom || '').toLowerCase().includes(needle) ||
+          (b.prenom || '').toLowerCase().includes(needle) ||
+          (b.cin || '').toLowerCase().includes(needle) ||
+          (b.numeroDossier || '').toLowerCase().includes(needle)
+        );
+        this.pageIndex = 0;
+        this.updatePage();
+        this.loading = false;
+        this.searched = true;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.loading = false;
+        this.snackBar.open(this.translate.instant('BENEFICIAIRE.SEARCH.SEARCH_ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000, panelClass: 'error-snackbar' });
+      }
+    });
+  }
+
+  clearGlobalQuery() {
+    this.globalQuery = null;
+    this.resetFilters();
   }
 
   search() {

@@ -6,7 +6,9 @@
     "ETABLISSEMENTS": "Entités impliquées",
     "PERSONNEL": "Gestion du personnel",
     "ADMIN": "Administration",
-    "LOGOUT": "Se déconnecter"
+    "LOGOUT": "Se déconnecter",
+    "PIN": "Épingler le menu",
+    "SEARCH_PLACEHOLDER": "Rechercher un dossier, un nom, un numéro..."
   },
   "MENU": {
     "RECHERCHE": "Recherche",
@@ -186,6 +188,7 @@
       "EMPTY_STATE_DESC": "Vous pouvez filtrer par nom, CIN, situation, province, établissement et dates",
       "SHOW_ALL": "Afficher tous",
       "SEARCH_ERROR": "Erreur de recherche",
+      "GLOBAL_RESULTS_FOR": "Résultats pour",
       "CONFIRM_DELETE": "Supprimer {{nom}} {{prenom}} ?",
       "DELETED": "Bénéficiaire supprimé"
     },

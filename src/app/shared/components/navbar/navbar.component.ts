@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../core/auth/auth.service';
@@ -8,12 +9,18 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, MatIconModule, TranslateModule],
+  imports: [CommonModule, FormsModule, MatIconModule, TranslateModule],
   template: `
     <div class="navbar">
       <button class="icon-btn" (click)="toggleSidebar.emit()">
         <mat-icon>menu</mat-icon>
       </button>
+
+      <form class="search" (ngSubmit)="onSearch()">
+        <mat-icon>search</mat-icon>
+        <input type="text" [(ngModel)]="searchQuery" name="q"
+               [placeholder]="'NAV.SEARCH_PLACEHOLDER' | translate">
+      </form>
 
       <span class="spacer"></span>
 
@@ -76,6 +83,28 @@ import { Router } from '@angular/router';
       transition: background 0.15s ease;
     }
     .icon-btn:hover { background: rgba(255,255,255,0.15); }
+    @media (min-width: 861px) {
+      /* desktop: the icon-rail is always visible, pinned via its own control */
+      .icon-btn { display: none; }
+    }
+    .search {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: var(--radius-pill);
+      padding: 7px 14px;
+      max-width: 340px;
+      width: 100%;
+      mat-icon { font-size: 16px; width: 16px; height: 16px; color: rgba(255,255,255,0.75); flex-shrink: 0; }
+    }
+    .search input {
+      border: none; background: none; outline: none; color: white;
+      font-size: var(--font-sm); font-family: inherit; width: 100%;
+    }
+    .search input::placeholder { color: rgba(255,255,255,0.6); }
+    @media (max-width: 720px) {
+      .search { display: none; }
+    }
     .nav-btn {
       background: none; border: none; cursor: pointer;
       color: white; display: flex; align-items: center;
@@ -153,6 +182,7 @@ export class NavbarComponent {
   @Output() toggleSidebar = new EventEmitter<void>();
   langOpen = false;
   userOpen = false;
+  searchQuery = '';
 
   get user() { return this.auth.getCurrentUser(); }
   get currentLang() { return this.translate.currentLang || 'fr'; }
@@ -196,5 +226,11 @@ export class NavbarComponent {
 
   logout() {
     this.auth.logout();
+  }
+
+  onSearch() {
+    const q = this.searchQuery.trim();
+    if (!q) return;
+    this.router.navigate(['/beneficiaires'], { queryParams: { q } });
   }
 }
