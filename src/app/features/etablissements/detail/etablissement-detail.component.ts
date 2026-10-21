@@ -32,8 +32,8 @@ import { Personnel } from '../../../core/models/personnel.model';
           <h1>{{ etab.nomFr }}</h1>
           <div class="nomAr">{{ etab.nomAr }}</div>
           <div class="meta-row">
-            <span class="badge badge-blue" *ngIf="etab.typeLocal">{{ formatType(etab.typeLocal) }}</span>
-            <span class="badge badge-green" *ngIf="etab.milieu">{{ etab.milieu }}</span>
+            <span class="chip" *ngIf="etab.typeLocal">{{ formatType(etab.typeLocal) }}</span>
+            <span class="status-chip" [class.active]="etab.milieu === 'URBAIN'" [class.pending]="etab.milieu === 'RURAL'" *ngIf="etab.milieu">{{ 'ETABLISSEMENT.MILIEUX.' + etab.milieu | translate }}</span>
             <span class="text-secondary">{{ etab.provinceNom }}</span>
             <span class="text-secondary" *ngIf="etab.regionNom">— {{ etab.regionNom }}</span>
           </div>
@@ -301,11 +301,6 @@ import { Personnel } from '../../../core/models/personnel.model';
 
     .tags { display: flex; flex-wrap: wrap; gap: 8px; }
 
-    .badge {
-      padding: 3px 10px; border-radius: var(--radius-pill); font-size: var(--font-xs); font-weight: 500;
-    }
-    .badge-blue { background: var(--color-primary-surface); color: var(--color-primary-dark); }
-    .badge-green { background: var(--color-primary-surface); color: var(--color-primary-dark); }
 
     .tab-header {
       display: flex; justify-content: space-between;

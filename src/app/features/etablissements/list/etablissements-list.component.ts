@@ -122,8 +122,8 @@ import { Province } from '../../../core/models/geo.model';
                 </td>
                 <td>{{ e.code || '-' }}</td>
                 <td>{{ e.provinceNom || '-' }}</td>
-                <td><span class="badge badge-blue">{{ formatType(e.typeLocal) }}</span></td>
-                <td><span class="badge" [class.badge-green]="e.milieu === 'URBAIN'" [class.badge-orange]="e.milieu === 'RURAL'">{{ e.milieu ? ('ETABLISSEMENT.MILIEUX.' + e.milieu | translate) : '-' }}</span></td>
+                <td><span class="chip">{{ formatType(e.typeLocal) }}</span></td>
+                <td><span class="status-chip" [class.active]="e.milieu === 'URBAIN'" [class.pending]="e.milieu === 'RURAL'">{{ e.milieu ? ('ETABLISSEMENT.MILIEUX.' + e.milieu | translate) : '-' }}</span></td>
                 <td>{{ e.capaciteAccueil || '-' }}</td>
                 <td>{{ e.telephone || '-' }}</td>
                 <td class="actions">
@@ -189,15 +189,6 @@ import { Province } from '../../../core/models/geo.model';
     }
     .link:hover { text-decoration: underline; }
     .sub-text { font-size: var(--font-xs); color: var(--color-text-tertiary); direction: rtl; }
-    .badge {
-      padding: 3px 10px;
-      border-radius: var(--radius-pill);
-      font-size: var(--font-xs);
-      font-weight: 500;
-    }
-    .badge-blue { background: var(--color-primary-surface); color: var(--color-primary-dark); }
-    .badge-green { background: var(--color-primary-surface); color: var(--color-primary-dark); }
-    .badge-orange { background: var(--color-accent-surface); color: var(--color-accent); }
     .actions { display: flex; gap: 4px; }
     .action-btn {
       display: inline-flex;
