@@ -123,7 +123,10 @@ import { AuthService } from '../../../core/auth/auth.service';
       letter-spacing: 0.6px;
       padding: var(--space-3) var(--space-3) var(--space-1);
       white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.12s ease;
     }
+    .rail:hover .rail-group-title, .rail.pinned .rail-group-title { opacity: 1; }
     .rail-item {
       display: flex;
       align-items: center;
@@ -193,7 +196,7 @@ import { AuthService } from '../../../core/auth/auth.service';
         box-shadow: var(--shadow-lg);
       }
       .rail.mobile-open { inset-inline-start: 0; }
-      .label { opacity: 1; }
+      .label, .rail-group-title { opacity: 1; }
       .rail-pin { display: none; }
     }
   `]
