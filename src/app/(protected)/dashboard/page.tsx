@@ -99,25 +99,25 @@ export default function DashboardPage() {
           <div className="stats-grid">
             <div className="stat-card accent-green">
               <div className="stat-card-top"><div className="stat-icon"><Icon name="people" /></div></div>
-              <div className="stat-value">{data.totalBeneficiaires}</div>
+              <div className="stat-value">{data.totalBeneficiaires.toLocaleString('fr-FR')}</div>
               <div className="stat-label">{t('DASHBOARD.TOTAL_BENEFICIAIRES')}</div>
             </div>
 
             <div className="stat-card accent-blue">
               <div className="stat-card-top"><div className="stat-icon"><Icon name="badge" /></div></div>
-              <div className="stat-value">{data.totalPersonnel}</div>
+              <div className="stat-value">{data.totalPersonnel.toLocaleString('fr-FR')}</div>
               <div className="stat-label">{t('DASHBOARD.TOTAL_PERSONNEL')}</div>
             </div>
 
             <div className="stat-card accent-orange">
               <div className="stat-card-top"><div className="stat-icon"><Icon name="business" /></div></div>
-              <div className="stat-value">{data.totalEtablissements}</div>
+              <div className="stat-value">{data.totalEtablissements.toLocaleString('fr-FR')}</div>
               <div className="stat-label">{t('DASHBOARD.TOTAL_ETABLISSEMENTS')}</div>
             </div>
 
             <div className="stat-card accent-purple">
               <div className="stat-card-top"><div className="stat-icon"><Icon name="handshake" /></div></div>
-              <div className="stat-value">{data.totalPartenaires}</div>
+              <div className="stat-value">{data.totalPartenaires.toLocaleString('fr-FR')}</div>
               <div className="stat-label">{t('DASHBOARD.TOTAL_PARTENAIRES')}</div>
             </div>
 
