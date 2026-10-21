@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { ApiService } from '../../core/services/api.service';
@@ -157,9 +158,10 @@ import { AuthService } from '../../core/auth/auth.service';
     .accent-red .stat-icon { background: var(--color-danger-surface); color: var(--color-danger); }
   `]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   loading = true;
   data: any = null;
+  private langSub?: Subscription;
 
   monthlyChartData: ChartData<'bar'> = { labels: [], datasets: [] };
   situationChartData: ChartData<'doughnut'> = { labels: [], datasets: [] };
@@ -179,7 +181,7 @@ export class DashboardComponent implements OnInit {
 
   get user() { return this.auth.getCurrentUser(); }
 
-  constructor(private api: ApiService, private auth: AuthService) {}
+  constructor(private api: ApiService, private auth: AuthService, private translate: TranslateService) {}
 
   ngOnInit() {
     this.api.getDashboard().subscribe({
@@ -190,6 +192,21 @@ export class DashboardComponent implements OnInit {
       },
       error: () => { this.loading = false; }
     });
+
+    // Re-translate chart labels when the user switches language from the navbar
+    this.langSub = this.translate.onLangChange.subscribe(() => {
+      if (this.data) this.buildCharts(this.data);
+    });
+  }
+
+  ngOnDestroy() {
+    this.langSub?.unsubscribe();
+  }
+
+  private translateEnum(key: string, value: string): string {
+    const translated = this.translate.instant(key + value);
+    if (translated !== key + value) return translated;
+    return value.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
   }
 
   private buildCharts(data: any) {
@@ -211,14 +228,14 @@ export class DashboardComponent implements OnInit {
     // Situation
     const situations = Object.keys(data.beneficiairesBySituationDifficulte || {});
     this.situationChartData = {
-      labels: situations,
+      labels: situations.map(s => this.translateEnum('BENEFICIAIRE.OPTIONS.SITUATION_DIFFICULTE.', s)),
       datasets: [{ data: situations.map(s => data.beneficiairesBySituationDifficulte[s]), backgroundColor: colors }]
     };
 
     // Grade
     const grades = Object.keys(data.personnelByGrade || {}).slice(0, 8);
     this.gradeChartData = {
-      labels: grades,
+      labels: grades.map(g => this.translateEnum('PERSONNEL.FORM.GRADES.', g)),
       datasets: [{ data: grades.map(g => data.personnelByGrade[g]), backgroundColor: '#2458c4' }]
     };
 
