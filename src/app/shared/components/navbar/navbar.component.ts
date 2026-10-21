@@ -32,15 +32,18 @@ import { Router } from '@angular/router';
 
       <!-- User dropdown -->
       <div class="dropdown">
-        <button class="nav-btn" (click)="toggleUser($event)">
-          <mat-icon>account_circle</mat-icon>
-          <span>{{ user?.nom }} {{ user?.prenom }}</span>
+        <button class="nav-btn user-btn" (click)="toggleUser($event)">
+          <span class="avatar">{{ initials }}</span>
+          <span class="user-name">{{ user?.nom }} {{ user?.prenom }}</span>
           <mat-icon>arrow_drop_down</mat-icon>
         </button>
         <div class="dropdown-menu" [class.show]="userOpen">
           <div class="dropdown-header">
-            <strong>{{ ('ADMIN.USERS.ROLES.' + (user?.role || '')) | translate }}</strong>
-            <small>{{ user?.email }}</small>
+            <span class="avatar avatar-lg">{{ initials }}</span>
+            <div>
+              <strong>{{ ('ADMIN.USERS.ROLES.' + (user?.role || '')) | translate }}</strong>
+              <small>{{ user?.email }}</small>
+            </div>
           </div>
           <hr>
           <button class="dropdown-item" (click)="logout()">
@@ -53,7 +56,7 @@ import { Router } from '@angular/router';
   `,
   styles: [`
     .navbar {
-      background-color: var(--color-primary);
+      background: linear-gradient(120deg, var(--color-primary-dark), var(--color-primary));
       color: white;
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -61,25 +64,39 @@ import { Router } from '@angular/router';
       height: var(--header-height);
       display: flex;
       align-items: center;
-      padding: 0 16px;
-      gap: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      padding: 0 var(--space-5);
+      gap: var(--space-2);
+      box-shadow: var(--shadow-md);
     }
     .spacer { flex: 1; }
     .icon-btn {
       background: none; border: none; cursor: pointer;
       color: white; display: flex; align-items: center;
       padding: 8px; border-radius: 50%;
+      transition: background 0.15s ease;
     }
     .icon-btn:hover { background: rgba(255,255,255,0.15); }
     .nav-btn {
       background: none; border: none; cursor: pointer;
       color: white; display: flex; align-items: center;
-      gap: 4px; padding: 8px 12px; border-radius: 4px;
-      font-size: 14px; font-family: inherit;
+      gap: 6px; padding: 6px 10px 6px 6px; border-radius: var(--radius-xl);
+      font-size: var(--font-base); font-family: inherit;
+      transition: background 0.15s ease;
     }
     .nav-btn:hover { background: rgba(255,255,255,0.15); }
     .nav-btn mat-icon { font-size: 20px; width: 20px; height: 20px; }
+    .user-btn { padding-inline-start: 4px; }
+    .user-name { font-weight: 500; }
+
+    .avatar {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: rgba(255,255,255,0.22);
+      color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.3px;
+      flex-shrink: 0;
+    }
+    .avatar-lg { width: 40px; height: 40px; font-size: 15px; background: var(--color-primary-surface); color: var(--color-primary-dark); }
 
     .dropdown {
       position: relative;
@@ -88,12 +105,12 @@ import { Router } from '@angular/router';
     .dropdown-menu {
       display: none;
       position: absolute;
-      top: calc(100% + 8px);
+      top: calc(100% + 10px);
       inset-inline-end: 0;
       background: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-      min-width: 180px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      min-width: 220px;
       z-index: 9999;
       overflow: hidden;
       flex-direction: column;
@@ -103,32 +120,33 @@ import { Router } from '@angular/router';
     }
 
     .dropdown-header {
-      padding: 12px 16px;
+      padding: var(--space-4);
       display: flex;
-      flex-direction: column;
-      gap: 2px;
-      strong { color: #333; font-size: 13px; }
-      small { color: #888; font-size: 12px; }
+      align-items: center;
+      gap: var(--space-3);
+      strong { display: block; color: var(--color-text); font-size: var(--font-sm); font-weight: 600; }
+      small { color: var(--color-text-secondary); font-size: var(--font-xs); }
     }
 
-    hr { margin: 0; border: none; border-top: 1px solid #eee; }
+    hr { margin: 0; border: none; border-top: 1px solid var(--color-border); }
 
     .dropdown-item {
       background: none;
       border: none;
       cursor: pointer;
-      padding: 10px 16px;
+      padding: 12px 16px;
       text-align: start;
-      font-size: 14px;
-      color: #333;
+      font-size: var(--font-base);
+      color: var(--color-text);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--space-3);
       width: 100%;
       font-family: inherit;
-      mat-icon { font-size: 18px; width: 18px; height: 18px; color: #666; }
+      transition: background 0.15s ease;
+      mat-icon { font-size: 18px; width: 18px; height: 18px; color: var(--color-text-secondary); }
     }
-    .dropdown-item:hover { background: #f5f5f5; }
+    .dropdown-item:hover { background: var(--color-primary-surface); }
   `]
 })
 export class NavbarComponent {
@@ -138,6 +156,11 @@ export class NavbarComponent {
 
   get user() { return this.auth.getCurrentUser(); }
   get currentLang() { return this.translate.currentLang || 'fr'; }
+  get initials() {
+    const u = this.user;
+    if (!u) return '';
+    return `${u.nom?.charAt(0) || ''}${u.prenom?.charAt(0) || ''}`.toUpperCase();
+  }
 
   constructor(
     private auth: AuthService,

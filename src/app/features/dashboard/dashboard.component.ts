@@ -30,59 +30,50 @@ import { AuthService } from '../../core/auth/auth.service';
       <ng-container *ngIf="!loading && data">
         <!-- Stat cards -->
         <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon" style="background:#e8f5e9">
-              <mat-icon style="color:#2e7d32">people</mat-icon>
-            </div>
+          <div class="stat-card accent-green">
+            <div class="stat-icon"><mat-icon>people</mat-icon></div>
             <div>
               <div class="stat-value">{{ data.totalBeneficiaires }}</div>
               <div class="stat-label">{{ 'DASHBOARD.TOTAL_BENEFICIAIRES' | translate }}</div>
             </div>
           </div>
 
-          <div class="stat-card" style="border-inline-start-color:#1976d2">
-            <div class="stat-icon" style="background:#e3f2fd">
-              <mat-icon style="color:#1976d2">badge</mat-icon>
-            </div>
+          <div class="stat-card accent-blue">
+            <div class="stat-icon"><mat-icon>badge</mat-icon></div>
             <div>
-              <div class="stat-value" style="color:#1976d2">{{ data.totalPersonnel }}</div>
+              <div class="stat-value">{{ data.totalPersonnel }}</div>
               <div class="stat-label">{{ 'DASHBOARD.TOTAL_PERSONNEL' | translate }}</div>
             </div>
           </div>
 
-          <div class="stat-card" style="border-inline-start-color:#f57c00">
-            <div class="stat-icon" style="background:#fff3e0">
-              <mat-icon style="color:#f57c00">business</mat-icon>
-            </div>
+          <div class="stat-card accent-orange">
+            <div class="stat-icon"><mat-icon>business</mat-icon></div>
             <div>
-              <div class="stat-value" style="color:#f57c00">{{ data.totalEtablissements }}</div>
+              <div class="stat-value">{{ data.totalEtablissements }}</div>
               <div class="stat-label">{{ 'DASHBOARD.TOTAL_ETABLISSEMENTS' | translate }}</div>
             </div>
           </div>
 
-          <div class="stat-card" style="border-inline-start-color:#7b1fa2">
-            <div class="stat-icon" style="background:#f3e5f5">
-              <mat-icon style="color:#7b1fa2">handshake</mat-icon>
-            </div>
+          <div class="stat-card accent-purple">
+            <div class="stat-icon"><mat-icon>handshake</mat-icon></div>
             <div>
-              <div class="stat-value" style="color:#7b1fa2">{{ data.totalPartenaires }}</div>
+              <div class="stat-value">{{ data.totalPartenaires }}</div>
               <div class="stat-label">{{ 'DASHBOARD.TOTAL_PARTENAIRES' | translate }}</div>
             </div>
           </div>
 
-          <div class="stat-card" style="border-inline-start-color:#c62828">
-            <div class="stat-icon" style="background:#ffebee">
-              <mat-icon style="color:#c62828">payments</mat-icon>
-            </div>
+          <div class="stat-card accent-red">
+            <div class="stat-icon"><mat-icon>payments</mat-icon></div>
             <div>
-              <div class="stat-value" style="color:#c62828">{{ data.totalMontantSubventions | number:'1.0-0' }} MAD</div>
+              <div class="stat-value">{{ data.totalMontantSubventions | number:'1.0-0' }} MAD</div>
               <div class="stat-label">{{ 'DASHBOARD.MONTANT_SUBVENTIONS' | translate }}</div>
             </div>
           </div>
         </div>
 
         <!-- Charts row -->
-        <div class="charts-grid mt-3">
+        <h2 class="section-title mt-3">{{ 'DASHBOARD.STATISTIQUES' | translate }}</h2>
+        <div class="charts-grid">
           <!-- Beneficiaires par mois -->
           <mat-card class="chart-card">
             <mat-card-header>
@@ -146,17 +137,35 @@ import { AuthService } from '../../core/auth/auth.service';
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
+      gap: var(--space-4);
+    }
+    .section-title {
+      font-size: var(--font-lg);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-4);
     }
     .charts-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-      gap: 16px;
+      gap: var(--space-4);
     }
     .chart-card {
-      mat-card-title { font-size: 14px; color: var(--color-primary); }
+      border-radius: var(--radius-lg) !important;
+      box-shadow: var(--shadow-sm) !important;
+      border: 1px solid var(--color-border);
+      mat-card-title { font-size: var(--font-md); font-weight: 600; color: var(--color-text); }
       canvas { max-height: 250px; }
     }
+
+    .stat-icon { width: 48px; height: 48px; border-radius: var(--radius-md); }
+    mat-icon { font-size: 22px; width: 22px; height: 22px; }
+
+    .accent-green { border-inline-start-color: var(--color-primary); .stat-icon { background: var(--color-primary-surface); } .stat-value, mat-icon { color: var(--color-primary); } }
+    .accent-blue { border-inline-start-color: #2563eb; .stat-icon { background: #eff6ff; } .stat-value, mat-icon { color: #2563eb; } }
+    .accent-orange { border-inline-start-color: #d97706; .stat-icon { background: var(--color-accent-surface); } .stat-value, mat-icon { color: #d97706; } }
+    .accent-purple { border-inline-start-color: #7c3aed; .stat-icon { background: #f5f3ff; } .stat-value, mat-icon { color: #7c3aed; } }
+    .accent-red { border-inline-start-color: #dc2626; .stat-icon { background: #fef2f2; } .stat-value, mat-icon { color: #dc2626; } }
   `]
 })
 export class DashboardComponent implements OnInit {
