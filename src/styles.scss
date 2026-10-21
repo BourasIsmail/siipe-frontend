@@ -400,36 +400,43 @@ h1, h2, h3, h4, h5, h6 {
 .stat-card {
   background: white;
   border-radius: var(--radius-lg);
-  padding: 20px;
+  padding: 18px;
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--color-border);
   display: flex;
-  align-items: center;
-  gap: 16px;
-  border-inline-start: 4px solid var(--color-primary);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  flex-direction: column;
+  gap: 10px;
+  transition: box-shadow 0.2s ease;
 
   &:hover {
     box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+  }
+
+  .stat-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .stat-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-sm);
     background: var(--color-primary-surface);
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--color-primary);
-    font-size: 24px;
+
+    mat-icon { font-size: 18px; width: 18px; height: 18px; }
   }
 
   .stat-value {
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--color-primary);
+    font-family: 'Manrope', 'Inter', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text);
   }
 
   .stat-label {

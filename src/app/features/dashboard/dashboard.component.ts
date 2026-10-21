@@ -31,43 +31,33 @@ import { AuthService } from '../../core/auth/auth.service';
         <!-- Stat cards -->
         <div class="stats-grid">
           <div class="stat-card accent-green">
-            <div class="stat-icon"><mat-icon>people</mat-icon></div>
-            <div>
-              <div class="stat-value">{{ data.totalBeneficiaires }}</div>
-              <div class="stat-label">{{ 'DASHBOARD.TOTAL_BENEFICIAIRES' | translate }}</div>
-            </div>
+            <div class="stat-card-top"><div class="stat-icon"><mat-icon>people</mat-icon></div></div>
+            <div class="stat-value">{{ data.totalBeneficiaires }}</div>
+            <div class="stat-label">{{ 'DASHBOARD.TOTAL_BENEFICIAIRES' | translate }}</div>
           </div>
 
           <div class="stat-card accent-blue">
-            <div class="stat-icon"><mat-icon>badge</mat-icon></div>
-            <div>
-              <div class="stat-value">{{ data.totalPersonnel }}</div>
-              <div class="stat-label">{{ 'DASHBOARD.TOTAL_PERSONNEL' | translate }}</div>
-            </div>
+            <div class="stat-card-top"><div class="stat-icon"><mat-icon>badge</mat-icon></div></div>
+            <div class="stat-value">{{ data.totalPersonnel }}</div>
+            <div class="stat-label">{{ 'DASHBOARD.TOTAL_PERSONNEL' | translate }}</div>
           </div>
 
           <div class="stat-card accent-orange">
-            <div class="stat-icon"><mat-icon>business</mat-icon></div>
-            <div>
-              <div class="stat-value">{{ data.totalEtablissements }}</div>
-              <div class="stat-label">{{ 'DASHBOARD.TOTAL_ETABLISSEMENTS' | translate }}</div>
-            </div>
+            <div class="stat-card-top"><div class="stat-icon"><mat-icon>business</mat-icon></div></div>
+            <div class="stat-value">{{ data.totalEtablissements }}</div>
+            <div class="stat-label">{{ 'DASHBOARD.TOTAL_ETABLISSEMENTS' | translate }}</div>
           </div>
 
           <div class="stat-card accent-purple">
-            <div class="stat-icon"><mat-icon>handshake</mat-icon></div>
-            <div>
-              <div class="stat-value">{{ data.totalPartenaires }}</div>
-              <div class="stat-label">{{ 'DASHBOARD.TOTAL_PARTENAIRES' | translate }}</div>
-            </div>
+            <div class="stat-card-top"><div class="stat-icon"><mat-icon>handshake</mat-icon></div></div>
+            <div class="stat-value">{{ data.totalPartenaires }}</div>
+            <div class="stat-label">{{ 'DASHBOARD.TOTAL_PARTENAIRES' | translate }}</div>
           </div>
 
           <div class="stat-card accent-red">
-            <div class="stat-icon"><mat-icon>payments</mat-icon></div>
-            <div>
-              <div class="stat-value">{{ data.totalMontantSubventions | number:'1.0-0' }} MAD</div>
-              <div class="stat-label">{{ 'DASHBOARD.MONTANT_SUBVENTIONS' | translate }}</div>
-            </div>
+            <div class="stat-card-top"><div class="stat-icon"><mat-icon>payments</mat-icon></div></div>
+            <div class="stat-value">{{ data.totalMontantSubventions | number:'1.0-0' }} <span class="unit">MAD</span></div>
+            <div class="stat-label">{{ 'DASHBOARD.MONTANT_SUBVENTIONS' | translate }}</div>
           </div>
         </div>
 
@@ -158,14 +148,13 @@ import { AuthService } from '../../core/auth/auth.service';
       canvas { max-height: 250px; }
     }
 
-    .stat-icon { width: 48px; height: 48px; border-radius: var(--radius-md); }
-    mat-icon { font-size: 22px; width: 22px; height: 22px; }
+    .stat-value .unit { font-size: 13px; font-weight: 600; }
 
-    .accent-green { border-inline-start-color: var(--color-primary); .stat-icon { background: var(--color-primary-surface); } .stat-value, mat-icon { color: var(--color-primary); } }
-    .accent-blue { border-inline-start-color: #2458c4; .stat-icon { background: #e7eefb; } .stat-value, mat-icon { color: #2458c4; } }
-    .accent-orange { border-inline-start-color: var(--color-accent); .stat-icon { background: var(--color-accent-surface); } .stat-value, mat-icon { color: var(--color-accent); } }
-    .accent-purple { border-inline-start-color: #7b3fc4; .stat-icon { background: #f3e9fb; } .stat-value, mat-icon { color: #7b3fc4; } }
-    .accent-red { border-inline-start-color: var(--color-danger); .stat-icon { background: var(--color-danger-surface); } .stat-value, mat-icon { color: var(--color-danger); } }
+    .accent-green .stat-icon { background: var(--color-primary-surface); color: var(--color-primary); }
+    .accent-blue .stat-icon { background: #e7eefb; color: #2458c4; }
+    .accent-orange .stat-icon { background: var(--color-accent-surface); color: var(--color-accent); }
+    .accent-purple .stat-icon { background: #f3e9fb; color: #7b3fc4; }
+    .accent-red .stat-icon { background: var(--color-danger-surface); color: var(--color-danger); }
   `]
 })
 export class DashboardComponent implements OnInit {
@@ -206,11 +195,17 @@ export class DashboardComponent implements OnInit {
   private buildCharts(data: any) {
     const colors = ['#1a7a4c','#b9872f','#2458c4','#7b3fc4','#8a2f55','#4aab80','#dbb04d','#5c9ad6','#a885d8','#b3443a'];
 
-    // Monthly beneficiaires
+    // Monthly beneficiaires — neutral bars, peak month highlighted in green
     const months = Object.keys(data.beneficiairesByMonth || {});
+    const monthValues = months.map(m => data.beneficiairesByMonth[m]);
+    const peakIndex = monthValues.indexOf(Math.max(...monthValues));
     this.monthlyChartData = {
       labels: months,
-      datasets: [{ data: months.map(m => data.beneficiairesByMonth[m]), backgroundColor: '#1a7a4c', borderColor: '#0e5c38', borderWidth: 1 }]
+      datasets: [{
+        data: monthValues,
+        backgroundColor: monthValues.map((_, i) => i === peakIndex ? '#1a7a4c' : '#e6e1d4'),
+        borderRadius: 4
+      }]
     };
 
     // Situation

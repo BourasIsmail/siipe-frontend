@@ -35,8 +35,8 @@ import { Personnel } from '../../../core/models/personnel.model';
           <div>
             <h1>{{ personnel.nom }} {{ personnel.prenom }}</h1>
             <div class="meta-row">
-              <span class="badge badge-blue">{{ formatEnum(personnel.grade, 'GRADES') }}</span>
-              <span class="badge badge-green">{{ formatEnum(personnel.fonction, 'FONCTIONS') }}</span>
+              <span class="chip">{{ formatEnum(personnel.grade, 'GRADES') }}</span>
+              <span class="status-chip active">{{ formatEnum(personnel.fonction, 'FONCTIONS') }}</span>
               <span class="text-secondary">{{ personnel.matricule }}</span>
             </div>
             <div class="meta-row mt-1">
@@ -204,11 +204,6 @@ import { Personnel } from '../../../core/models/personnel.model';
     .meta-icon { font-size: 16px; width: 16px; height: 16px; color: var(--color-text-tertiary); }
     .mt-1 { margin-top: 6px; }
     .header-actions { display: flex; gap: 8px; }
-    .badge {
-      padding: 3px 10px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 500;
-    }
-    .badge-blue { background: var(--color-accent-surface); color: var(--color-accent); }
-    .badge-green { background: var(--color-primary-surface); color: var(--color-primary-dark); }
     .tabs {
       display: flex; gap: 4px; margin-bottom: 16px;
       border-bottom: 2px solid var(--color-border);

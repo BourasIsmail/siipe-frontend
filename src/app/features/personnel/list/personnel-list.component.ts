@@ -149,7 +149,7 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
                     </div>
                   </div>
                 </td>
-                <td><span class="badge badge-gray">{{ p.matricule }}</span></td>
+                <td><span class="chip badge-gray">{{ p.matricule }}</span></td>
                 <td>{{ p.sexe === 'MASCULIN' ? 'M' : p.sexe === 'FEMININ' ? 'F' : '-' }}</td>
                 <td>{{ formatEnum(p.grade, 'GRADES') }}</td>
                 <td>{{ formatEnum(p.fonction, 'FONCTIONS') }}</td>
@@ -210,9 +210,6 @@ import { EtablissementCentre } from '../../../core/models/etablissement.model';
     .link { color: var(--color-primary); text-decoration: none; font-weight: 500; }
     .link:hover { text-decoration: underline; }
     .sub-text { font-size: 12px; color: var(--color-text-tertiary); }
-    .badge {
-      padding: 3px 10px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 500;
-    }
     .badge-gray { background: var(--color-surface-2); color: var(--color-text-secondary); }
     .actions { display: flex; gap: 4px; }
     .action-btn {
