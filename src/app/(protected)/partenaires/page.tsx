@@ -168,42 +168,19 @@ export default function PartenairesPage() {
         )}
       </div>
 
-      {/* Filters */}
-      <div className="siipe-card mb-2">
-        <div className="filter-grid">
-          <div className="field">
-            <label>{t('PARTENAIRE.LIST.NOM')}</label>
-            <input
-              type="text"
-              value={filterNom}
-              onChange={e => { setFilterNom(e.target.value); setPageIndex(0); }}
-              placeholder={t('PARTENAIRE.LIST.SEARCH_PLACEHOLDER')}
-            />
-          </div>
-          <div className="field">
-            <label>{t('PARTENAIRE.LIST.TYPE')}</label>
-            <select value={filterType} onChange={e => { setFilterType(e.target.value); setPageIndex(0); }}>
-              <option value="">{t('COMMON.ALL')}</option>
-              {PARTENAIRE_TYPES.map(type => (
-                <option key={type} value={type}>{t('PARTENAIRE.LIST.TYPES.' + type)}</option>
-              ))}
-            </select>
-          </div>
-          <div className="field">
-            <label>{t('PARTENAIRE.LIST.PROVINCE')}</label>
-            <select value={filterProvinceId} onChange={e => { setFilterProvinceId(e.target.value); setPageIndex(0); }}>
-              <option value="">{t('PARTENAIRE.LIST.ALL_PROVINCES')}</option>
-              {provinces.map(p => (
-                <option key={p.id} value={p.id}>{p.nomFr}</option>
-              ))}
-            </select>
-          </div>
-          <div className="field filter-reset">
-            <button className="btn btn-outline" onClick={resetFilter}>
-              <Icon name="clear" /> {t('COMMON.RESET')}
-            </button>
-          </div>
+      <div className="toolbar">
+        <div className="quick-search">
+          <Icon name="search" />
+          <input type="text" value={filterNom} onChange={e => { setFilterNom(e.target.value); setPageIndex(0); }} placeholder={t('PARTENAIRE.LIST.SEARCH_PLACEHOLDER')} />
         </div>
+        <select className="filter-chip" value={filterType} onChange={e => { setFilterType(e.target.value); setPageIndex(0); }}>
+          <option value="">{t('PARTENAIRE.LIST.TYPE')} : {t('COMMON.ALL')}</option>
+          {PARTENAIRE_TYPES.map(type => (<option key={type} value={type}>{t('PARTENAIRE.LIST.TYPES.' + type)}</option>))}
+        </select>
+        <select className="filter-chip" value={filterProvinceId} onChange={e => { setFilterProvinceId(e.target.value); setPageIndex(0); }}>
+          <option value="">{t('PARTENAIRE.LIST.PROVINCE')} : {t('PARTENAIRE.LIST.ALL_PROVINCES')}</option>
+          {provinces.map(p => (<option key={p.id} value={p.id}>{p.nomFr}</option>))}
+        </select>
       </div>
 
       {/* Loading */}
@@ -372,13 +349,22 @@ export default function PartenairesPage() {
       )}
 
       <style jsx>{`
-        .filter-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-          gap: var(--space-4);
-          align-items: end;
+        .toolbar {
+          display: flex; gap: 10px; align-items: center; margin-bottom: 16px; flex-wrap: wrap;
         }
-        .filter-reset { justify-content: flex-end; }
+        .quick-search {
+          flex: 1; max-width: 320px; display: flex; align-items: center; gap: 8px;
+          background: var(--color-white); border: 1px solid var(--color-border);
+          border-radius: var(--radius-pill); padding: 8px 14px; color: var(--color-text-tertiary);
+        }
+        .quick-search :global(.material-icons) { font-size: 16px; flex-shrink: 0; }
+        .quick-search input {
+          border: none; outline: none; background: none; color: var(--color-text);
+          font-size: var(--font-sm); width: 100%; font-family: inherit;
+        }
+        select.filter-chip {
+          -webkit-appearance: none; appearance: none;
+        }
         .form-title { font-size: var(--font-md); font-weight: 700; margin-bottom: var(--space-4); }
         .form-btns { display: flex; justify-content: flex-end; gap: var(--space-2); }
         .err { color: var(--color-danger); font-size: var(--font-xs); }

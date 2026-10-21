@@ -211,6 +211,14 @@ h1, h2, h3, h4, h5, h6 {
 .filter-chip:hover { background: var(--color-surface-2); }
 .badge-situation, .chip { background: var(--color-accent-surface); color: var(--color-accent); }
 
+// Per-category situation badge colors, matching the approved mockup's chip system
+.badge-situation.sit-rue, .badge-situation.sit-violence { background: var(--color-danger-surface); color: var(--color-danger); }
+.badge-situation.sit-handicap { background: #e7eefb; color: #2458c4; }
+.badge-situation.sit-abandon { background: var(--color-accent-surface); color: var(--color-accent); }
+.badge-situation.sit-travail { background: #f3e9fb; color: #7b3fc4; }
+.badge-situation.sit-agee { background: var(--color-primary-surface); color: var(--color-primary-dark); }
+.badge-situation.sit-autre { background: var(--color-surface-2); color: var(--color-text-secondary); }
+
 // Avatars
 .avatar, .mini-avatar {
   display: flex;

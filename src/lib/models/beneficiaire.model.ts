@@ -151,3 +151,16 @@ export const SITUATIONS_DIFFICULTE = [
   'PERSONNE_AGEE',
   'AUTRE'
 ];
+
+// Per-category chip colors matching the approved mockup's situation badges
+export const SITUATION_COLOR_CLASS: Record<string, string> = {
+  ENFANT_EN_SITUATION_DE_RUE: 'sit-rue',
+  ENFANT_EN_SITUATION_DE_HANDICAP: 'sit-handicap',
+  ENFANT_EN_CONFLIT_AVEC_LA_LOI: 'sit-rue',
+  ENFANT_VICTIME_DE_VIOLENCE: 'sit-violence',
+  ENFANT_ABANDONNE: 'sit-abandon',
+  ENFANT_EN_SITUATION_DE_TRAVAIL: 'sit-travail',
+  FEMME_EN_SITUATION_DE_VIOLENCE: 'sit-violence',
+  PERSONNE_AGEE: 'sit-agee',
+  AUTRE: 'sit-autre'
+};

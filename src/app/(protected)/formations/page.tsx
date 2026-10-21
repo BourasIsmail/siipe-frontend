@@ -192,33 +192,15 @@ export default function FormationsPage() {
         )}
       </div>
 
-      {/* Filters */}
-      <div className="siipe-card mb-2">
-        <div className="filter-grid">
-          <div className="field">
-            <label>{t('FORMATION.LIST.TITRE')}</label>
-            <input
-              type="text"
-              value={filterTitre}
-              onChange={e => { setFilterTitre(e.target.value); setPageIndex(0); }}
-              placeholder={t('FORMATION.LIST.SEARCH_PLACEHOLDER')}
-            />
-          </div>
-          <div className="field">
-            <label>{t('FORMATION.LIST.ETABLISSEMENT')}</label>
-            <select value={filterEtabId} onChange={e => { setFilterEtabId(e.target.value); setPageIndex(0); }}>
-              <option value="">{t('COMMON.ALL')}</option>
-              {etablissements.map(e => (
-                <option key={e.id} value={e.id}>{e.nomFr}</option>
-              ))}
-            </select>
-          </div>
-          <div className="field filter-reset">
-            <button className="btn btn-outline" onClick={resetFilter}>
-              <Icon name="clear" /> {t('COMMON.RESET')}
-            </button>
-          </div>
+      <div className="toolbar">
+        <div className="quick-search">
+          <Icon name="search" />
+          <input type="text" value={filterTitre} onChange={e => { setFilterTitre(e.target.value); setPageIndex(0); }} placeholder={t('FORMATION.LIST.SEARCH_PLACEHOLDER')} />
         </div>
+        <select className="filter-chip" value={filterEtabId} onChange={e => { setFilterEtabId(e.target.value); setPageIndex(0); }}>
+          <option value="">{t('FORMATION.LIST.ETABLISSEMENT')} : {t('COMMON.ALL')}</option>
+          {etablissements.map(e => (<option key={e.id} value={e.id}>{e.nomFr}</option>))}
+        </select>
       </div>
 
       {/* Add/Edit Form */}
@@ -407,13 +389,22 @@ export default function FormationsPage() {
       )}
 
       <style jsx>{`
-        .filter-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-          gap: var(--space-4);
-          align-items: end;
+        .toolbar {
+          display: flex; gap: 10px; align-items: center; margin-bottom: 16px; flex-wrap: wrap;
         }
-        .filter-reset { justify-content: flex-end; }
+        .quick-search {
+          flex: 1; max-width: 320px; display: flex; align-items: center; gap: 8px;
+          background: var(--color-white); border: 1px solid var(--color-border);
+          border-radius: var(--radius-pill); padding: 8px 14px; color: var(--color-text-tertiary);
+        }
+        .quick-search :global(.material-icons) { font-size: 16px; flex-shrink: 0; }
+        .quick-search input {
+          border: none; outline: none; background: none; color: var(--color-text);
+          font-size: var(--font-sm); width: 100%; font-family: inherit;
+        }
+        select.filter-chip {
+          -webkit-appearance: none; appearance: none;
+        }
         .form-title { font-size: var(--font-md); font-weight: 700; margin-bottom: var(--space-4); }
         .form-btns { display: flex; justify-content: flex-end; gap: var(--space-2); }
         .err { color: var(--color-danger); font-size: var(--font-xs); }
