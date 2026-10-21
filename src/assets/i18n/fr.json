@@ -6,7 +6,8 @@
     "ETABLISSEMENTS": "Entités impliquées",
     "PERSONNEL": "Gestion du personnel",
     "ADMIN": "Administration",
-    "LOGOUT": "Se déconnecter"
+    "LOGOUT": "Se déconnecter",
+    "PIN": "Épingler le menu"
   },
   "MENU": {
     "RECHERCHE": "Recherche",

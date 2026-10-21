@@ -76,6 +76,10 @@ import { Router } from '@angular/router';
       transition: background 0.15s ease;
     }
     .icon-btn:hover { background: rgba(255,255,255,0.15); }
+    @media (min-width: 861px) {
+      /* desktop: the icon-rail is always visible, pinned via its own control */
+      .icon-btn { display: none; }
+    }
     .nav-btn {
       background: none; border: none; cursor: pointer;
       color: white; display: flex; align-items: center;
