@@ -6,7 +6,7 @@ import './globals.scss';
 
 export const metadata: Metadata = {
   title: 'SIIPE - Entraide Nationale',
-  icons: { icon: '/favicon.ico' }
+  icons: { icon: '/entraide-logo-mark.png' }
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
