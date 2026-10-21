@@ -35,7 +35,9 @@ $siipe-theme: mat.define-light-theme((
     accent: $siipe-accent,
     warn: $siipe-warn,
   ),
-  typography: mat.define-typography-config(),
+  typography: mat.define-typography-config(
+    $font-family: "'Inter', 'Tajawal', sans-serif"
+  ),
   density: 0,
 ));
 
@@ -45,9 +47,10 @@ $siipe-theme: mat.define-light-theme((
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'Roboto', 'Segoe UI', sans-serif;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
   background-color: #f8fafc;
   color: #1e293b;
+  -webkit-font-smoothing: antialiased;
 }
 
 // Entraide colors — modernized emerald palette
@@ -57,25 +60,55 @@ body {
   --color-primary-dark: #15803d;
   --color-primary-surface: #f0fdf4;
   --color-accent: #f59e0b;
+  --color-accent-surface: #fffbeb;
   --color-bg: #f8fafc;
   --color-white: #ffffff;
   --color-text: #1e293b;
   --color-text-secondary: #64748b;
+  --color-text-tertiary: #94a3b8;
   --color-border: #e2e8f0;
   --color-danger: #dc2626;
   --color-success: #16a34a;
-  --sidebar-width: 260px;
+  --sidebar-width: 264px;
   --header-height: 64px;
   --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
   --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.14);
+  --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  // Spacing scale
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  // Type scale
+  --font-xs: 12px;
+  --font-sm: 13px;
+  --font-base: 14px;
+  --font-md: 15px;
+  --font-lg: 18px;
+  --font-xl: 22px;
+  --font-2xl: 28px;
 }
 
 // RTL support for Arabic
 [dir="rtl"] {
   direction: rtl;
   font-family: 'Tajawal', 'Arial', sans-serif;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
 }
 
 // Utility classes
@@ -118,12 +151,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: var(--space-6);
 
   h1 {
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--color-primary);
+    font-size: var(--font-xl);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+
+  .text-secondary {
+    font-size: var(--font-sm);
   }
 }
 

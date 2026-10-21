@@ -106,55 +106,59 @@ import { AuthService } from '../../../core/auth/auth.service';
     }
     :host-context([dir="rtl"]) .sidebar { transform: translateX(100%); }
     .sidebar.open { transform: translateX(0); }
-    .sidebar-nav { flex: 1; padding: 8px 0; }
-    .nav-section { margin-bottom: 4px; }
+    .sidebar-nav { flex: 1; padding: var(--space-4) var(--space-3); }
+    .nav-section { margin-bottom: var(--space-2); }
     .nav-section-title {
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
-      color: var(--color-text-secondary);
-      letter-spacing: 0.8px;
-      padding: 12px 16px 4px;
+      color: var(--color-text-tertiary);
+      letter-spacing: 0.6px;
+      padding: var(--space-4) var(--space-3) var(--space-1);
     }
     .nav-item {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 10px 16px;
+      gap: var(--space-3);
+      padding: 10px var(--space-3);
+      margin: 2px 0;
+      border-radius: var(--radius-md);
       text-decoration: none;
       color: var(--color-text);
-      font-size: 14px;
+      font-size: var(--font-base);
+      font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: background 0.15s ease, color 0.15s ease;
     }
     .nav-item mat-icon {
       font-size: 20px;
       width: 20px;
       height: 20px;
       color: var(--color-text-secondary);
+      transition: color 0.15s ease;
     }
     .nav-item:hover {
-      background: #e8f5e9;
-      color: var(--color-primary);
+      background: var(--color-primary-surface);
+      color: var(--color-primary-dark);
     }
     .nav-item:hover mat-icon { color: var(--color-primary); }
     .nav-item.active {
-      background: #e8f5e9;
-      color: var(--color-primary);
+      background: var(--color-primary);
+      color: white;
       font-weight: 600;
-      border-inline-end: 3px solid var(--color-primary);
+      box-shadow: var(--shadow-sm);
     }
-    .nav-item.active mat-icon { color: var(--color-primary); }
+    .nav-item.active mat-icon { color: white; }
     .sidebar-footer {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 16px;
+      gap: var(--space-2);
+      padding: var(--space-4);
       border-top: 1px solid var(--color-border);
-      font-size: 12px;
+      font-size: var(--font-xs);
       color: var(--color-text-secondary);
     }
-    .sidebar-footer mat-icon { font-size: 16px; width: 16px; height: 16px; }
+    .sidebar-footer mat-icon { font-size: 16px; width: 16px; height: 16px; color: var(--color-text-tertiary); }
   `]
 })
 export class SidebarComponent {
