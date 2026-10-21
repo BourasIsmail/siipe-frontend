@@ -585,6 +585,9 @@
         "CONTRAT": "عقدة"
       },
       "GRADES": {
+        "AGENT_CET_ENTRAIDE_NLE": "عون التعاون الوطني",
+        "REDACTEUR": "محرر",
+        "SECRETAIRE_PRINCIPAL": "كاتب رئيسي",
         "ADMINISTRATEUR_1ER_GRADE": "متصرف من الدرجة الأولى",
         "ADMINISTRATEUR_2EME_GRADE": "متصرف من الدرجة الثانية",
         "ADMINISTRATEUR_3EME_GRADE": "متصرف من الدرجة الثالثة",
@@ -600,11 +603,19 @@
         "ADJOINT_ADMINISTRATIF_GRADE_PRINCIPAL": "ملحق إداري من الدرجة الرئيسية",
         "ADJOINT_TECHNIQUE_1ER_GRADE": "ملحق تقني من الدرجة الأولى",
         "ADJOINT_TECHNIQUE_GRADE_PRINCIPAL": "ملحق تقني من الدرجة الرئيسية",
+        "ADJOINT_TECHNIQUE_HORS_CATEGORIE": "ملحق تقني خارج الفئة",
+        "ADJOINT_TECHNIQUE_2EME_CATEGORIE": "ملحق تقني من الفئة الثانية",
+        "ADJOINT_TECHNIQUE_4EME_CATEGORIE": "ملحق تقني من الفئة الرابعة",
         "AGENTS_A_CONTRAT": "أعوان بعقدة",
         "AGENT_EXECUTION": "عون تنفيذ",
         "AGENT_EXECUTION_PRINCIPAL": "عون تنفيذ رئيسي",
         "AGENT_DE_SERVICE": "عون خدمة",
+        "MEDECIN_GRADE_EXCEPTIONNEL": "طبيب من الرتبة الاستثنائية",
+        "INGENIEUR_EN_CHEF_GRADE_PRINCIPAL": "مهندس رئيسي من الدرجة الممتازة",
         "INGENIEUR_EN_CHEF_PREMIER_GRADE": "مهندس رئيسي من الدرجة الأولى",
+        "INGENIEUR_ETAT_GRADE_PRINCIPAL": "مهندس دولة من الدرجة الممتازة",
+        "INGENIEUR_ETAT_PREMIER_GRADE": "مهندس دولة من الدرجة الأولى",
+        "ARCHITECTE_EN_CHEF_GRADE_PRINCIPAL": "مهندس معماري رئيسي من الدرجة الممتازة",
         "ARCHITECTE_PREMIER_GRADE": "مهندس معماري من الدرجة الأولى"
       },
       "FONCTIONS": {
@@ -661,6 +672,8 @@
         "DUT": "DUT",
         "BEP": "BEP",
         "DEUG": "DEUG",
+        "DEUST": "DEUST",
+        "DEUP": "DEUP",
         "LICENCE": "الإجازة",
         "MASTER": "الماستر",
         "DOCTORAT": "الدكتوراه",

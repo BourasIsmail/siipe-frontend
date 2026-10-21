@@ -132,6 +132,9 @@ import { EtablissementCentre, Programme, Prestation } from '../../../core/models
               <label>{{ 'PERSONNEL.GRADE' | translate }}</label>
               <select formControlName="grade">
                 <option value="">{{ 'PERSONNEL.FORM.SELECT_PLACEHOLDER' | translate }}</option>
+                <option value="AGENT_CET_ENTRAIDE_NLE">{{ 'PERSONNEL.FORM.GRADES.AGENT_CET_ENTRAIDE_NLE' | translate }}</option>
+                <option value="REDACTEUR">{{ 'PERSONNEL.FORM.GRADES.REDACTEUR' | translate }}</option>
+                <option value="SECRETAIRE_PRINCIPAL">{{ 'PERSONNEL.FORM.GRADES.SECRETAIRE_PRINCIPAL' | translate }}</option>
                 <option value="ADMINISTRATEUR_1ER_GRADE">{{ 'PERSONNEL.FORM.GRADES.ADMINISTRATEUR_1ER_GRADE' | translate }}</option>
                 <option value="ADMINISTRATEUR_2EME_GRADE">{{ 'PERSONNEL.FORM.GRADES.ADMINISTRATEUR_2EME_GRADE' | translate }}</option>
                 <option value="ADMINISTRATEUR_3EME_GRADE">{{ 'PERSONNEL.FORM.GRADES.ADMINISTRATEUR_3EME_GRADE' | translate }}</option>
@@ -147,11 +150,19 @@ import { EtablissementCentre, Programme, Prestation } from '../../../core/models
                 <option value="ADJOINT_ADMINISTRATIF_GRADE_PRINCIPAL">{{ 'PERSONNEL.FORM.GRADES.ADJOINT_ADMINISTRATIF_GRADE_PRINCIPAL' | translate }}</option>
                 <option value="ADJOINT_TECHNIQUE_1ER_GRADE">{{ 'PERSONNEL.FORM.GRADES.ADJOINT_TECHNIQUE_1ER_GRADE' | translate }}</option>
                 <option value="ADJOINT_TECHNIQUE_GRADE_PRINCIPAL">{{ 'PERSONNEL.FORM.GRADES.ADJOINT_TECHNIQUE_GRADE_PRINCIPAL' | translate }}</option>
+                <option value="ADJOINT_TECHNIQUE_HORS_CATEGORIE">{{ 'PERSONNEL.FORM.GRADES.ADJOINT_TECHNIQUE_HORS_CATEGORIE' | translate }}</option>
+                <option value="ADJOINT_TECHNIQUE_2EME_CATEGORIE">{{ 'PERSONNEL.FORM.GRADES.ADJOINT_TECHNIQUE_2EME_CATEGORIE' | translate }}</option>
+                <option value="ADJOINT_TECHNIQUE_4EME_CATEGORIE">{{ 'PERSONNEL.FORM.GRADES.ADJOINT_TECHNIQUE_4EME_CATEGORIE' | translate }}</option>
                 <option value="AGENTS_A_CONTRAT">{{ 'PERSONNEL.FORM.GRADES.AGENTS_A_CONTRAT' | translate }}</option>
                 <option value="AGENT_EXECUTION">{{ 'PERSONNEL.FORM.GRADES.AGENT_EXECUTION' | translate }}</option>
                 <option value="AGENT_EXECUTION_PRINCIPAL">{{ 'PERSONNEL.FORM.GRADES.AGENT_EXECUTION_PRINCIPAL' | translate }}</option>
                 <option value="AGENT_DE_SERVICE">{{ 'PERSONNEL.FORM.GRADES.AGENT_DE_SERVICE' | translate }}</option>
+                <option value="MEDECIN_GRADE_EXCEPTIONNEL">{{ 'PERSONNEL.FORM.GRADES.MEDECIN_GRADE_EXCEPTIONNEL' | translate }}</option>
+                <option value="INGENIEUR_EN_CHEF_GRADE_PRINCIPAL">{{ 'PERSONNEL.FORM.GRADES.INGENIEUR_EN_CHEF_GRADE_PRINCIPAL' | translate }}</option>
                 <option value="INGENIEUR_EN_CHEF_PREMIER_GRADE">{{ 'PERSONNEL.FORM.GRADES.INGENIEUR_EN_CHEF_PREMIER_GRADE' | translate }}</option>
+                <option value="INGENIEUR_ETAT_GRADE_PRINCIPAL">{{ 'PERSONNEL.FORM.GRADES.INGENIEUR_ETAT_GRADE_PRINCIPAL' | translate }}</option>
+                <option value="INGENIEUR_ETAT_PREMIER_GRADE">{{ 'PERSONNEL.FORM.GRADES.INGENIEUR_ETAT_PREMIER_GRADE' | translate }}</option>
+                <option value="ARCHITECTE_EN_CHEF_GRADE_PRINCIPAL">{{ 'PERSONNEL.FORM.GRADES.ARCHITECTE_EN_CHEF_GRADE_PRINCIPAL' | translate }}</option>
                 <option value="ARCHITECTE_PREMIER_GRADE">{{ 'PERSONNEL.FORM.GRADES.ARCHITECTE_PREMIER_GRADE' | translate }}</option>
               </select>
             </div>
@@ -237,6 +248,8 @@ import { EtablissementCentre, Programme, Prestation } from '../../../core/models
                 <option value="DUT">{{ 'PERSONNEL.FORM.DIPLOMES.DUT' | translate }}</option>
                 <option value="BEP">{{ 'PERSONNEL.FORM.DIPLOMES.BEP' | translate }}</option>
                 <option value="DEUG">{{ 'PERSONNEL.FORM.DIPLOMES.DEUG' | translate }}</option>
+                <option value="DEUST">{{ 'PERSONNEL.FORM.DIPLOMES.DEUST' | translate }}</option>
+                <option value="DEUP">{{ 'PERSONNEL.FORM.DIPLOMES.DEUP' | translate }}</option>
                 <option value="LICENCE">{{ 'PERSONNEL.FORM.DIPLOMES.LICENCE' | translate }}</option>
                 <option value="MASTER">{{ 'PERSONNEL.FORM.DIPLOMES.MASTER' | translate }}</option>
                 <option value="DOCTORAT">{{ 'PERSONNEL.FORM.DIPLOMES.DOCTORAT' | translate }}</option>
